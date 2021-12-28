@@ -16,12 +16,8 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
 
 const styles = {
-  grid: {
-    padding: "50px",
-  },
   paper: {
     display: "flex",
-    minWidth: "350px",
     flexDirection: "column",
     padding: "20px 50px ",
     margin: "20px auto",
@@ -39,9 +35,9 @@ const styles = {
 
 function SignUp() {
   return (
-    <Grid container sx={styles.grid}>
+    <Grid container>
       <Paper square elevation={4} sx={styles.paper}>
-        <Typography variant="h2">Register</Typography>
+        <Typography variant="h2">Sign up</Typography>
         <FormControl>
           <TextField
             sx={styles.item}
@@ -89,8 +85,8 @@ function SignUp() {
             variant="standard"
           />
         </FormControl>
-        <Button variant="contained" sx={styles.item}>
-          Register
+        <Button variant="contained" sx={styles.item} disableRipple>
+          Sign up
         </Button>
         <Divider />
         <Box sx={styles.item}>

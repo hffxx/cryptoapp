@@ -13,17 +13,14 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import { Link as RouterLink } from "react-router-dom";
 
 const styles = {
-  grid: {
-    padding: "50px",
-  },
   paper: {
     display: "flex",
     flexDirection: "column",
     padding: "20px 50px ",
     margin: "20px auto",
-    minWidth: "350px",
   },
   item: {
     margin: "20px",
@@ -38,7 +35,7 @@ const styles = {
 
 function Login() {
   return (
-    <Grid container sx={styles.grid}>
+    <Grid container>
       <Paper square elevation={4} sx={styles.paper}>
         <Typography variant="h2">Login</Typography>
         <FormControl>
@@ -72,14 +69,19 @@ function Login() {
             variant="standard"
           />
         </FormControl>
-        <Button variant="contained" sx={styles.item}>
+        <Button variant="contained" sx={styles.item} disableRipple>
           Login
         </Button>
         <Divider />
         <Box sx={styles.item}>
           <Typography>
             {"Not a member? "}
-            <Link underline="hover" sx={styles.link}>
+            <Link
+              underline="hover"
+              sx={styles.link}
+              component={RouterLink}
+              to="/signup"
+            >
               Register here
             </Link>
           </Typography>

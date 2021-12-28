@@ -52,13 +52,17 @@ function Navbar() {
             Crypto Game
           </Typography>
           <Box>
-            <Button sx={styles.register} onClick={() => handleClick("/signup")}>
+            <Button
+              sx={styles.register}
+              onClick={() => handleClick("/signup")}
+              disableRipple
+            >
               Register
             </Button>
             <Button
               sx={styles.login}
               onClick={() => handleClick("/login")}
-              disableRipple={true}
+              disableRipple
             >
               Login
             </Button>
