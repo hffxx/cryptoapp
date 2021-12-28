@@ -7,15 +7,14 @@ import Box from "@mui/material/Box";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 const styles = {
-  appBar: {
-    marginLeft: "16px",
-    marginRight: "16px",
-  },
   logo: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     gap: "5px",
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   register: {
     backgroundColor: "#ffd434",
@@ -40,8 +39,8 @@ const styles = {
 
 function Navbar() {
   return (
-    <Box sx={styles.appBar}>
-      <AppBar>
+    <Box>
+      <AppBar position="static">
         <Toolbar sx={styles.toolbar}>
           <Typography variant="h6" component="div" sx={styles.logo}>
             <MonetizationOnIcon />
