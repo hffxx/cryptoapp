@@ -20,7 +20,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     padding: "20px 50px ",
-    margin: "20px auto",
   },
   item: {
     margin: "20px",
@@ -35,7 +34,7 @@ const styles = {
 
 function SignUp() {
   return (
-    <Grid container>
+    <Grid container sx={{ margin: "20px auto" }}>
       <Paper square elevation={4} sx={styles.paper}>
         <Typography variant="h2">Sign up</Typography>
         <FormControl>
