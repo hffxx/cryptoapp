@@ -19,10 +19,10 @@ const styles = {
   },
   paper: {
     display: "flex",
+    minWidth: "350px",
     flexDirection: "column",
     padding: "20px 50px ",
     margin: "20px auto",
-    minWidth: "350px",
   },
   item: {
     margin: "20px",
@@ -39,7 +39,7 @@ function Login() {
   return (
     <Grid container sx={styles.grid}>
       <Paper square elevation={4} sx={styles.paper}>
-        <Typography variant="h2">Login</Typography>
+        <Typography variant="h2">Register</Typography>
         <FormControl>
           <TextField
             sx={styles.item}
@@ -58,7 +58,7 @@ function Login() {
         <FormControl>
           <TextField
             sx={styles.item}
-            label="Password"
+            label="Set password"
             placeholder="Password"
             type="password"
             InputProps={{
@@ -71,20 +71,30 @@ function Login() {
             variant="standard"
           />
         </FormControl>
+        <FormControl>
+          <TextField
+            sx={styles.item}
+            label="Confirm password"
+            placeholder="Confirm password"
+            type="password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <VpnKeyIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+        </FormControl>
         <Button variant="contained" sx={styles.item}>
-          Login
+          Register
         </Button>
         <Box sx={styles.item}>
           <Typography>
-            {"Not a member? "}
+            {"Already registered? "}
             <Link underline="none" sx={styles.link}>
-              Register now
-            </Link>
-          </Typography>
-          <Typography>
-            {"Password lost? "}
-            <Link underline="none" sx={styles.link}>
-              Recover Account
+              Login
             </Link>
           </Typography>
         </Box>
