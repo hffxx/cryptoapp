@@ -35,7 +35,7 @@ const styles = {
 
 function Login() {
   return (
-    <Grid container>
+    <Grid container sx={{ padding: "10px" }}>
       <Paper square elevation={4} sx={styles.paper}>
         <Typography variant="h2">Login</Typography>
         <FormControl>
