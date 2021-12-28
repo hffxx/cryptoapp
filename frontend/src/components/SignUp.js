@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import { Link as RouterLink } from "react-router-dom";
 
 const styles = {
   grid: {
@@ -36,7 +37,7 @@ const styles = {
   },
 };
 
-function Login() {
+function SignUp() {
   return (
     <Grid container sx={styles.grid}>
       <Paper square elevation={4} sx={styles.paper}>
@@ -95,7 +96,12 @@ function Login() {
         <Box sx={styles.item}>
           <Typography>
             {"Already registered? "}
-            <Link underline="none" sx={styles.link}>
+            <Link
+              underline="hover"
+              sx={styles.link}
+              component={RouterLink}
+              to="/login"
+            >
               Login
             </Link>
           </Typography>
@@ -105,4 +111,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;

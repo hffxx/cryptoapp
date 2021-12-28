@@ -79,13 +79,13 @@ function Login() {
         <Box sx={styles.item}>
           <Typography>
             {"Not a member? "}
-            <Link underline="none" sx={styles.link}>
+            <Link underline="hover" sx={styles.link}>
               Register here
             </Link>
           </Typography>
           <Typography>
             {"Forgot your password? "}
-            <Link underline="none" sx={styles.link}>
+            <Link underline="hover" sx={styles.link}>
               Recover account
             </Link>
           </Typography>

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   logo: {
@@ -38,6 +39,10 @@ const styles = {
 };
 
 function Navbar() {
+  let navigate = useNavigate();
+  const handleClick = (route) => {
+    navigate(route);
+  };
   return (
     <Box>
       <AppBar position="static">
@@ -47,8 +52,14 @@ function Navbar() {
             Crypto Game
           </Typography>
           <Box>
-            <Button sx={styles.register}>Register</Button>
-            <Button sx={styles.login} disableRipple={true}>
+            <Button sx={styles.register} onClick={() => handleClick("/signup")}>
+              Register
+            </Button>
+            <Button
+              sx={styles.login}
+              onClick={() => handleClick("/login")}
+              disableRipple={true}
+            >
               Login
             </Button>
           </Box>
