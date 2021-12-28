@@ -47,7 +47,12 @@ function Navbar() {
     <Box>
       <AppBar position="static">
         <Toolbar sx={styles.toolbar}>
-          <Typography variant="h6" component="div" sx={styles.logo}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={styles.logo}
+            onClick={() => handleClick("/")}
+          >
             <MonetizationOnIcon />
             Crypto Game
           </Typography>

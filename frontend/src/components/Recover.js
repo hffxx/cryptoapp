@@ -12,7 +12,6 @@ import {
   Divider,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
 
 const styles = {
@@ -33,11 +32,11 @@ const styles = {
   },
 };
 
-function Login() {
+function Recover() {
   return (
     <Grid container sx={{ padding: "10px" }}>
       <Paper square elevation={4} sx={styles.paper}>
-        <Typography variant="h2">Login</Typography>
+        <Typography variant="h2">Recovery</Typography>
         <FormControl>
           <TextField
             sx={styles.item}
@@ -53,47 +52,15 @@ function Login() {
             variant="standard"
           />
         </FormControl>
-        <FormControl>
-          <TextField
-            sx={styles.item}
-            label="Password"
-            placeholder="Password"
-            type="password"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <VpnKeyIcon />
-                </InputAdornment>
-              ),
-            }}
-            variant="standard"
-          />
-        </FormControl>
         <Button variant="contained" sx={styles.item} disableRipple>
-          Login
+          Reset password
         </Button>
         <Divider />
         <Box sx={styles.item}>
           <Typography>
-            {"Not a member? "}
-            <Link
-              underline="hover"
-              sx={styles.link}
-              component={RouterLink}
-              to="/signup"
-            >
-              Register here
-            </Link>
-          </Typography>
-          <Typography>
-            {"Forgot your password? "}
-            <Link
-              underline="hover"
-              sx={styles.link}
-              component={RouterLink}
-              to="/recover"
-            >
-              Recover account
+            {"Didn't receive an email? "}
+            <Link underline="hover" sx={styles.link}>
+              Resend
             </Link>
           </Typography>
         </Box>
@@ -102,4 +69,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Recover;
