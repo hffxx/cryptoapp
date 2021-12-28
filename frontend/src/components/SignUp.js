@@ -9,6 +9,7 @@ import {
   Button,
   Link,
   Box,
+  Divider,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
@@ -90,6 +91,7 @@ function Login() {
         <Button variant="contained" sx={styles.item}>
           Register
         </Button>
+        <Divider />
         <Box sx={styles.item}>
           <Typography>
             {"Already registered? "}

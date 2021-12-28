@@ -9,6 +9,7 @@ import {
   Button,
   Link,
   Box,
+  Divider,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
@@ -74,17 +75,18 @@ function Login() {
         <Button variant="contained" sx={styles.item}>
           Login
         </Button>
+        <Divider />
         <Box sx={styles.item}>
           <Typography>
             {"Not a member? "}
             <Link underline="none" sx={styles.link}>
-              Register now
+              Register here
             </Link>
           </Typography>
           <Typography>
-            {"Password lost? "}
+            {"Forgot your password? "}
             <Link underline="none" sx={styles.link}>
-              Recover Account
+              Recover account
             </Link>
           </Typography>
         </Box>
