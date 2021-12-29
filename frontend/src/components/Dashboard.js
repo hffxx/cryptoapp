@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import Carousel from "./Carousel/Carousel";
 import Sidebar from "./Sidebar";
 import { Hidden } from "@mui/material";
 
 function Dashboard() {
+  const [isLogged, setLogin] = useState(true);
   return (
     <Grid container>
-      <Hidden smDown>
-        <Sidebar />
-      </Hidden>
-      {/* <Carousel /> */}
+      <Hidden smDown>{isLogged && <Sidebar />}</Hidden>
+      <Carousel />
     </Grid>
   );
 }
