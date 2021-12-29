@@ -17,6 +17,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const styles = {
   item: {
     padding: "20px",
+    height: "250px",
   },
   itemTitle: {
     display: "flex",
@@ -27,6 +28,7 @@ const styles = {
     width: "5%",
     margin: "25px",
   },
+  itemInfo: {},
 };
 
 function Carousel() {
@@ -84,7 +86,8 @@ function Carousel() {
                   <Typography variant="h2">{coin.name}</Typography>
                 </Box>
                 <Box sx={styles.itemInfo}>
-                  <Typography>INFO</Typography>
+                  <Typography variant="h5">{`Current Price : $${coin.current_price}`}</Typography>
+                  <Typography variant="h5">{`24h % : ${coin.price_change_percentage_24h}`}</Typography>
                 </Box>
               </Container>
             ) : null}
