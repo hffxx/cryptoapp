@@ -1,12 +1,14 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Grid } from "@mui/material";
 import Carousel from "./Carousel/Carousel";
+import Sidebar from "./Sidebar";
 
 function Dashboard() {
   return (
-    <Container>
+    <Grid container>
+      <Sidebar />
       <Carousel />
-    </Container>
+    </Grid>
   );
 }
 

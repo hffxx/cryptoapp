@@ -13,6 +13,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     gap: "5px",
+    color: "black",
     "&:hover": {
       cursor: "pointer",
     },
@@ -45,7 +46,7 @@ function Navbar() {
   };
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar elevation={0} position="static" sx={{ backgroundColor: "white" }}>
         <Toolbar sx={styles.toolbar}>
           <Typography
             variant="h6"
