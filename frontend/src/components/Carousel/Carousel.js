@@ -87,7 +87,7 @@ function Carousel() {
                     <Typography variant="h2">{coin.name}</Typography>
                   </Box>
                   <Box sx={styles.itemInfo}>
-                    <Typography variant="h5">{`Current Price : $${coin.current_price}`}</Typography>
+                    <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
                     <Typography variant="h5">{`24h : ${coin.price_change_percentage_24h}%`}</Typography>
                   </Box>
                 </Container>
@@ -95,7 +95,7 @@ function Carousel() {
             </div>
           ))
         ) : (
-          <Box sx={{ display: "flex", padding: "50px" }}>
+          <Box sx={{ display: "flex", padding: "20px" }}>
             <CircularProgress />
           </Box>
         )}

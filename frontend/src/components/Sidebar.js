@@ -16,7 +16,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 function Sidebar() {
   return (
-    <Box sx={{ width: "250px" }}>
+    <Box>
       <List
         aria-labelledby="dashboard"
         component="nav"

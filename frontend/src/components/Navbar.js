@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useNavigate } from "react-router-dom";
+import { Hidden } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const styles = {
   logo: {
@@ -57,21 +59,27 @@ function Navbar() {
             <MonetizationOnIcon />
             Crypto Game
           </Typography>
+
           <Box>
-            <Button
-              sx={styles.register}
-              onClick={() => handleClick("/signup")}
-              disableRipple
-            >
-              Register
-            </Button>
-            <Button
-              sx={styles.login}
-              onClick={() => handleClick("/login")}
-              disableRipple
-            >
-              Login
-            </Button>
+            <Hidden smDown>
+              <Button
+                sx={styles.register}
+                onClick={() => handleClick("/signup")}
+                disableRipple
+              >
+                Register
+              </Button>
+              <Button
+                sx={styles.login}
+                onClick={() => handleClick("/login")}
+                disableRipple
+              >
+                Login
+              </Button>
+            </Hidden>
+            <Hidden smUp>
+              <MenuIcon sx={{ color: "black" }} fontSize="large" />
+            </Hidden>
           </Box>
         </Toolbar>
       </AppBar>
