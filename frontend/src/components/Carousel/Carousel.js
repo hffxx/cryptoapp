@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import MobileStepper from "@mui/material/MobileStepper";
-import { Paper, Container } from "@mui/material";
+import { Card, Container } from "@mui/material";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -13,6 +13,21 @@ import { TrendingCoins } from "../../config/api";
 import { Typography } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
+const styles = {
+  item: {
+    padding: "20px",
+  },
+  itemTitle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  itemImage: {
+    width: "5%",
+    margin: "25px",
+  },
+};
 
 function Carousel() {
   const theme = useTheme();
@@ -39,21 +54,38 @@ function Carousel() {
     setActiveStep(step);
   };
   console.log(trending);
-
   return (
-    <Paper sx={{ margin: "25px" }}>
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
+        interval={4000}
       >
         {trending.map((coin, index) => (
           <div key={coin.id}>
             {Math.abs(activeStep - index) <= 2 ? (
-              <Container sx={{ backgroundColor: "red" }}>
-                <Typography variant="h2">{coin.name}</Typography>
-                <Box component="img" src={coin?.image} alt={coin.id} />
+              <Container sx={styles.item}>
+                <Box sx={styles.itemTitle}>
+                  <Box
+                    sx={styles.itemImage}
+                    component="img"
+                    src={coin?.image}
+                    alt={coin.id}
+                  />
+                  <Typography variant="h2">{coin.name}</Typography>
+                </Box>
+                <Box sx={styles.itemInfo}>
+                  <Typography>INFO</Typography>
+                </Box>
               </Container>
             ) : null}
           </div>
@@ -69,7 +101,6 @@ function Carousel() {
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
           >
-            Next
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
             ) : (
@@ -84,11 +115,10 @@ function Carousel() {
             ) : (
               <KeyboardArrowLeft />
             )}
-            Back
           </Button>
         }
       />
-    </Paper>
+    </Container>
   );
 }
 
