@@ -95,7 +95,7 @@ function Carousel() {
             </div>
           ))
         ) : (
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", padding: "50px" }}>
             <CircularProgress />
           </Box>
         )}
