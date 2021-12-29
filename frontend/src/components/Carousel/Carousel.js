@@ -10,14 +10,14 @@ import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import axios from "axios";
 import { TrendingCoins } from "../../config/api";
-import { Typography } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = {
   item: {
     padding: "20px",
-    height: "250px",
+    height: "200px",
   },
   itemTitle: {
     display: "flex",
@@ -72,27 +72,33 @@ function Carousel() {
         enableMouseEvents
         interval={4000}
       >
-        {trending.map((coin, index) => (
-          <div key={coin.id}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Container sx={styles.item}>
-                <Box sx={styles.itemTitle}>
-                  <Box
-                    sx={styles.itemImage}
-                    component="img"
-                    src={coin?.image}
-                    alt={coin.id}
-                  />
-                  <Typography variant="h2">{coin.name}</Typography>
-                </Box>
-                <Box sx={styles.itemInfo}>
-                  <Typography variant="h5">{`Current Price : $${coin.current_price}`}</Typography>
-                  <Typography variant="h5">{`24h % : ${coin.price_change_percentage_24h}`}</Typography>
-                </Box>
-              </Container>
-            ) : null}
-          </div>
-        ))}
+        {trending.length !== 0 ? (
+          trending.map((coin, index) => (
+            <div key={coin.id}>
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Container sx={styles.item}>
+                  <Box sx={styles.itemTitle}>
+                    <Box
+                      sx={styles.itemImage}
+                      component="img"
+                      src={coin?.image}
+                      alt={coin.id}
+                    />
+                    <Typography variant="h2">{coin.name}</Typography>
+                  </Box>
+                  <Box sx={styles.itemInfo}>
+                    <Typography variant="h5">{`Current Price : $${coin.current_price}`}</Typography>
+                    <Typography variant="h5">{`24h : ${coin.price_change_percentage_24h}%`}</Typography>
+                  </Box>
+                </Container>
+              ) : null}
+            </div>
+          ))
+        ) : (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        )}
       </AutoPlaySwipeableViews>
       <MobileStepper
         steps={maxSteps}
