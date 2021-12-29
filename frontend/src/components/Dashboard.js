@@ -1,11 +1,12 @@
 import React from "react";
-import Banner from "./Carousel/Banner";
+import { Container } from "@mui/material";
+import Carousel from "./Carousel/Carousel";
 
 function Dashboard() {
   return (
-    <div>
-      <Banner />
-    </div>
+    <Container>
+      <Carousel />
+    </Container>
   );
 }
 
