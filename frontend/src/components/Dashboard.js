@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid } from "@mui/material";
-import Carousel from "./Carousel/Carousel";
-import Sidebar from "./Sidebar";
-import { Hidden } from "@mui/material";
+import TableComponent from "./Table/TableComponent";
+import Banner from "./Carousel/Banner";
+import { TrendingCoins } from "../config/api";
 
 function Dashboard() {
-  const [isLogged, setLogin] = useState(true);
   return (
-    <Grid container>
-      <Hidden smDown>{isLogged && <Sidebar />}</Hidden>
-      <Carousel />
+    <Grid
+      container
+      sx={{
+        justifyContent: "center",
+        padding: "0px 50px",
+      }}
+    >
+      <Grid item>
+        <Banner title="Top coins 🔥" apiFunc={TrendingCoins} />
+      </Grid>
+      <Grid item lg>
+        <TableComponent />
+      </Grid>
     </Grid>
   );
 }

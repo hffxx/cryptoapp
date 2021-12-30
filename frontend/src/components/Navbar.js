@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useNavigate } from "react-router-dom";
-import { Hidden, Container } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
-import { SwipeableDrawer } from "@mui/material";
 import Sidebar from "./Sidebar";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import {
+  Hidden,
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+  SwipeableDrawer,
+} from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
+import MenuIcon from "@mui/icons-material/Menu";
 const styles = {
   logo: {
     display: "flex",
@@ -51,8 +53,9 @@ function Navbar() {
     navigate(route);
   };
   const [open, setOpen] = useState(false);
+  const [isLogged, setLogin] = useState(true);
   return (
-    <Box>
+    <Box sx={{ marginBottom: "20px" }}>
       <AppBar elevation={0} position="sticky" sx={{ backgroundColor: "white" }}>
         <Container maxWidth="xxl">
           <Toolbar sx={styles.toolbar} disableGutters>
@@ -66,30 +69,34 @@ function Navbar() {
               Crypto Game
             </Typography>
 
-            <Box>
-              <Hidden smDown>
-                <Button
-                  sx={styles.register}
-                  onClick={() => handleClick("/signup")}
-                  disableRipple
-                >
-                  Register
-                </Button>
-                <Button
-                  sx={styles.login}
-                  onClick={() => handleClick("/login")}
-                  disableRipple
-                >
-                  Login
-                </Button>
-              </Hidden>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {!isLogged && (
+                <Hidden smDown>
+                  <Button
+                    sx={styles.register}
+                    onClick={() => handleClick("/signup")}
+                    disableRipple
+                  >
+                    Register
+                  </Button>
+                  <Button
+                    sx={styles.login}
+                    onClick={() => handleClick("/login")}
+                    disableRipple
+                  >
+                    Login
+                  </Button>
+                </Hidden>
+              )}
               <Hidden smUp>
-                <IconButton>
-                  <MenuIcon
-                    sx={{ color: "black" }}
-                    fontSize="large"
-                    onClick={() => setOpen(true)}
-                  />
+                <IconButton onClick={() => setOpen(true)}>
+                  <MenuIcon sx={{ color: "black" }} fontSize="large" />
                 </IconButton>
               </Hidden>
             </Box>
@@ -101,12 +108,8 @@ function Navbar() {
           onOpen={() => setOpen(true)}
           onClose={() => setOpen(false)}
         >
-          <IconButton disableRipple>
-            <ChevronRightIcon
-              sx={{ color: "black" }}
-              fontSize="large"
-              onClick={() => setOpen(false)}
-            />
+          <IconButton disableRipple onClick={() => setOpen(false)}>
+            <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
           <Sidebar />
         </SwipeableDrawer>

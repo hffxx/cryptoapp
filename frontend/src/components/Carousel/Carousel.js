@@ -2,22 +2,20 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import MobileStepper from "@mui/material/MobileStepper";
-import { Card, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import axios from "axios";
-import { TrendingCoins } from "../../config/api";
-import { Typography, CircularProgress } from "@mui/material";
+import { Typography, CircularProgress, Link } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = {
   item: {
     padding: "20px",
-    height: "200px",
+    height: "260px",
   },
   itemTitle: {
     display: "flex",
@@ -25,24 +23,20 @@ const styles = {
     justifyContent: "center",
   },
   itemImage: {
-    width: "10%",
+    width: "75px",
     margin: "25px",
   },
   itemInfo: {},
 };
 
-function Carousel() {
+function Carousel({ data }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const [trending, setTrending] = useState([]);
-  const maxSteps = trending.length;
-  const fetchTrendingCoings = async () => {
-    const { data } = await axios.get(TrendingCoins());
-    setTrending(data);
-  };
+  const [coins, setCoin] = useState([]);
+  const maxSteps = coins.length;
   useEffect(() => {
-    fetchTrendingCoings();
-  }, []);
+    setCoin(data);
+  }, [data]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -55,9 +49,8 @@ function Carousel() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-  console.log(trending);
   return (
-    <Box sx={{ maxWidth: "350px", flexGrow: 1 }}>
+    <Box sx={{ maxWidth: "320px", flexGrow: 1 }}>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
@@ -65,8 +58,8 @@ function Carousel() {
         enableMouseEvents
         interval={4000}
       >
-        {trending.length !== 0 ? (
-          trending.map((coin, index) => (
+        {coins.length !== 0 ? (
+          coins.map((coin, index) => (
             <div key={coin.id}>
               {Math.abs(activeStep - index) <= 2 ? (
                 <Container sx={styles.item}>
@@ -82,20 +75,20 @@ function Carousel() {
                   <Box sx={styles.itemInfo}>
                     <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
                     <Typography variant="h5">{`24h : ${coin.price_change_percentage_24h}%`}</Typography>
+                    <Link>Buy now</Link>
                   </Box>
                 </Container>
               ) : null}
             </div>
           ))
         ) : (
-          <Box sx={{ display: "flex", padding: "20px" }}>
-            <CircularProgress />
-          </Box>
+          <CircularProgress />
         )}
       </AutoPlaySwipeableViews>
-      {trending.length !== 0 && (
+      {coins.length !== 0 && (
         <MobileStepper
           steps={maxSteps}
+          sx={{ justifyContent: "center" }}
           position="static"
           activeStep={activeStep}
           nextButton={
