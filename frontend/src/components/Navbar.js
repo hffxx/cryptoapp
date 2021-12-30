@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -6,8 +6,12 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useNavigate } from "react-router-dom";
-import { Hidden } from "@mui/material";
+import { Hidden, Container } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { IconButton } from "@mui/material";
+import { SwipeableDrawer } from "@mui/material";
+import Sidebar from "./Sidebar";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const styles = {
   logo: {
@@ -46,42 +50,66 @@ function Navbar() {
   const handleClick = (route) => {
     navigate(route);
   };
+  const [open, setOpen] = useState(false);
   return (
     <Box>
-      <AppBar elevation={0} position="static" sx={{ backgroundColor: "white" }}>
-        <Toolbar sx={styles.toolbar}>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={styles.logo}
-            onClick={() => handleClick("/")}
-          >
-            <MonetizationOnIcon />
-            Crypto Game
-          </Typography>
+      <AppBar elevation={0} position="sticky" sx={{ backgroundColor: "white" }}>
+        <Container maxWidth="xxl">
+          <Toolbar sx={styles.toolbar} disableGutters>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={styles.logo}
+              onClick={() => handleClick("/")}
+            >
+              <MonetizationOnIcon />
+              Crypto Game
+            </Typography>
 
-          <Box>
-            <Hidden smDown>
-              <Button
-                sx={styles.register}
-                onClick={() => handleClick("/signup")}
-                disableRipple
-              >
-                Register
-              </Button>
-              <Button
-                sx={styles.login}
-                onClick={() => handleClick("/login")}
-                disableRipple
-              >
-                Login
-              </Button>
-            </Hidden>
-            <Hidden smUp>
-              <MenuIcon sx={{ color: "black" }} fontSize="large" />
-            </Hidden>
-          </Box>
-        </Toolbar>
+            <Box>
+              <Hidden smDown>
+                <Button
+                  sx={styles.register}
+                  onClick={() => handleClick("/signup")}
+                  disableRipple
+                >
+                  Register
+                </Button>
+                <Button
+                  sx={styles.login}
+                  onClick={() => handleClick("/login")}
+                  disableRipple
+                >
+                  Login
+                </Button>
+              </Hidden>
+              <Hidden smUp>
+                <IconButton>
+                  <MenuIcon
+                    sx={{ color: "black" }}
+                    fontSize="large"
+                    onClick={() => setOpen(true)}
+                  />
+                </IconButton>
+              </Hidden>
+            </Box>
+          </Toolbar>
+        </Container>
+        <SwipeableDrawer
+          anchor="right"
+          open={open}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+        >
+          <IconButton disableRipple>
+            <ChevronRightIcon
+              sx={{ color: "black" }}
+              fontSize="large"
+              onClick={() => setOpen(false)}
+            />
+          </IconButton>
+          <Sidebar />
+        </SwipeableDrawer>
       </AppBar>
     </Box>
   );

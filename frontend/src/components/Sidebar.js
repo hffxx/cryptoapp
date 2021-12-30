@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -10,9 +10,8 @@ import Divider from "@mui/material/Divider";
 import LineStyleIcon from "@mui/icons-material/LineStyle";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
 import SendIcon from "@mui/icons-material/Send";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 function Sidebar() {
   return (
@@ -66,23 +65,26 @@ function Sidebar() {
             <ListItemIcon>
               <SendIcon />
             </ListItemIcon>
-            <ListItemText primary="Send mail" />
+            <ListItemText primary="Send message" />
           </ListItemButton>
         </ListItem>
+      </List>
+      <Divider />
+      <List
+        aria-labelledby="action"
+        component="nav"
+        subheader={
+          <ListSubheader component="div" id="action">
+            Action
+          </ListSubheader>
+        }
+      >
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <DraftsIcon />
+              <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="Drafts" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
+            <ListItemText primary="Logout" />
           </ListItemButton>
         </ListItem>
       </List>
