@@ -57,7 +57,7 @@ function Carousel() {
   };
   console.log(trending);
   return (
-    <Box sx={{ maxWidth: "1200px", flexGrow: 1 }}>
+    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
@@ -89,9 +89,7 @@ function Carousel() {
             </div>
           ))
         ) : (
-          <Box sx={{ display: "flex", padding: "20px" }}>
-            <CircularProgress />
-          </Box>
+          <CircularProgress />
         )}
       </AutoPlaySwipeableViews>
       {trending.length !== 0 && (

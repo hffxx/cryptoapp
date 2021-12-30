@@ -69,8 +69,14 @@ function Navbar() {
               Crypto Game
             </Typography>
 
-            <Box>
-              {!isLogged && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {!isLogged ? (
                 <Hidden smDown>
                   <Button
                     sx={styles.register}
@@ -87,6 +93,10 @@ function Navbar() {
                     Login
                   </Button>
                 </Hidden>
+              ) : (
+                <Typography variant="h5" sx={{ color: "black" }}>
+                  test user123
+                </Typography>
               )}
               <Hidden smUp>
                 <IconButton>

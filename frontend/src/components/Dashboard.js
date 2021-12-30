@@ -1,14 +1,24 @@
-import React, { useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import React from "react";
+import { Grid } from "@mui/material";
 import Carousel from "./Carousel/Carousel";
-import Sidebar from "./Sidebar";
-import { Hidden } from "@mui/material";
+import TableComponent from "./Table/TableComponent";
 
 function Dashboard() {
-  const [isLogged, setLogin] = useState(true);
   return (
-    <Grid container>
-      <Carousel />
+    <Grid
+      container
+      sx={{
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "0px 50px",
+      }}
+    >
+      <Grid item>
+        <Carousel />
+      </Grid>
+      <Grid item lg>
+        <TableComponent />
+      </Grid>
     </Grid>
   );
 }
