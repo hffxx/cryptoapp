@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@mui/material";
 import { SwipeableDrawer } from "@mui/material";
 import Sidebar from "./Sidebar";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const styles = {
   logo: {
@@ -49,6 +50,7 @@ function Navbar() {
   const handleClick = (route) => {
     navigate(route);
   };
+  const [open, setOpen] = useState(false);
   return (
     <Box>
       <AppBar elevation={0} position="sticky" sx={{ backgroundColor: "white" }}>
@@ -83,13 +85,29 @@ function Navbar() {
               </Hidden>
               <Hidden smUp>
                 <IconButton>
-                  <MenuIcon sx={{ color: "black" }} fontSize="large" />
+                  <MenuIcon
+                    sx={{ color: "black" }}
+                    fontSize="large"
+                    onClick={() => setOpen(true)}
+                  />
                 </IconButton>
               </Hidden>
             </Box>
           </Toolbar>
         </Container>
-        <SwipeableDrawer anchor="right" open={false}>
+        <SwipeableDrawer
+          anchor="right"
+          open={open}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+        >
+          <IconButton disableRipple>
+            <ChevronRightIcon
+              sx={{ color: "black" }}
+              fontSize="large"
+              onClick={() => setOpen(false)}
+            />
+          </IconButton>
           <Sidebar />
         </SwipeableDrawer>
       </AppBar>

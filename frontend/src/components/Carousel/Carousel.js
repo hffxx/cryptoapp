@@ -25,7 +25,7 @@ const styles = {
     justifyContent: "center",
   },
   itemImage: {
-    width: "5%",
+    width: "10%",
     margin: "25px",
   },
   itemInfo: {},
@@ -57,14 +57,7 @@ function Carousel() {
   };
   console.log(trending);
   return (
-    <Container
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
-    >
+    <Box sx={{ maxWidth: "350px", flexGrow: 1 }}>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
@@ -84,7 +77,7 @@ function Carousel() {
                       src={coin?.image}
                       alt={coin.id}
                     />
-                    <Typography variant="h2">{coin.name}</Typography>
+                    <Typography variant="h4">{coin.name}</Typography>
                   </Box>
                   <Box sx={styles.itemInfo}>
                     <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
@@ -133,7 +126,7 @@ function Carousel() {
           }
         />
       )}
-    </Container>
+    </Box>
   );
 }
 
