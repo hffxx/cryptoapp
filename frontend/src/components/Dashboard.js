@@ -6,12 +6,7 @@ import { Hidden } from "@mui/material";
 
 function Dashboard() {
   const [isLogged, setLogin] = useState(true);
-  return (
-    <Grid container>
-      <Hidden smDown>{isLogged && <Sidebar />}</Hidden>
-      <Carousel />
-    </Grid>
-  );
+  return <Grid container>{<Carousel />}</Grid>;
 }
 
 export default Dashboard;

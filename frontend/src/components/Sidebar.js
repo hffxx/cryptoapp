@@ -65,7 +65,7 @@ function Sidebar() {
             <ListItemIcon>
               <SendIcon />
             </ListItemIcon>
-            <ListItemText primary="Send message" />
+            <ListItemText primary="Messages" />
           </ListItemButton>
         </ListItem>
       </List>

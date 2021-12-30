@@ -51,6 +51,7 @@ function Navbar() {
     navigate(route);
   };
   const [open, setOpen] = useState(false);
+  const [isLogged, setLogin] = useState(true);
   return (
     <Box>
       <AppBar elevation={0} position="sticky" sx={{ backgroundColor: "white" }}>
@@ -67,22 +68,24 @@ function Navbar() {
             </Typography>
 
             <Box>
-              <Hidden smDown>
-                <Button
-                  sx={styles.register}
-                  onClick={() => handleClick("/signup")}
-                  disableRipple
-                >
-                  Register
-                </Button>
-                <Button
-                  sx={styles.login}
-                  onClick={() => handleClick("/login")}
-                  disableRipple
-                >
-                  Login
-                </Button>
-              </Hidden>
+              {!isLogged && (
+                <Hidden smDown>
+                  <Button
+                    sx={styles.register}
+                    onClick={() => handleClick("/signup")}
+                    disableRipple
+                  >
+                    Register
+                  </Button>
+                  <Button
+                    sx={styles.login}
+                    onClick={() => handleClick("/login")}
+                    disableRipple
+                  >
+                    Login
+                  </Button>
+                </Hidden>
+              )}
               <Hidden smUp>
                 <IconButton>
                   <MenuIcon
