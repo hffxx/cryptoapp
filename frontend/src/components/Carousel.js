@@ -52,16 +52,16 @@ function Carousel({ data, title }) {
   return (
     <Container sx={{ marginBottom: "50px" }}>
       <Typography variant="h3">{title}</Typography>
-      <Box sx={{ maxWidth: "320px", flexGrow: 1 }}>
-        <AutoPlaySwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
-          interval={4000}
-        >
-          {coins.length !== 0 ? (
-            coins.map((coin, index) => (
+      {coins.length !== 0 ? (
+        <Box sx={{ maxWidth: "320px", flexGrow: 1 }}>
+          <AutoPlaySwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+            interval={4000}
+          >
+            {coins.map((coin, index) => (
               <div key={coin.id}>
                 {Math.abs(activeStep - index) <= 2 ? (
                   <Container sx={styles.item}>
@@ -82,46 +82,46 @@ function Carousel({ data, title }) {
                   </Container>
                 ) : null}
               </div>
-            ))
-          ) : (
-            <CircularProgress />
+            ))}
+          </AutoPlaySwipeableViews>
+          {coins.length !== 0 && (
+            <MobileStepper
+              steps={maxSteps}
+              sx={{ justifyContent: "center" }}
+              position="static"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={activeStep === maxSteps - 1}
+                >
+                  {theme.direction === "rtl" ? (
+                    <KeyboardArrowLeft />
+                  ) : (
+                    <KeyboardArrowRight />
+                  )}
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                >
+                  {theme.direction === "rtl" ? (
+                    <KeyboardArrowRight />
+                  ) : (
+                    <KeyboardArrowLeft />
+                  )}
+                </Button>
+              }
+            />
           )}
-        </AutoPlaySwipeableViews>
-        {coins.length !== 0 && (
-          <MobileStepper
-            steps={maxSteps}
-            sx={{ justifyContent: "center" }}
-            position="static"
-            activeStep={activeStep}
-            nextButton={
-              <Button
-                size="small"
-                onClick={handleNext}
-                disabled={activeStep === maxSteps - 1}
-              >
-                {theme.direction === "rtl" ? (
-                  <KeyboardArrowLeft />
-                ) : (
-                  <KeyboardArrowRight />
-                )}
-              </Button>
-            }
-            backButton={
-              <Button
-                size="small"
-                onClick={handleBack}
-                disabled={activeStep === 0}
-              >
-                {theme.direction === "rtl" ? (
-                  <KeyboardArrowRight />
-                ) : (
-                  <KeyboardArrowLeft />
-                )}
-              </Button>
-            }
-          />
-        )}
-      </Box>
+        </Box>
+      ) : (
+        <CircularProgress />
+      )}
     </Container>
   );
 }
