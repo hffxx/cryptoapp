@@ -17,7 +17,11 @@ function App() {
       <Box sx={{ display: "flex" }}>
         <Hidden smDown>{isLogged && <Sidebar />}</Hidden>
         <Routes>
-          <Route path="/" exact={true} element={<Dashboard />} />
+          <Route
+            path="/"
+            exact={true}
+            element={isLogged ? <Dashboard /> : <Login />}
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/recover" element={<Recover />} />

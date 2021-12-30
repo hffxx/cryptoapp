@@ -55,7 +55,7 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLogged, setLogin] = useState(true);
   return (
-    <Box>
+    <Box sx={{ marginBottom: "20px" }}>
       <AppBar elevation={0} position="sticky" sx={{ backgroundColor: "white" }}>
         <Container maxWidth="xxl">
           <Toolbar sx={styles.toolbar} disableGutters>
@@ -76,7 +76,7 @@ function Navbar() {
                 justifyContent: "center",
               }}
             >
-              {!isLogged ? (
+              {!isLogged && (
                 <Hidden smDown>
                   <Button
                     sx={styles.register}
@@ -93,18 +93,10 @@ function Navbar() {
                     Login
                   </Button>
                 </Hidden>
-              ) : (
-                <Typography variant="h5" sx={{ color: "black" }}>
-                  test user123
-                </Typography>
               )}
               <Hidden smUp>
-                <IconButton>
-                  <MenuIcon
-                    sx={{ color: "black" }}
-                    fontSize="large"
-                    onClick={() => setOpen(true)}
-                  />
+                <IconButton onClick={() => setOpen(true)}>
+                  <MenuIcon sx={{ color: "black" }} fontSize="large" />
                 </IconButton>
               </Hidden>
             </Box>
@@ -116,12 +108,8 @@ function Navbar() {
           onOpen={() => setOpen(true)}
           onClose={() => setOpen(false)}
         >
-          <IconButton disableRipple>
-            <ChevronRightIcon
-              sx={{ color: "black" }}
-              fontSize="large"
-              onClick={() => setOpen(false)}
-            />
+          <IconButton disableRipple onClick={() => setOpen(false)}>
+            <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
           <Sidebar />
         </SwipeableDrawer>
