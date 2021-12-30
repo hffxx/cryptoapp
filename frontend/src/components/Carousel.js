@@ -29,14 +29,10 @@ const styles = {
   itemInfo: {},
 };
 
-function Carousel({ data, title }) {
+function Carousel({ coins, title }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const [coins, setCoin] = useState([]);
   const maxSteps = coins.length;
-  useEffect(() => {
-    setCoin(data);
-  }, [data]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

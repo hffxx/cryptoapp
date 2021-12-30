@@ -23,9 +23,9 @@ function Dashboard() {
       }}
     >
       <Grid item>
-        <Carousel title="🔥 Top Coins" data={data} />
-        <Carousel title="💪 Top Gainers" data={data} />
-        <Carousel title="🕓 New Coins" data={data} />
+        <Carousel title="🔥 Top Coins" coins={data} />
+        <Carousel title="💪 Top Gainers" coins={data} />
+        <Carousel title="🕓 New Coins" coins={data} />
       </Grid>
       <Grid item lg>
         <TableComponent />
