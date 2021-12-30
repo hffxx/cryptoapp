@@ -50,7 +50,7 @@ function Carousel({ data, title }) {
     setActiveStep(step);
   };
   return (
-    <Container>
+    <Container sx={{ marginBottom: "50px" }}>
       <Typography variant="h3">{title}</Typography>
       <Box sx={{ maxWidth: "320px", flexGrow: 1 }}>
         <AutoPlaySwipeableViews
