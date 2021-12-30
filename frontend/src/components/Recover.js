@@ -12,7 +12,6 @@ import {
   Divider,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Link as RouterLink } from "react-router-dom";
 
 const styles = {
   paper: {

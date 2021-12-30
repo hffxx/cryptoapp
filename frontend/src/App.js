@@ -7,14 +7,14 @@ import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import Recover from "./components/Recover";
 import Sidebar from "./components/Sidebar";
-import { Hidden, Grid } from "@mui/material";
+import { Hidden, Box } from "@mui/material";
 
 function App() {
   const [isLogged, setLogin] = useState(true);
   return (
     <div className="App">
       <Navbar />
-      <div style={{ display: "flex" }}>
+      <Box sx={{ display: "flex" }}>
         <Hidden smDown>{isLogged && <Sidebar />}</Hidden>
         <Routes>
           <Route path="/" exact={true} element={<Dashboard />} />
@@ -22,7 +22,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/recover" element={<Recover />} />
         </Routes>
-      </div>
+      </Box>
     </div>
   );
 }
