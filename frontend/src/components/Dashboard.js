@@ -41,7 +41,7 @@ function Dashboard() {
         <Carousel title="📉 Top Losers" coins={biggestLosers} />
       </Grid>
       <Grid item lg>
-        {/* <TableComponent /> */}
+        <TableComponent />
       </Grid>
     </Grid>
   );
