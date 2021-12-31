@@ -15,7 +15,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const styles = {
   item: {
     padding: "20px",
-    height: "260px",
+    height: "250px",
   },
   itemTitle: {
     display: "flex",
@@ -23,10 +23,14 @@ const styles = {
     justifyContent: "center",
   },
   itemImage: {
-    width: "75px",
+    width: "50px",
     margin: "25px",
   },
-  itemInfo: {},
+  itemInfo: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100px",
+  },
 };
 
 function Carousel({ coins, title }) {
