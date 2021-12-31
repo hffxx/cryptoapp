@@ -94,6 +94,7 @@ function Carousel({ coins, title }) {
                 <Button
                   size="small"
                   onClick={handleNext}
+                  disableRipple
                   disabled={activeStep === maxSteps - 1}
                 >
                   {theme.direction === "rtl" ? (
@@ -107,6 +108,7 @@ function Carousel({ coins, title }) {
                 <Button
                   size="small"
                   onClick={handleBack}
+                  disableRipple
                   disabled={activeStep === 0}
                 >
                   {theme.direction === "rtl" ? (
