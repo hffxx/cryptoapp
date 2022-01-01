@@ -55,14 +55,18 @@ function TableComponent({ data }) {
                 <Typography>{`$${coin.current_price}`}</Typography>
               </TableCell>
               <TableCell>
-                <Box sx={{ display: "flex", color: percentColor(coin) }}>
-                  {coin.price_change_percentage_24h > 0 ? (
-                    <ArrowDropUpIcon />
-                  ) : (
-                    <ArrowDropDownIcon />
-                  )}
-                  <Typography>{`${coin.price_change_percentage_24h}%`}</Typography>
-                </Box>
+                {!!coin.price_change_percentage_24h ? (
+                  <Box sx={{ display: "flex", color: percentColor(coin) }}>
+                    {coin.price_change_percentage_24h > 0 ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
+                    <Typography>{`${coin.price_change_percentage_24h}%`}</Typography>
+                  </Box>
+                ) : (
+                  <Typography sx={{ color: "orange" }}>Data missing</Typography>
+                )}
               </TableCell>
               <TableCell>
                 <Typography>{`$${coin.market_cap}`}</Typography>
