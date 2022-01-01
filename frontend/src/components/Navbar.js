@@ -54,7 +54,7 @@ function Navbar() {
     navigate(route);
   };
   const [open, setOpen] = useState(false);
-  const [isLogged, setLogin] = useState(true);
+  const [isLogged, setLogin] = useState(false);
   return (
     <Box
       sx={{
@@ -64,7 +64,7 @@ function Navbar() {
         top: "0px",
       }}
     >
-      <AppBar elevation={0} sx={{ backgroundColor: "white" }}>
+      <AppBar elevation={1} sx={{ backgroundColor: "white" }}>
         <Container maxWidth="xxl">
           <Toolbar sx={styles.toolbar} disableGutters>
             <Typography
