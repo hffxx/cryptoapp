@@ -14,19 +14,19 @@ function Dashboard() {
   useEffect(() => {
     fetchCoins();
   }, []);
-
   const topCoins = data.slice(0, 10);
-  const biggestGainers = data
+
+  const biggestGainers = [...data]
     .sort((a, b) =>
       a.price_change_percentage_24h < b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  const biggestLosers = data
+  const biggestLosers = [...data]
     .sort((a, b) =>
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-
+  console.log(data);
   return (
     <Grid
       container
@@ -41,7 +41,7 @@ function Dashboard() {
         <Carousel title="📉 Top Losers" coins={biggestLosers} />
       </Grid>
       <Grid item lg>
-        <TableComponent />
+        <TableComponent data={data} />
       </Grid>
     </Grid>
   );
