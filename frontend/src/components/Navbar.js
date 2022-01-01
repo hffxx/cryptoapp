@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
+import { height } from "@mui/system";
 const styles = {
   logo: {
     display: "flex",
@@ -55,8 +56,15 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLogged, setLogin] = useState(true);
   return (
-    <Box sx={{ marginBottom: "20px" }}>
-      <AppBar elevation={0} position="sticky" sx={{ backgroundColor: "white" }}>
+    <Box
+      sx={{
+        marginBottom: "20px",
+        position: "sticky",
+        height: "50px",
+        top: "0px",
+      }}
+    >
+      <AppBar elevation={0} sx={{ backgroundColor: "white" }}>
         <Container maxWidth="xxl">
           <Toolbar sx={styles.toolbar} disableGutters>
             <Typography
@@ -77,7 +85,7 @@ function Navbar() {
               }}
             >
               {!isLogged && (
-                <Hidden smDown>
+                <Hidden mdDown>
                   <Button
                     sx={styles.register}
                     onClick={() => handleClick("/signup")}
@@ -94,7 +102,7 @@ function Navbar() {
                   </Button>
                 </Hidden>
               )}
-              <Hidden smUp>
+              <Hidden mdUp>
                 <IconButton onClick={() => setOpen(true)}>
                   <MenuIcon sx={{ color: "black" }} fontSize="large" />
                 </IconButton>

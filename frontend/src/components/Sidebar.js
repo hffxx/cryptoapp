@@ -17,7 +17,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 function Sidebar() {
   return (
-    <Box sx={{ position: "sticky", top: "20px", height: "100vh" }}>
+    <Box
+      sx={{ position: "sticky", top: "70px", height: "100vh", width: "200px" }}
+    >
       <List
         aria-labelledby="dashboard"
         component="nav"
