@@ -26,7 +26,6 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  console.log(data);
   return (
     <Grid
       container

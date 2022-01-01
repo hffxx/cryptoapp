@@ -5,6 +5,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Box, Typography } from "@mui/material";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+const percentColor = (coin) =>
+  coin.price_change_percentage_24h > 0 ? "green" : "red";
 
 function TableComponent({ data }) {
   return (
@@ -27,15 +32,49 @@ function TableComponent({ data }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {coin.name}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: "20px",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={coin?.image}
+                    sx={{ width: "25px" }}
+                  ></Box>
+                  <Typography>{coin.name}</Typography>
+                  <Typography sx={{ color: "gray" }}>
+                    {coin.symbol.toUpperCase()}
+                  </Typography>
+                </Box>
               </TableCell>
-              <TableCell>{`$${coin.current_price}`}</TableCell>
-              <TableCell>{`${coin.price_change_percentage_24h}%`}</TableCell>
-              <TableCell>{`$${coin.market_cap}`}</TableCell>
-              <TableCell>{`$${coin.total_volume}`}</TableCell>
-              <TableCell>{`${
-                coin.circulating_supply
-              } ${coin.symbol.toUpperCase()}`}</TableCell>
+              <TableCell>
+                <Typography>{`$${coin.current_price}`}</Typography>
+              </TableCell>
+              <TableCell>
+                <Box sx={{ display: "flex", color: percentColor(coin) }}>
+                  {coin.price_change_percentage_24h > 0 ? (
+                    <ArrowDropUpIcon />
+                  ) : (
+                    <ArrowDropDownIcon />
+                  )}
+                  <Typography>{`${coin.price_change_percentage_24h}%`}</Typography>
+                </Box>
+              </TableCell>
+              <TableCell>
+                <Typography>{`$${coin.market_cap}`}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{`$${coin.total_volume}`}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{`${
+                  coin.circulating_supply
+                } ${coin.symbol.toUpperCase()}`}</Typography>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
