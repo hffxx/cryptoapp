@@ -11,6 +11,9 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
 
+const dataMissing = (
+  <Typography sx={{ color: "orange" }}>Data missing</Typography>
+);
 function TableComponent({ data }) {
   return (
     <TableContainer>
@@ -52,7 +55,11 @@ function TableComponent({ data }) {
                 </Box>
               </TableCell>
               <TableCell>
-                <Typography>{`$${coin.current_price}`}</Typography>
+                {!!coin.current_price ? (
+                  <Typography>{`$${coin.current_price}`}</Typography>
+                ) : (
+                  dataMissing
+                )}
               </TableCell>
               <TableCell>
                 {!!coin.price_change_percentage_24h ? (
@@ -65,7 +72,7 @@ function TableComponent({ data }) {
                     <Typography>{`${coin.price_change_percentage_24h}%`}</Typography>
                   </Box>
                 ) : (
-                  <Typography sx={{ color: "orange" }}>Data missing</Typography>
+                  dataMissing
                 )}
               </TableCell>
               <TableCell>

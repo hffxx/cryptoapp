@@ -17,12 +17,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 function Sidebar() {
   return (
-    <Box>
+    <Box sx={{ position: "sticky", top: "20px", height: "100vh" }}>
       <List
         aria-labelledby="dashboard"
         component="nav"
         subheader={
-          <ListSubheader component="div" id="dashboard">
+          <ListSubheader component="div" id="dashboard" disableSticky>
             Dashboard
           </ListSubheader>
         }
@@ -57,7 +57,7 @@ function Sidebar() {
         aria-labelledby="inbox"
         component="nav"
         subheader={
-          <ListSubheader component="div" id="inbox">
+          <ListSubheader component="div" id="inbox" disableSticky>
             Inbox
           </ListSubheader>
         }
@@ -76,7 +76,7 @@ function Sidebar() {
         aria-labelledby="action"
         component="nav"
         subheader={
-          <ListSubheader component="div" id="action">
+          <ListSubheader component="div" id="action" disableSticky>
             Action
           </ListSubheader>
         }
