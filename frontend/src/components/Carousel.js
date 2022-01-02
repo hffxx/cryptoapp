@@ -15,7 +15,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const styles = {
   item: {
     padding: "20px",
-    height: "250px",
+    height: "260px",
   },
   itemTitle: {
     display: "flex",

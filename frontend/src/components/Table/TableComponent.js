@@ -92,6 +92,37 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
       </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Test1
+              </Typography>
+              <Table size="small" aria-label="test">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Test</TableCell>
+                    <TableCell>Test</TableCell>
+                    <TableCell align="right">Test</TableCell>
+                    <TableCell align="right">Test</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow key={coin.id}>
+                    <TableCell component="th" scope="row">
+                      {coin.name}
+                    </TableCell>
+                    <TableCell>{coin.name}</TableCell>
+                    <TableCell align="right">{coin.name}</TableCell>
+                    <TableCell align="right">{coin.name}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
     </>
   );
 }
