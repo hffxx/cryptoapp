@@ -51,10 +51,18 @@ function Carousel({ coins, title }) {
     setActiveStep(step);
   };
   return (
-    <Container sx={{ marginBottom: "50px" }}>
+    <Box
+      sx={{
+        marginBottom: "50px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="h3">{title}</Typography>
       {coins.length !== 0 ? (
-        <Box sx={{ maxWidth: "320px", flexGrow: 1 }}>
+        <Box sx={{ width: "500px" }}>
           <AutoPlaySwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={activeStep}
@@ -130,7 +138,7 @@ function Carousel({ coins, title }) {
       ) : (
         <CircularProgress />
       )}
-    </Container>
+    </Box>
   );
 }
 

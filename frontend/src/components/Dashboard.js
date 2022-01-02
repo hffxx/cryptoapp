@@ -26,7 +26,6 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  console.log(data);
   return (
     <Grid
       container
@@ -36,7 +35,11 @@ function Dashboard() {
         marginTop: "20px",
       }}
     >
-      <Grid item sx={{ position: "sticky", top: "90px", height: "100vh" }}>
+      <Grid
+        item
+        lg
+        sx={{ display: "flex", justifyContent: "center", gap: "75px" }}
+      >
         <Carousel title="🔥 Top Coins" coins={topCoins} />
         <Carousel title="💪 Top Gainers" coins={biggestGainers} />
         <Carousel title="📉 Top Losers" coins={biggestLosers} />
