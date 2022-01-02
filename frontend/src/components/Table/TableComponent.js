@@ -85,13 +85,13 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
         <TableCell>
-          <Box sx={{ width: "200px" }}>
+          <Box>
             <Typography>{`${
               coin.circulating_supply
             } ${coin.symbol.toUpperCase()}`}</Typography>
             {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
               <Tooltip
-                title={`${(
+                title={`Percentage: ${(
                   (coin.circulating_supply / coin.max_supply) *
                   100
                 ).toFixed(2)}%`}
