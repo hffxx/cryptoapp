@@ -32,9 +32,10 @@ function Dashboard() {
       sx={{
         justifyContent: "center",
         padding: "0px 50px",
+        marginTop: "20px",
       }}
     >
-      <Grid item>
+      <Grid item sx={{ position: "sticky", top: "90px", height: "100vh" }}>
         <Carousel title="🔥 Top Coins" coins={topCoins} />
         <Carousel title="💪 Top Gainers" coins={biggestGainers} />
         <Carousel title="📉 Top Losers" coins={biggestLosers} />

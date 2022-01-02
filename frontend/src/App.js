@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Box sx={{ display: "flex" }}>
-        <Hidden smDown>{isLogged && <Sidebar />}</Hidden>
+        <Hidden mdDown>{isLogged && <Sidebar />}</Hidden>
         <Routes>
           <Route
             path="/"
