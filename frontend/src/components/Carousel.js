@@ -8,7 +8,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import { Typography, CircularProgress, Link } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 

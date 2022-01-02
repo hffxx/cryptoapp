@@ -54,7 +54,7 @@ function Navbar() {
     navigate(route);
   };
   const [open, setOpen] = useState(false);
-  const [isLogged, setLogin] = useState(false);
+  const [isLogged, setLogin] = useState(true);
   return (
     <Box
       sx={{
