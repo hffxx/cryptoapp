@@ -23,8 +23,8 @@ const styles = {
     justifyContent: "center",
   },
   itemImage: {
-    width: "50px",
-    margin: "25px",
+    width: "40px",
+    margin: "20px",
   },
   itemInfo: {
     display: "flex",
