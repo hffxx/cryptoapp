@@ -11,7 +11,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LinearProgress from "@mui/material/LinearProgress";
-import { height } from "@mui/system";
+import Tooltip from "@mui/material/Tooltip";
 
 const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
@@ -85,19 +85,26 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
         <TableCell>
-          <Box>
+          <Box sx={{ width: "200px" }}>
             <Typography>{`${
               coin.circulating_supply
             } ${coin.symbol.toUpperCase()}`}</Typography>
-            {!!coin.max_supply &&
-              coin.circulating_supply !== coin.max_supply && (
+            {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
+              <Tooltip
+                title={`${(
+                  (coin.circulating_supply / coin.max_supply) *
+                  100
+                ).toFixed(2)}%`}
+                arrow
+              >
                 <LinearProgress
                   sx={{ width: "150px", height: "5px", borderRadius: "2px" }}
                   variant="determinate"
                   value={(coin.circulating_supply / coin.max_supply) * 100}
                   color="inherit"
                 ></LinearProgress>
-              )}
+              </Tooltip>
+            )}
           </Box>
         </TableCell>
       </TableRow>
