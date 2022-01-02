@@ -29,6 +29,7 @@ const styles = {
   itemInfo: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     height: "100px",
   },
 };
@@ -77,7 +78,12 @@ function Carousel({ coins, title }) {
                     <Box sx={styles.itemInfo}>
                       <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
                       <Typography variant="h5">{`24h : ${coin.price_change_percentage_24h}%`}</Typography>
-                      <Link>Buy now</Link>
+                      <Button
+                        disableRipple
+                        sx={{ width: "50%", marginTop: "20px" }}
+                      >
+                        💰 Buy now
+                      </Button>
                     </Box>
                   </Container>
                 ) : null}
