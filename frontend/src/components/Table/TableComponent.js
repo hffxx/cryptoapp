@@ -13,7 +13,6 @@ import {
   IconButton,
   Hidden,
   TablePagination,
-  Paper,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -233,7 +232,7 @@ function TablePaginationComponent({
     <TablePagination
       rowsPerPageOptions={[5, 10, 25]}
       count={rows.length}
-      component={Paper}
+      component={Box}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}

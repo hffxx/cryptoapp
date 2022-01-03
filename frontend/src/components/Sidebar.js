@@ -19,8 +19,6 @@ function Sidebar() {
   return (
     <Box
       sx={{
-        position: "sticky",
-        top: "70px",
         height: "100vh",
         width: "200px",
       }}
