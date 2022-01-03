@@ -29,12 +29,7 @@ function Sidebar() {
         aria-labelledby="dashboard"
         component="nav"
         subheader={
-          <ListSubheader
-            component="div"
-            id="dashboard"
-            disableSticky
-            disablePadding
-          >
+          <ListSubheader component="div" id="dashboard" disableSticky>
             Dashboard
           </ListSubheader>
         }

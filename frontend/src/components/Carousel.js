@@ -62,7 +62,7 @@ function Carousel({ coins, title }) {
     >
       <Typography variant="h3">{title}</Typography>
       {coins.length !== 0 ? (
-        <Box sx={{ width: "500px" }}>
+        <Box sx={{ width: "300px" }}>
           <AutoPlaySwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={activeStep}

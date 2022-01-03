@@ -5,7 +5,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, Typography, Grid, Collapse, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  Collapse,
+  IconButton,
+  Hidden,
+} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -34,9 +41,11 @@ function Row({ coin }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>
-          <Typography>{coin.market_cap_rank}</Typography>
-        </TableCell>
+        <Hidden lgDown>
+          <TableCell>
+            <Typography>{coin.market_cap_rank}</Typography>
+          </TableCell>
+        </Hidden>
         <TableCell component="th" scope="row">
           <Box
             sx={{
@@ -48,7 +57,7 @@ function Row({ coin }) {
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
             <Typography>{coin.name}</Typography>
-            <Typography sx={{ color: "gray" }}>
+            <Typography variant="subtitle2" sx={{ color: "gray" }}>
               {coin.symbol.toUpperCase()}
             </Typography>
           </Box>
@@ -145,12 +154,14 @@ function Row({ coin }) {
 
 function TableComponent({ data }) {
   return (
-    <TableContainer>
+    <TableContainer sx={{ overflowX: "auto" }}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>#</TableCell>
+            <Hidden lgDown>
+              <TableCell>#</TableCell>
+            </Hidden>
             <TableCell>Name</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>24h %</TableCell>
