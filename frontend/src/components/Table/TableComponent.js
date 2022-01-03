@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -30,6 +30,14 @@ const dataMissing = (
 
 function Row({ coin }) {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    function handleCloseCollapse() {
+      if (window.innerWidth >= 900) {
+        setOpen(false);
+      }
+    }
+    window.addEventListener("resize", handleCloseCollapse);
+  }, []);
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -234,9 +242,14 @@ function TablePaginationComponent({
 }) {
   return (
     <TablePagination
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       rowsPerPageOptions={[5, 10, 25]}
+      component="div"
       count={rows.length}
-      component={Box}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}
