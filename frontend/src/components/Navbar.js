@@ -59,10 +59,7 @@ function Navbar() {
     <Box
       sx={{
         marginBottom: "20px",
-        position: "sticky",
         height: "50px",
-        top: "0px",
-        zIndex: 1,
       }}
     >
       <AppBar elevation={1} sx={{ backgroundColor: "white" }}>

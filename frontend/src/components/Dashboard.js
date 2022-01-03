@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Box, CircularProgress, Typography } from "@mui/material";
+import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import { CoinList } from "../config/api";
@@ -26,6 +26,7 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
+
   return data.length === 0 ? (
     <Box
       sx={{
@@ -48,18 +49,23 @@ function Dashboard() {
         justifyContent: "center",
         padding: "0px 50px",
         marginTop: "20px",
+        "@media only screen and (max-width: 1200px)": {
+          padding: "10px",
+        },
       }}
     >
-      <Grid
-        item
-        lg
-        sx={{ display: "flex", justifyContent: "center", gap: "75px" }}
-      >
-        <Carousel title="🔥 Top Coins" coins={topCoins} />
-        <Carousel title="💪 Top Gainers" coins={biggestGainers} />
-        <Carousel title="📉 Top Losers" coins={biggestLosers} />
-      </Grid>
-      <Grid item lg>
+      <Hidden xlDown>
+        <Grid
+          item
+          xs={8}
+          sx={{ display: "flex", justifyContent: "space-between", gap: "75px" }}
+        >
+          <Carousel title="🔥 Top Coins" coins={topCoins} />
+          <Carousel title="💪 Top Gainers" coins={biggestGainers} />
+          <Carousel title="📉 Top Losers" coins={biggestLosers} />
+        </Grid>
+      </Hidden>
+      <Grid item xs={12}>
         <TableComponent data={data} />
       </Grid>
     </Grid>

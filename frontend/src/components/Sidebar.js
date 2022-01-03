@@ -19,8 +19,6 @@ function Sidebar() {
   return (
     <Box
       sx={{
-        position: "sticky",
-        top: "70px",
         height: "100vh",
         width: "200px",
       }}
@@ -29,12 +27,7 @@ function Sidebar() {
         aria-labelledby="dashboard"
         component="nav"
         subheader={
-          <ListSubheader
-            component="div"
-            id="dashboard"
-            disableSticky
-            disablePadding
-          >
+          <ListSubheader component="div" id="dashboard" disableSticky>
             Dashboard
           </ListSubheader>
         }
