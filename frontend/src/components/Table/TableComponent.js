@@ -33,15 +33,17 @@ function Row({ coin }) {
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
+        <Hidden mdUp>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+        </Hidden>
         <Hidden xlDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
@@ -189,7 +191,9 @@ function TableComponent({ data }) {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell />
+            <Hidden mdUp>
+              <TableCell />
+            </Hidden>
             <Hidden xlDown>
               <TableCell>#</TableCell>
             </Hidden>
