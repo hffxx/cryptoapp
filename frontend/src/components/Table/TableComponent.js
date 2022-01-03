@@ -10,6 +10,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LinearProgress from "@mui/material/LinearProgress";
+import Tooltip from "@mui/material/Tooltip";
+
 const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
 
@@ -21,10 +24,7 @@ function Row({ coin }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <TableRow
-        key={coin.id}
-        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-      >
+      <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -34,9 +34,11 @@ function Row({ coin }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        <TableCell>
+          <Typography>{coin.market_cap_rank}</Typography>
+        </TableCell>
         <TableCell component="th" scope="row">
-          <Grid
-            item
+          <Box
             sx={{
               display: "flex",
               flexDirection: "row",
@@ -49,13 +51,11 @@ function Row({ coin }) {
             <Typography sx={{ color: "gray" }}>
               {coin.symbol.toUpperCase()}
             </Typography>
-          </Grid>
+          </Box>
         </TableCell>
         <TableCell>
           {!!coin.current_price ? (
-            <Grid item>
-              <Typography>{`$${coin.current_price}`}</Typography>
-            </Grid>
+            <Typography>{`$${coin.current_price}`}</Typography>
           ) : (
             dataMissing
           )}
@@ -85,11 +85,58 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
         <TableCell>
-          <Grid item>
+          <Box>
             <Typography>{`${
               coin.circulating_supply
             } ${coin.symbol.toUpperCase()}`}</Typography>
-          </Grid>
+            {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
+              <Tooltip
+                title={`Percentage: ${(
+                  (coin.circulating_supply / coin.max_supply) *
+                  100
+                ).toFixed(2)}%`}
+                arrow
+              >
+                <LinearProgress
+                  sx={{ width: "150px", height: "5px", borderRadius: "2px" }}
+                  variant="determinate"
+                  value={(coin.circulating_supply / coin.max_supply) * 100}
+                  color="inherit"
+                ></LinearProgress>
+              </Tooltip>
+            )}
+          </Box>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Test1
+              </Typography>
+              <Table size="small" aria-label="test">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Test</TableCell>
+                    <TableCell>Test</TableCell>
+                    <TableCell align="right">Test</TableCell>
+                    <TableCell align="right">Test</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow key={coin.id}>
+                    <TableCell component="th" scope="row">
+                      {coin.name}
+                    </TableCell>
+                    <TableCell>{coin.name}</TableCell>
+                    <TableCell align="right">{coin.name}</TableCell>
+                    <TableCell align="right">{coin.name}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
         </TableCell>
       </TableRow>
     </>
@@ -103,6 +150,7 @@ function TableComponent({ data }) {
         <TableHead>
           <TableRow>
             <TableCell />
+            <TableCell>#</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>24h %</TableCell>
@@ -113,7 +161,7 @@ function TableComponent({ data }) {
         </TableHead>
         <TableBody>
           {data.map((coin) => (
-            <Row coin={coin} />
+            <Row coin={coin} key={coin.id} />
           ))}
         </TableBody>
       </Table>

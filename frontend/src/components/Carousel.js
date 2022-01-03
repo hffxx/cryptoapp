@@ -8,14 +8,14 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import { Typography, CircularProgress, Link } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = {
   item: {
     padding: "20px",
-    height: "250px",
+    height: "260px",
   },
   itemTitle: {
     display: "flex",
@@ -23,12 +23,13 @@ const styles = {
     justifyContent: "center",
   },
   itemImage: {
-    width: "50px",
-    margin: "25px",
+    width: "40px",
+    margin: "20px",
   },
   itemInfo: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     height: "100px",
   },
 };
@@ -50,10 +51,18 @@ function Carousel({ coins, title }) {
     setActiveStep(step);
   };
   return (
-    <Container sx={{ marginBottom: "50px" }}>
+    <Box
+      sx={{
+        marginBottom: "50px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="h3">{title}</Typography>
       {coins.length !== 0 ? (
-        <Box sx={{ maxWidth: "320px", flexGrow: 1 }}>
+        <Box sx={{ width: "500px" }}>
           <AutoPlaySwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={activeStep}
@@ -77,7 +86,12 @@ function Carousel({ coins, title }) {
                     <Box sx={styles.itemInfo}>
                       <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
                       <Typography variant="h5">{`24h : ${coin.price_change_percentage_24h}%`}</Typography>
-                      <Link>Buy now</Link>
+                      <Button
+                        disableRipple
+                        sx={{ width: "50%", marginTop: "20px" }}
+                      >
+                        💰 Buy now
+                      </Button>
                     </Box>
                   </Container>
                 ) : null}
@@ -124,7 +138,7 @@ function Carousel({ coins, title }) {
       ) : (
         <CircularProgress />
       )}
-    </Container>
+    </Box>
   );
 }
 

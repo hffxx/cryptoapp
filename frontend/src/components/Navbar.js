@@ -54,7 +54,7 @@ function Navbar() {
     navigate(route);
   };
   const [open, setOpen] = useState(false);
-  const [isLogged, setLogin] = useState(false);
+  const [isLogged, setLogin] = useState(true);
   return (
     <Box
       sx={{
@@ -62,6 +62,7 @@ function Navbar() {
         position: "sticky",
         height: "50px",
         top: "0px",
+        zIndex: 1,
       }}
     >
       <AppBar elevation={1} sx={{ backgroundColor: "white" }}>

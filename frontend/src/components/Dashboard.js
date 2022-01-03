@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Box, CircularProgress, Typography } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import { CoinList } from "../config/api";
@@ -26,7 +26,22 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  return (
+  return data.length === 0 ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "50vh",
+        width: "100vw",
+        flexDirection: "column",
+        gap: "25px",
+      }}
+    >
+      <Typography>Data loading..</Typography>
+      <CircularProgress />
+    </Box>
+  ) : (
     <Grid
       container
       sx={{
@@ -35,7 +50,11 @@ function Dashboard() {
         marginTop: "20px",
       }}
     >
-      <Grid item sx={{ position: "sticky", top: "90px", height: "100vh" }}>
+      <Grid
+        item
+        lg
+        sx={{ display: "flex", justifyContent: "center", gap: "75px" }}
+      >
         <Carousel title="🔥 Top Coins" coins={topCoins} />
         <Carousel title="💪 Top Gainers" coins={biggestGainers} />
         <Carousel title="📉 Top Losers" coins={biggestLosers} />
