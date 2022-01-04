@@ -37,6 +37,7 @@ function Row({ coin }) {
       }
     }
     window.addEventListener("resize", handleCloseCollapse);
+    return () => window.removeEventListener("resize", handleCloseCollapse);
   }, []);
   return (
     <>
