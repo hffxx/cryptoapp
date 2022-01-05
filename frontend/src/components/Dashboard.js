@@ -7,9 +7,14 @@ import axios from "axios";
 
 function Dashboard() {
   const [data, setData] = useState([]);
-  const fetchCoins = async () => {
-    const data = await fetch(CoinList()).then((res) => res.json());
-    setData(data);
+  // const fetchCoins = async () => {
+  //   const data = await fetch(CoinList()).then((res) => res.json());
+  //   setData(data);
+  // };
+  const fetchCoins = () => {
+    fetch(CoinList())
+      .then((res) => res.json())
+      .then((data) => setData(data));
   };
   useEffect(() => {
     fetchCoins();
