@@ -9,6 +9,9 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import { Typography, CircularProgress } from "@mui/material";
+import { percentColor } from "./Table/TableComponent";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -62,7 +65,7 @@ function Carousel({ coins, title }) {
     >
       <Typography variant="h3">{title}</Typography>
       {coins.length !== 0 ? (
-        <Box sx={{ width: "300px" }}>
+        <Box sx={{ width: "320px" }}>
           <AutoPlaySwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={activeStep}
@@ -85,7 +88,28 @@ function Carousel({ coins, title }) {
                     </Box>
                     <Box sx={styles.itemInfo}>
                       <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
-                      <Typography variant="h5">{`24h : ${coin.price_change_percentage_24h}%`}</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: "5px",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography variant="h5">{"24h:"}</Typography>
+                        {coin.price_change_percentage_24h > 0 ? (
+                          <ArrowDropUpIcon sx={{ color: percentColor(coin) }} />
+                        ) : (
+                          <ArrowDropDownIcon
+                            sx={{ color: percentColor(coin) }}
+                          />
+                        )}
+                        <Typography
+                          variant="h5"
+                          sx={{ color: percentColor(coin) }}
+                        >
+                          {` ${coin.price_change_percentage_24h.toFixed(2)} %`}
+                        </Typography>
+                      </Box>
                       <Button
                         disableRipple
                         sx={{ width: "50%", marginTop: "20px" }}

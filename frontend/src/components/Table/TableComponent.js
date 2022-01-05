@@ -21,7 +21,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tooltip from "@mui/material/Tooltip";
 
-const percentColor = (coin) =>
+export const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
 
 const dataMissing = (
