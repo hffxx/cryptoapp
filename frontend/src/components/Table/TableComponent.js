@@ -20,6 +20,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tooltip from "@mui/material/Tooltip";
+import NumberFormat from "react-number-format";
 
 export const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
@@ -108,9 +109,14 @@ function Row({ coin }) {
           </TableCell>
           <TableCell>
             <Box>
-              <Typography>{`${
-                coin.circulating_supply
-              } ${coin.symbol.toUpperCase()}`}</Typography>
+              <Typography>
+                <NumberFormat
+                  displayType="text"
+                  suffix={` ${coin.symbol.toUpperCase()}`}
+                  value={coin.circulating_supply.toFixed()}
+                  thousandSeparator={true}
+                ></NumberFormat>
+              </Typography>
               {!!coin.max_supply &&
                 coin.circulating_supply !== coin.max_supply && (
                   <Tooltip
