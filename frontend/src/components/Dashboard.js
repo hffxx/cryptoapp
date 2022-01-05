@@ -3,14 +3,24 @@ import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import { CoinList } from "../config/api";
-import axios from "axios";
 
 function Dashboard() {
   const [data, setData] = useState([]);
   const fetchCoins = async () => {
-    const { data } = await axios.get(CoinList());
-    setData(data);
+    try {
+      let data = await fetch(CoinList());
+      let coins = await data.json();
+      setData(coins);
+    } catch (e) {
+      console.log("error", e);
+    }
   };
+  // const fetchCoins = () => {
+  //   fetch(CoinList())
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data))
+  //     .catch((e) => console.log("error", e));
+  // };
   useEffect(() => {
     fetchCoins();
   }, []);
@@ -58,7 +68,7 @@ function Dashboard() {
         <Grid
           item
           xs={8}
-          sx={{ display: "flex", justifyContent: "space-between", gap: "75px" }}
+          sx={{ display: "flex", justifyContent: "space-around", gap: "75px" }}
         >
           <Carousel title="🔥 Top Coins" coins={topCoins} />
           <Carousel title="💪 Top Gainers" coins={biggestGainers} />
