@@ -14,7 +14,8 @@ function Dashboard() {
   const fetchCoins = () => {
     fetch(CoinList())
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => setData(data))
+      .catch((e) => console.log("error", e));
   };
   useEffect(() => {
     fetchCoins();
