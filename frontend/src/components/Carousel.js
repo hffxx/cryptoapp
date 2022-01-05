@@ -87,9 +87,7 @@ function Carousel({ coins, title }) {
                       <Typography variant="h5">{coin.name}</Typography>
                     </Box>
                     <Box sx={styles.itemInfo}>
-                      <Typography variant="h5">{`Current price : $${coin.current_price.toFixed(
-                        4
-                      )}`}</Typography>
+                      <Typography variant="h5">{`Current price : $${coin.current_price}`}</Typography>
                       <Box
                         sx={{
                           display: "flex",
