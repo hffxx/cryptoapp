@@ -7,9 +7,13 @@ import { CoinList } from "../config/api";
 function Dashboard() {
   const [data, setData] = useState([]);
   const fetchCoins = async () => {
-    let data = await fetch(CoinList());
-    let coins = await data.json();
-    setData(coins);
+    try {
+      let data = await fetch(CoinList());
+      let coins = await data.json();
+      setData(coins);
+    } catch (e) {
+      console.log("error", e);
+    }
   };
   // const fetchCoins = () => {
   //   fetch(CoinList())
