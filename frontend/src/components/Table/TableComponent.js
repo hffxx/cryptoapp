@@ -96,7 +96,7 @@ function Row({ coin }) {
             dataMissing
           )}
         </TableCell>
-        <Hidden mdDown>
+        <Hidden lgDown>
           <TableCell>
             <Grid item>
               <Typography>{`$${coin.market_cap}`}</Typography>
@@ -215,7 +215,7 @@ function TableComponent({ data }) {
             <TableCell>Name</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>24h %</TableCell>
-            <Hidden mdDown>
+            <Hidden lgDown>
               <TableCell>Market Cap</TableCell>
               <TableCell>Volume</TableCell>
               <TableCell>Circulating Supply</TableCell>
