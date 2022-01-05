@@ -43,7 +43,7 @@ function Row({ coin }) {
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <Hidden mdUp>
+        <Hidden lgUp>
           <TableCell>
             <IconButton
               aria-label="expand row"
@@ -206,7 +206,7 @@ function TableComponent({ data }) {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <Hidden mdUp>
+            <Hidden lgUp>
               <TableCell />
             </Hidden>
             <Hidden xlDown>
