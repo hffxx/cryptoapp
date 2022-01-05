@@ -3,20 +3,20 @@ import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import { CoinList } from "../config/api";
-import axios from "axios";
 
 function Dashboard() {
   const [data, setData] = useState([]);
-  // const fetchCoins = async () => {
-  //   const data = await fetch(CoinList()).then((res) => res.json());
-  //   setData(data);
-  // };
-  const fetchCoins = () => {
-    fetch(CoinList())
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((e) => console.log("error", e));
+  const fetchCoins = async () => {
+    let data = await fetch(CoinList());
+    let coins = await data.json();
+    setData(coins);
   };
+  // const fetchCoins = () => {
+  //   fetch(CoinList())
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data))
+  //     .catch((e) => console.log("error", e));
+  // };
   useEffect(() => {
     fetchCoins();
   }, []);
