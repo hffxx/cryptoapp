@@ -68,7 +68,7 @@ function Dashboard() {
         <Grid
           item
           xs={8}
-          sx={{ display: "flex", justifyContent: "space-between", gap: "75px" }}
+          sx={{ display: "flex", justifyContent: "space-around", gap: "75px" }}
         >
           <Carousel title="🔥 Top Coins" coins={topCoins} />
           <Carousel title="💪 Top Gainers" coins={biggestGainers} />
