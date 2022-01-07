@@ -108,7 +108,7 @@ function Row({ coin }) {
             </Grid>
           </TableCell>
           <TableCell>
-            <Box>
+            <Grid>
               <Typography>
                 <NumberFormat
                   displayType="text"
@@ -138,34 +138,76 @@ function Row({ coin }) {
                     ></LinearProgress>
                   </Tooltip>
                 )}
-            </Box>
+            </Grid>
           </TableCell>
         </Hidden>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Test1
-              </Typography>
+            <Box p={1}>
               <Table size="small" aria-label="test">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Test</TableCell>
-                    <TableCell>Test</TableCell>
-                    <TableCell align="right">Test</TableCell>
-                    <TableCell align="right">Test</TableCell>
+                    <TableCell align="center">Test</TableCell>
+                    <TableCell align="center">Test</TableCell>
+                    <TableCell align="left" sx={{ width: "150px" }}>
+                      Circulating Supply
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow key={coin.id}>
-                    <TableCell component="th" scope="row">
-                      {coin.name}
+                  <TableRow
+                    key={coin.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="center">{coin.name}</TableCell>
+                    <TableCell align="center">{coin.name}</TableCell>
+                    <TableCell
+                      align="right"
+                      sx={{ display: "flex", margin: "0px" }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <Typography>
+                          <NumberFormat
+                            displayType="text"
+                            suffix={` ${coin.symbol.toUpperCase()}`}
+                            value={coin.circulating_supply.toFixed()}
+                            thousandSeparator={true}
+                          ></NumberFormat>
+                        </Typography>
+                        {!!coin.max_supply &&
+                          coin.circulating_supply !== coin.max_supply && (
+                            <Tooltip
+                              title={`Percentage: ${(
+                                (coin.circulating_supply / coin.max_supply) *
+                                100
+                              ).toFixed(2)}%`}
+                              arrow
+                            >
+                              <LinearProgress
+                                sx={{
+                                  width: "150px",
+                                  height: "5px",
+                                  borderRadius: "2px",
+                                }}
+                                variant="determinate"
+                                value={
+                                  (coin.circulating_supply / coin.max_supply) *
+                                  100
+                                }
+                                color="inherit"
+                              ></LinearProgress>
+                            </Tooltip>
+                          )}
+                      </Box>
                     </TableCell>
-                    <TableCell>{coin.name}</TableCell>
-                    <TableCell align="right">{coin.name}</TableCell>
-                    <TableCell align="right">{coin.name}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
