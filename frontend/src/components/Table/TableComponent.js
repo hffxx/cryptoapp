@@ -42,9 +42,14 @@ function Row({ coin }) {
   }, []);
   return (
     <>
-      <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+      <TableRow
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+          height: "65px",
+        }}
+      >
         <Hidden lgUp>
-          <TableCell>
+          <TableCell sx={{ width: "35px" }}>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -59,7 +64,7 @@ function Row({ coin }) {
             <Typography>{coin.market_cap_rank}</Typography>
           </TableCell>
         </Hidden>
-        <TableCell component="th" scope="row">
+        <TableCell>
           <Box
             sx={{
               display: "flex",
