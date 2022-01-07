@@ -33,7 +33,7 @@ function Row({ coin }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     function handleCloseCollapse() {
-      if (window.innerWidth >= 900) {
+      if (window.innerWidth >= 1200) {
         setOpen(false);
       }
     }
@@ -149,8 +149,8 @@ function Row({ coin }) {
               <Table size="small" aria-label="test">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Test</TableCell>
-                    <TableCell align="center">Test</TableCell>
+                    <TableCell align="left">Test</TableCell>
+                    <TableCell align="left">Test</TableCell>
                     <TableCell align="left" sx={{ width: "150px" }}>
                       Circulating Supply
                     </TableCell>
@@ -161,8 +161,8 @@ function Row({ coin }) {
                     key={coin.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="center">{coin.name}</TableCell>
-                    <TableCell align="center">{coin.name}</TableCell>
+                    <TableCell align="left">{coin.name}</TableCell>
+                    <TableCell align="left">{coin.name}</TableCell>
                     <TableCell
                       align="right"
                       sx={{ display: "flex", margin: "0px" }}
