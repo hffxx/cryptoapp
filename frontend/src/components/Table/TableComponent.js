@@ -90,7 +90,9 @@ function Row({ coin }) {
               ) : (
                 <ArrowDropDownIcon />
               )}
-              <Typography>{`${coin.price_change_percentage_24h}%`}</Typography>
+              <Typography>{`${coin.price_change_percentage_24h.toFixed(
+                2
+              )}%`}</Typography>
             </Grid>
           ) : (
             dataMissing
@@ -149,8 +151,9 @@ function Row({ coin }) {
               <Table size="small" aria-label="test">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left">Test</TableCell>
-                    <TableCell align="left">Test</TableCell>
+                    <TableCell align="left" sx={{ border: 0 }}></TableCell>
+                    <TableCell align="left">Market Cap</TableCell>
+                    <TableCell align="left">Volume</TableCell>
                     <TableCell align="left" sx={{ width: "150px" }}>
                       Circulating Supply
                     </TableCell>
@@ -161,8 +164,17 @@ function Row({ coin }) {
                     key={coin.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="left">{coin.name}</TableCell>
-                    <TableCell align="left">{coin.name}</TableCell>
+                    <TableCell align="left"></TableCell>
+                    <TableCell align="left">
+                      <Grid item>
+                        <Typography>{`$${coin.market_cap}`}</Typography>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Grid item>
+                        <Typography>{`$${coin.total_volume}`}</Typography>
+                      </Grid>
+                    </TableCell>
                     <TableCell
                       align="right"
                       sx={{ display: "flex", margin: "0px" }}
