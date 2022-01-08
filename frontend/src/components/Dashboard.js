@@ -3,6 +3,7 @@ import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import { CoinList } from "../config/api";
+import Sidebar from "./Sidebar";
 
 function Dashboard() {
   const [data, setData] = useState([]);
@@ -53,30 +54,33 @@ function Dashboard() {
       <CircularProgress />
     </Box>
   ) : (
-    <Grid
-      container
-      sx={{
-        justifyContent: "center",
-        padding: "0px 50px",
-        marginTop: "20px",
-        "@media only screen and (max-width: 1200px)": {
-          padding: "10px",
-        },
-      }}
-    >
-      <Hidden xlDown>
-        <Grid
-          item
-          xs={8}
-          sx={{ display: "flex", justifyContent: "space-around", gap: "75px" }}
-        >
-          <Carousel title="🔥 Top Coins" coins={topCoins} />
-          <Carousel title="💪 Top Gainers" coins={biggestGainers} />
-          <Carousel title="📉 Top Losers" coins={biggestLosers} />
+    <Grid container justify="center">
+      <Hidden mdDown>
+        <Grid item xs={1}>
+          <Sidebar />
         </Grid>
       </Hidden>
-      <Grid item xs={12}>
-        <TableComponent data={data} />
+      <Grid item xs={11}>
+        <Grid container justify="center">
+          <Hidden xlDown>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "150px",
+              }}
+            >
+              <Carousel title="🔥 Top Coins" coins={topCoins} />
+              <Carousel title="💪 Top Gainers" coins={biggestGainers} />
+              <Carousel title="📉 Top Losers" coins={biggestLosers} />
+            </Grid>
+          </Hidden>
+          <Grid item xs={12}>
+            <TableComponent data={data} />
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

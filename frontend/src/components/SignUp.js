@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Paper,
   Typography,
@@ -10,10 +10,13 @@ import {
   Link,
   Box,
   Divider,
+  Alert,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   paper: {
@@ -34,12 +37,41 @@ const styles = {
 };
 
 function SignUp() {
+  const [newUser, setNewUser] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  let navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signup } = useAuth();
+  const handleSubmit = async () => {
+    const { email, password, confirmPassword } = newUser;
+    if (password !== confirmPassword) {
+      return setError("Password do not match!");
+    }
+    try {
+      setError("");
+      setLoading(true);
+      signup(email, password);
+      setNewUser({ email: "", password: "", confirmPassword: "" });
+    } catch (e) {
+      setError("Failed to create an account!");
+    }
+    setLoading(false);
+  };
+
   return (
-    <Grid container sx={{ padding: "10px" }}>
+    <Grid
+      container
+      sx={{ padding: "10px", display: "flex", alignItems: "flex-start" }}
+    >
       <Paper elevation={4} sx={styles.paper}>
         <Typography variant="h2">Sign up</Typography>
         <FormControl>
           <TextField
+            value={newUser.email}
             sx={styles.item}
             label="Login"
             placeholder="Email adress"
@@ -51,6 +83,7 @@ function SignUp() {
               ),
             }}
             variant="standard"
+            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           />
         </FormControl>
         <FormControl>
@@ -67,6 +100,9 @@ function SignUp() {
               ),
             }}
             variant="standard"
+            onChange={(e) =>
+              setNewUser({ ...newUser, password: e.target.value })
+            }
           />
         </FormControl>
         <FormControl>
@@ -83,9 +119,19 @@ function SignUp() {
               ),
             }}
             variant="standard"
+            onChange={(e) =>
+              setNewUser({ ...newUser, confirmPassword: e.target.value })
+            }
           />
         </FormControl>
-        <Button variant="contained" sx={styles.item} disableRipple>
+        {!!error && <Alert severity="error">{error}</Alert>}
+        <Button
+          variant="contained"
+          sx={styles.item}
+          disableRipple
+          onClick={handleSubmit}
+          disabled={loading}
+        >
           Sign up
         </Button>
         <Divider />
