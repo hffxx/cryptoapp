@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Paper,
   Typography,
@@ -14,6 +14,7 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 
 const styles = {
   paper: {
@@ -34,6 +35,30 @@ const styles = {
 };
 
 function SignUp() {
+  const [newUser, setNewUser] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signup } = useAuth();
+
+  const handleSubmit = async () => {
+    const { email, password, confirmPassword } = newUser;
+    if (password !== confirmPassword) {
+      return setError("Password do not match!");
+    }
+    try {
+      setError("");
+      setLoading(true);
+      signup(email, password);
+    } catch (e) {
+      setError("Failed to create an account!");
+    }
+    setLoading(false);
+  };
+
   return (
     <Grid container sx={{ padding: "10px" }}>
       <Paper elevation={4} sx={styles.paper}>
@@ -51,6 +76,7 @@ function SignUp() {
               ),
             }}
             variant="standard"
+            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           />
         </FormControl>
         <FormControl>
@@ -67,6 +93,9 @@ function SignUp() {
               ),
             }}
             variant="standard"
+            onChange={(e) =>
+              setNewUser({ ...newUser, password: e.target.value })
+            }
           />
         </FormControl>
         <FormControl>
@@ -83,9 +112,18 @@ function SignUp() {
               ),
             }}
             variant="standard"
+            onChange={(e) =>
+              setNewUser({ ...newUser, confirmPassword: e.target.value })
+            }
           />
         </FormControl>
-        <Button variant="contained" sx={styles.item} disableRipple>
+        <Button
+          variant="contained"
+          sx={styles.item}
+          disableRipple
+          onClick={handleSubmit}
+          disabled={loading}
+        >
           Sign up
         </Button>
         <Divider />
