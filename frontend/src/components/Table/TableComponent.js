@@ -49,7 +49,7 @@ function Row({ coin }) {
         }}
       >
         <Hidden lgUp>
-          <TableCell sx={{ width: "35px" }}>
+          <TableCell sx={{ width: "px" }}>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -82,7 +82,14 @@ function Row({ coin }) {
         </TableCell>
         <TableCell>
           {!!coin.current_price ? (
-            <Typography>{`$${coin.current_price}`}</Typography>
+            <Typography>
+              <NumberFormat
+                displayType="text"
+                prefix="$"
+                value={coin.current_price}
+                thousandSeparator={true}
+              ></NumberFormat>
+            </Typography>
           ) : (
             dataMissing
           )}
@@ -106,12 +113,26 @@ function Row({ coin }) {
         <Hidden lgDown>
           <TableCell>
             <Grid item>
-              <Typography>{`$${coin.market_cap}`}</Typography>
+              <Typography>
+                <NumberFormat
+                  displayType="text"
+                  prefix="$"
+                  value={coin.market_cap.toFixed()}
+                  thousandSeparator={true}
+                ></NumberFormat>
+              </Typography>
             </Grid>
           </TableCell>
           <TableCell>
             <Grid item>
-              <Typography>{`$${coin.total_volume}`}</Typography>
+              <Typography>
+                <NumberFormat
+                  displayType="text"
+                  prefix="$"
+                  value={coin.total_volume.toFixed()}
+                  thousandSeparator={true}
+                ></NumberFormat>
+              </Typography>
             </Grid>
           </TableCell>
           <TableCell>
@@ -152,14 +173,14 @@ function Row({ coin }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box p={1}>
-              <Table size="small" aria-label="test">
+            <Box>
+              <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left" sx={{ border: 0 }}></TableCell>
-                    <TableCell align="left">Market Cap</TableCell>
-                    <TableCell align="left">Volume</TableCell>
-                    <TableCell align="left" sx={{ width: "150px" }}>
+                    <TableCell sx={{ border: 0 }}></TableCell>
+                    <TableCell>Market Cap</TableCell>
+                    <TableCell>Volume</TableCell>
+                    <TableCell sx={{ width: "150px" }}>
                       Circulating Supply
                     </TableCell>
                   </TableRow>
@@ -169,13 +190,13 @@ function Row({ coin }) {
                     key={coin.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="left"></TableCell>
-                    <TableCell align="left">
+                    <TableCell></TableCell>
+                    <TableCell>
                       <Grid item>
                         <Typography>{`$${coin.market_cap}`}</Typography>
                       </Grid>
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell>
                       <Grid item>
                         <Typography>{`$${coin.total_volume}`}</Typography>
                       </Grid>
@@ -239,10 +260,11 @@ function Row({ coin }) {
 function TableComponent({ data }) {
   const rows = data;
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
 
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(Number(e.target.value));
+
     setPage(0);
   };
   const handleChangePage = (e, newPage) => {
@@ -313,7 +335,7 @@ function TablePaginationComponent({
         alignItems: "center",
         justifyContent: "center",
       }}
-      rowsPerPageOptions={[5, 10, 25]}
+      rowsPerPageOptions={[10, 25, 50, 100, 250]}
       component="div"
       count={rows.length}
       rowsPerPage={rowsPerPage}
