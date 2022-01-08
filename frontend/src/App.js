@@ -11,19 +11,16 @@ import { Hidden, Box } from "@mui/material";
 import { AuthProvider } from "./components/contexts/AuthContext";
 
 function App() {
-  const [isLogged, setLogin] = useState(true);
   return (
     <AuthProvider>
       <div className="App">
         <Navbar />
         <Box sx={{ display: "flex" }}>
-          <Hidden mdDown>{isLogged && <Sidebar />}</Hidden>
+          <Hidden mdDown>
+            <Sidebar />
+          </Hidden>
           <Routes>
-            <Route
-              path="/"
-              exact={true}
-              element={isLogged ? <Dashboard /> : <Login />}
-            />
+            <Route path="/" exact={true} element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/recover" element={<Recover />} />

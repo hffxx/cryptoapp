@@ -16,6 +16,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   paper: {
@@ -36,7 +37,12 @@ const styles = {
 };
 
 function SignUp() {
-  const [newUser, setNewUser] = useState({});
+  const [newUser, setNewUser] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  let navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { signup } = useAuth();
@@ -49,7 +55,8 @@ function SignUp() {
       setError("");
       setLoading(true);
       signup(email, password);
-      setNewUser({});
+      setNewUser({ email: "", password: "", confirmPassword: "" });
+      navigate("/");
     } catch (e) {
       setError("Failed to create an account!");
     }
@@ -62,6 +69,7 @@ function SignUp() {
         <Typography variant="h2">Sign up</Typography>
         <FormControl>
           <TextField
+            value={newUser.email}
             sx={styles.item}
             label="Login"
             placeholder="Email adress"
