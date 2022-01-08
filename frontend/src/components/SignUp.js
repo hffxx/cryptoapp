@@ -42,8 +42,7 @@ function SignUp() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signup } = useAuth();
-
+  const { signup, currentUser } = useAuth();
   const handleSubmit = async () => {
     const { email, password, confirmPassword } = newUser;
     if (password !== confirmPassword) {
