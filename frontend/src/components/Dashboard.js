@@ -55,12 +55,12 @@ function Dashboard() {
     </Box>
   ) : (
     <Grid container justify="center">
-      <Hidden mdDown>
-        <Grid item xs={1}>
+      <Hidden xlDown>
+        <Grid item xs={2}>
           <Sidebar />
         </Grid>
       </Hidden>
-      <Grid item xs={11}>
+      <Grid item xs={10}>
         <Grid container justify="center">
           <Hidden xlDown>
             <Grid

@@ -99,7 +99,7 @@ function Navbar() {
                   </Button>
                 </Hidden>
               )}
-              <Hidden mdUp>
+              <Hidden xlUp>
                 <IconButton onClick={() => setOpen(true)}>
                   <MenuIcon sx={{ color: "black" }} fontSize="large" />
                 </IconButton>
