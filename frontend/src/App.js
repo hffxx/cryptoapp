@@ -15,9 +15,6 @@ function App() {
     <div className="App">
       <Navbar />
       <Box sx={{ display: "flex" }}>
-        <Hidden mdDown>
-          <Sidebar />
-        </Hidden>
         <AuthProvider>
           <Routes>
             <Route path="/" exact={true} element={<Dashboard />} />
