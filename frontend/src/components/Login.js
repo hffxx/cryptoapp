@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Paper,
   Typography,
@@ -10,10 +10,13 @@ import {
   Link,
   Box,
   Divider,
+  Alert,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   paper: {
@@ -34,12 +37,33 @@ const styles = {
 };
 
 function Login() {
+  let navigate = useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const handleSubmit = async () => {
+    try {
+      setError("");
+      setLoading(true);
+      await login(user.email, user.password);
+      navigate("/");
+    } catch (e) {
+      setError("Failed to login");
+    }
+  };
+
   return (
     <Grid container sx={{ padding: "10px" }}>
       <Paper elevation={4} sx={styles.paper}>
         <Typography variant="h2">Login</Typography>
         <FormControl>
           <TextField
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             sx={styles.item}
             label="Login"
             placeholder="Email adress"
@@ -56,6 +80,8 @@ function Login() {
         <FormControl>
           <TextField
             sx={styles.item}
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             label="Password"
             placeholder="Password"
             type="password"
@@ -69,6 +95,7 @@ function Login() {
             variant="standard"
           />
         </FormControl>
+        {!!error && <Alert severity="error">{error}</Alert>}
         <Button variant="contained" sx={styles.item} disableRipple>
           Login
         </Button>

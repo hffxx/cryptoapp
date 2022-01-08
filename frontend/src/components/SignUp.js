@@ -56,7 +56,7 @@ function SignUp() {
       setLoading(true);
       signup(email, password);
       setNewUser({ email: "", password: "", confirmPassword: "" });
-      navigate("/");
+      navigate("/login");
     } catch (e) {
       setError("Failed to create an account!");
     }
