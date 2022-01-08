@@ -59,7 +59,7 @@ function Row({ coin }) {
             </IconButton>
           </TableCell>
         </Hidden>
-        <Hidden xlDown>
+        <Hidden lgDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
           </TableCell>
@@ -283,41 +283,43 @@ function TableComponent({ data }) {
     handleChangePage,
   };
   return (
-    <TableContainer sx={{ overflowX: "auto" }}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <Hidden lgUp>
-              <TableCell />
-            </Hidden>
-            <Hidden xlDown>
-              <TableCell>#</TableCell>
-            </Hidden>
-            <TableCell>Name</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>24h %</TableCell>
-            <Hidden lgDown>
-              <TableCell>Market Cap</TableCell>
-              <TableCell>Volume</TableCell>
-              <TableCell>Circulating Supply</TableCell>
-            </Hidden>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((coin) => (
-              <Row coin={coin} key={coin.id} />
-            ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 75 * emptyRows }}>
-              <TableCell colSpan={6} />
+    <Box sx={{ display: "flex" }}>
+      <TableContainer sx={{ overflowX: "auto" }}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <Hidden lgUp>
+                <TableCell />
+              </Hidden>
+              <Hidden lgDown>
+                <TableCell>#</TableCell>
+              </Hidden>
+              <TableCell>Name</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>24h %</TableCell>
+              <Hidden lgDown>
+                <TableCell>Market Cap</TableCell>
+                <TableCell>Volume</TableCell>
+                <TableCell>Circulating Supply</TableCell>
+              </Hidden>
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <TablePaginationComponent {...props} />
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((coin) => (
+                <Row coin={coin} key={coin.id} />
+              ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 75 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <TablePaginationComponent {...props} />
+      </TableContainer>
+    </Box>
   );
 }
 
