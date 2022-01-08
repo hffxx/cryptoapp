@@ -51,9 +51,10 @@ function Login() {
       setLoading(true);
       await login(user.email, user.password);
       navigate("/");
-    } catch (e) {
+    } catch {
       setError("Failed to login");
     }
+    setLoading(false);
   };
 
   return (
@@ -96,7 +97,13 @@ function Login() {
           />
         </FormControl>
         {!!error && <Alert severity="error">{error}</Alert>}
-        <Button variant="contained" sx={styles.item} disableRipple>
+        <Button
+          variant="contained"
+          sx={styles.item}
+          disableRipple
+          onClick={handleSubmit}
+          disabled={loading}
+        >
           Login
         </Button>
         <Divider />
