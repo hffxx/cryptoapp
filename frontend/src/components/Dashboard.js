@@ -54,14 +54,14 @@ function Dashboard() {
       <CircularProgress />
     </Box>
   ) : (
-    <Grid container justify="center">
+    <Grid container sx={{ justifyContent: "center" }}>
       <Hidden xlDown>
         <Grid item xs={1.5}>
           <Sidebar />
         </Grid>
       </Hidden>
       <Grid item xs={10.5}>
-        <Grid container justify="center">
+        <Grid container>
           <Hidden xlDown>
             <Grid
               item

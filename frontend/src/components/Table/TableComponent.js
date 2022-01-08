@@ -283,7 +283,7 @@ function TableComponent({ data }) {
     handleChangePage,
   };
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box>
       <TableContainer sx={{ overflowX: "auto" }}>
         <Table aria-label="simple table">
           <TableHead>
