@@ -56,11 +56,11 @@ function Dashboard() {
   ) : (
     <Grid container justify="center">
       <Hidden xlDown>
-        <Grid item xs={2}>
+        <Grid item xs={1.5}>
           <Sidebar />
         </Grid>
       </Hidden>
-      <Grid item xs={10}>
+      <Grid item xs={10.5}>
         <Grid container justify="center">
           <Hidden xlDown>
             <Grid
