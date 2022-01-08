@@ -12,22 +12,22 @@ import { AuthProvider } from "./components/contexts/AuthContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <div className="App">
-        <Navbar />
-        <Box sx={{ display: "flex" }}>
-          <Hidden mdDown>
-            <Sidebar />
-          </Hidden>
-          <Routes>
+    <div className="App">
+      <Navbar />
+      <Box sx={{ display: "flex" }}>
+        <Hidden mdDown>
+          <Sidebar />
+        </Hidden>
+        <Routes>
+          <AuthProvider>
             <Route path="/" exact={true} element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/recover" element={<Recover />} />
-          </Routes>
-        </Box>
-      </div>
-    </AuthProvider>
+          </AuthProvider>
+        </Routes>
+      </Box>
+    </div>
   );
 }
 
