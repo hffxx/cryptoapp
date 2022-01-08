@@ -10,6 +10,7 @@ import {
   Link,
   Box,
   Divider,
+  Alert,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
@@ -35,14 +36,10 @@ const styles = {
 };
 
 function SignUp() {
-  const [newUser, setNewUser] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [newUser, setNewUser] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signup, currentUser } = useAuth();
+  const { signup } = useAuth();
   const handleSubmit = async () => {
     const { email, password, confirmPassword } = newUser;
     if (password !== confirmPassword) {
@@ -52,6 +49,7 @@ function SignUp() {
       setError("");
       setLoading(true);
       signup(email, password);
+      setNewUser({});
     } catch (e) {
       setError("Failed to create an account!");
     }
@@ -116,6 +114,7 @@ function SignUp() {
             }
           />
         </FormControl>
+        {!!error && <Alert severity="error">{error}</Alert>}
         <Button
           variant="contained"
           sx={styles.item}
