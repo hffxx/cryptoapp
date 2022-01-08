@@ -50,9 +50,8 @@ function Login() {
       setError("");
       setLoading(true);
       await login(user.email, user.password);
-      navigate("/");
     } catch {
-      setError("Failed to login");
+      setError("Incorrect password");
     }
     setLoading(false);
   };
