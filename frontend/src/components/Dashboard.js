@@ -4,9 +4,11 @@ import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import Sidebar from "./Sidebar";
+import { useAuth } from "./contexts/AuthContext";
 
 function Dashboard() {
   const [data, setData] = useState([]);
+  const { currentUser } = useAuth();
   const fetchCoins = async () => {
     try {
       let data = await fetch(CoinList());

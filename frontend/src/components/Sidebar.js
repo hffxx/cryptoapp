@@ -77,24 +77,6 @@ function Sidebar() {
         </ListItem>
       </List>
       <Divider />
-      <List
-        aria-labelledby="action"
-        component="nav"
-        subheader={
-          <ListSubheader component="div" id="action" disableSticky>
-            Action
-          </ListSubheader>
-        }
-      >
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
-      </List>
     </Box>
   );
 }

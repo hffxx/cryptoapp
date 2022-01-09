@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useAuth } from "./contexts/AuthContext";
 const styles = {
   logo: {
     display: "flex",
@@ -48,12 +49,12 @@ const styles = {
 };
 
 function Navbar() {
+  const { currentUser } = useAuth();
   let navigate = useNavigate();
   const handleClick = (route) => {
     navigate(route);
   };
   const [open, setOpen] = useState(false);
-  const [isLogged, setLogin] = useState(true);
   return (
     <Box
       sx={{
@@ -81,8 +82,8 @@ function Navbar() {
                 justifyContent: "center",
               }}
             >
-              {!isLogged && (
-                <Hidden mdDown>
+              {!currentUser ? (
+                <Hidden xlDown>
                   <Button
                     sx={styles.register}
                     onClick={() => handleClick("/signup")}
@@ -96,6 +97,12 @@ function Navbar() {
                     disableRipple
                   >
                     Login
+                  </Button>
+                </Hidden>
+              ) : (
+                <Hidden xlDown>
+                  <Button sx={styles.register} disableRipple>
+                    Log out
                   </Button>
                 </Hidden>
               )}
