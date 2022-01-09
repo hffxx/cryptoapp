@@ -8,6 +8,7 @@ import {
   ListItemText,
   ListSubheader,
   Divider,
+  Hidden,
 } from "@mui/material";
 import LineStyleIcon from "@mui/icons-material/LineStyle";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -77,6 +78,26 @@ function Sidebar() {
         </ListItem>
       </List>
       <Divider />
+      <Hidden xlUp>
+        <List
+          aria-labelledby="action"
+          component="nav"
+          subheader={
+            <ListSubheader component="div" id="action" disableSticky>
+              Action
+            </ListSubheader>
+          }
+        >
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Hidden>
     </Box>
   );
 }
