@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { CoinList } from "../config/api";
 import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
-import { CoinList } from "../config/api";
 import Sidebar from "./Sidebar";
 
 function Dashboard() {
@@ -16,12 +16,7 @@ function Dashboard() {
       console.log("error", e);
     }
   };
-  // const fetchCoins = () => {
-  //   fetch(CoinList())
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data))
-  //     .catch((e) => console.log("error", e));
-  // };
+
   useEffect(() => {
     fetchCoins();
   }, []);
@@ -60,7 +55,7 @@ function Dashboard() {
           <Sidebar />
         </Grid>
       </Hidden>
-      <Grid item xs={10.5}>
+      <Grid item xs={10.5} mt={4}>
         <Grid container>
           <Hidden xlDown>
             <Grid
