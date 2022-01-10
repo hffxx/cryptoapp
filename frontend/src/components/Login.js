@@ -45,8 +45,8 @@ const errorsConf = {
 function Login() {
   let navigate = useNavigate();
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: "elo@wp.pl",
+    password: "123123",
   });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
