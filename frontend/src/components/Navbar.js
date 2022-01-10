@@ -49,8 +49,19 @@ const styles = {
 };
 
 function Navbar() {
-  const { currentUser } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState(null);
+  const { currentUser, logout } = useAuth();
   let navigate = useNavigate();
+  const handleLogout = async () => {
+    setError("");
+    try {
+      await logout();
+      navigate("/login");
+    } catch (e) {
+      setError("Failed to logout!");
+    }
+  };
   const handleClick = (route) => {
     navigate(route);
   };
@@ -63,7 +74,7 @@ function Navbar() {
     window.addEventListener("resize", handleCloseMenu);
     return () => window.removeEventListener("resize", handleCloseMenu);
   }, []);
-  const [open, setOpen] = useState(false);
+
   return (
     <Box
       sx={{
@@ -110,7 +121,11 @@ function Navbar() {
                 </Hidden>
               ) : (
                 <Hidden xlDown>
-                  <Button sx={styles.register} disableRipple>
+                  <Button
+                    sx={styles.register}
+                    disableRipple
+                    onClick={handleLogout}
+                  >
                     Log out
                   </Button>
                 </Hidden>
@@ -132,7 +147,7 @@ function Navbar() {
           <IconButton disableRipple onClick={() => setOpen(false)}>
             <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
-          <Sidebar />
+          <Sidebar setOpen={setOpen} />
         </SwipeableDrawer>
       </AppBar>
     </Box>

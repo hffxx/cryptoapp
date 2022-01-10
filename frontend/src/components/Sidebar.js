@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   List,
@@ -15,8 +16,23 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAuth } from "./contexts/AuthContext";
 
-function Sidebar() {
+function Sidebar({ setOpen }) {
+  const [error, setError] = useState(null);
+  const { logout } = useAuth();
+  let navigate = useNavigate();
+  const handleLogout = async () => {
+    setError("");
+    try {
+      await logout();
+      setOpen(false);
+      navigate("/login");
+    } catch (e) {
+      setError("Failed to logout!");
+      console.log(e?.message);
+    }
+  };
   return (
     <Box
       sx={{
@@ -89,7 +105,7 @@ function Sidebar() {
           }
         >
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
