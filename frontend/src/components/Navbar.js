@@ -121,6 +121,9 @@ function Navbar() {
                 </Hidden>
               ) : (
                 <Hidden xlDown>
+                  <Typography sx={{ color: "black", margin: "0px 20px" }}>
+                    {currentUser.email}
+                  </Typography>
                   <Button
                     sx={styles.register}
                     disableRipple

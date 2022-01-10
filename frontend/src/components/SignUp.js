@@ -89,6 +89,7 @@ function SignUp() {
         <FormControl>
           <TextField
             sx={styles.item}
+            value={newUser.password}
             label="Set password"
             placeholder="Password"
             type="password"
@@ -108,6 +109,7 @@ function SignUp() {
         <FormControl>
           <TextField
             sx={styles.item}
+            value={newUser.confirmPassword}
             label="Confirm password"
             placeholder="Confirm password"
             type="password"
