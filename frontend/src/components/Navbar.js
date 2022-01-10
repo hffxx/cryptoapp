@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -54,6 +54,15 @@ function Navbar() {
   const handleClick = (route) => {
     navigate(route);
   };
+  useEffect(() => {
+    function handleCloseMenu() {
+      if (window.innerWidth >= 1536) {
+        setOpen(false);
+      }
+    }
+    window.addEventListener("resize", handleCloseMenu);
+    return () => window.removeEventListener("resize", handleCloseMenu);
+  }, []);
   const [open, setOpen] = useState(false);
   return (
     <Box

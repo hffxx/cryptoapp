@@ -36,24 +36,42 @@ const styles = {
   },
 };
 
+const errorsConf = {
+  "auth/invalid-email": "login",
+};
+
 function Login() {
   let navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const handleSubmit = async () => {
     try {
-      setError("");
+      setError(null);
       setLoading(true);
       await login(user.email, user.password);
       setLoading(false);
       navigate("/");
-    } catch {
-      setError("Incorrect password");
+    } catch (e) {
+      console.log("code", e.code);
+      console.log("message", e.message);
+
+      if (errorsConf[e.code]) {
+        setError({
+          field: errorsConf[e.code],
+          message: e.message,
+        });
+      } else {
+        setError({
+          field: "any",
+          message: e.message,
+        });
+      }
+
       setLoading(false);
     }
   };
@@ -80,6 +98,8 @@ function Login() {
               ),
             }}
             variant="standard"
+            helperText={error?.field === "login" ? error.message : ""}
+            error={error?.field === "login"}
           />
         </FormControl>
         <FormControl>
@@ -100,7 +120,7 @@ function Login() {
             variant="standard"
           />
         </FormControl>
-        {!!error && <Alert severity="error">{error}</Alert>}
+        {!!error && <Alert severity="error">{error.message}</Alert>}
         <Button
           variant="contained"
           sx={styles.item}

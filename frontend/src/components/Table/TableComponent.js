@@ -284,7 +284,7 @@ function TableComponent({ data }) {
   };
   return (
     <Box>
-      <TableContainer sx={{ overflowX: "auto" }}>
+      <TableContainer>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
