@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   List,
@@ -8,14 +9,30 @@ import {
   ListItemText,
   ListSubheader,
   Divider,
+  Hidden,
 } from "@mui/material";
 import LineStyleIcon from "@mui/icons-material/LineStyle";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAuth } from "./contexts/AuthContext";
 
-function Sidebar() {
+function Sidebar({ setOpen }) {
+  const [error, setError] = useState(null);
+  const { logout } = useAuth();
+  let navigate = useNavigate();
+  const handleLogout = async () => {
+    setError("");
+    try {
+      await logout();
+      setOpen(false);
+      navigate("/login");
+    } catch (e) {
+      setError("Failed to logout!");
+      console.log(e?.message);
+    }
+  };
   return (
     <Box
       sx={{
@@ -77,24 +94,26 @@ function Sidebar() {
         </ListItem>
       </List>
       <Divider />
-      <List
-        aria-labelledby="action"
-        component="nav"
-        subheader={
-          <ListSubheader component="div" id="action" disableSticky>
-            Action
-          </ListSubheader>
-        }
-      >
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+      <Hidden xlUp>
+        <List
+          aria-labelledby="action"
+          component="nav"
+          subheader={
+            <ListSubheader component="div" id="action" disableSticky>
+              Action
+            </ListSubheader>
+          }
+        >
+          <ListItem disablePadding>
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Hidden>
     </Box>
   );
 }

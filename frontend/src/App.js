@@ -1,29 +1,37 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import Recover from "./components/Recover";
-import Sidebar from "./components/Sidebar";
-import { Hidden, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { AuthProvider } from "./components/contexts/AuthContext";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Box sx={{ display: "flex" }}>
-        <AuthProvider>
+      <AuthProvider>
+        <Navbar />
+        <Box sx={{ display: "flex" }}>
           <Routes>
-            <Route path="/" exact={true} element={<Dashboard />} />
+            <Route
+              path="/"
+              exact
+              element={
+                <AuthenticatedRoute>
+                  <Dashboard />
+                </AuthenticatedRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/recover" element={<Recover />} />
           </Routes>
-        </AuthProvider>
-      </Box>
+        </Box>
+      </AuthProvider>
     </div>
   );
 }

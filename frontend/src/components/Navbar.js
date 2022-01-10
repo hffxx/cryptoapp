@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useAuth } from "./contexts/AuthContext";
 const styles = {
   logo: {
     display: "flex",
@@ -48,12 +49,32 @@ const styles = {
 };
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState(null);
+  const { currentUser, logout } = useAuth();
   let navigate = useNavigate();
+  const handleLogout = async () => {
+    setError("");
+    try {
+      await logout();
+      navigate("/login");
+    } catch (e) {
+      setError("Failed to logout!");
+    }
+  };
   const handleClick = (route) => {
     navigate(route);
   };
-  const [open, setOpen] = useState(false);
-  const [isLogged, setLogin] = useState(true);
+  useEffect(() => {
+    function handleCloseMenu() {
+      if (window.innerWidth >= 1536) {
+        setOpen(false);
+      }
+    }
+    window.addEventListener("resize", handleCloseMenu);
+    return () => window.removeEventListener("resize", handleCloseMenu);
+  }, []);
+
   return (
     <Box
       sx={{
@@ -81,8 +102,8 @@ function Navbar() {
                 justifyContent: "center",
               }}
             >
-              {!isLogged && (
-                <Hidden mdDown>
+              {!currentUser ? (
+                <Hidden xlDown>
                   <Button
                     sx={styles.register}
                     onClick={() => handleClick("/signup")}
@@ -96,6 +117,16 @@ function Navbar() {
                     disableRipple
                   >
                     Login
+                  </Button>
+                </Hidden>
+              ) : (
+                <Hidden xlDown>
+                  <Button
+                    sx={styles.register}
+                    disableRipple
+                    onClick={handleLogout}
+                  >
+                    Log out
                   </Button>
                 </Hidden>
               )}
@@ -116,7 +147,7 @@ function Navbar() {
           <IconButton disableRipple onClick={() => setOpen(false)}>
             <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
-          <Sidebar />
+          <Sidebar setOpen={setOpen} />
         </SwipeableDrawer>
       </AppBar>
     </Box>
