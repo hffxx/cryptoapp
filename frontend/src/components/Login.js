@@ -37,7 +37,9 @@ const styles = {
 };
 
 const errorsConf = {
-  "auth/invalid-email": "login",
+  "auth/invalid-email": "Invalid email format",
+  "auth/user-not-found": "Email not registered",
+  "auth/wrong-password": "Wrong password",
 };
 
 function Login() {
@@ -57,18 +59,9 @@ function Login() {
       setLoading(false);
       navigate("/");
     } catch (e) {
-      console.log("code", e.code);
-      console.log("message", e.message);
-
       if (errorsConf[e.code]) {
         setError({
-          field: errorsConf[e.code],
-          message: e.message,
-        });
-      } else {
-        setError({
-          field: "any",
-          message: e.message,
+          message: errorsConf[e.code],
         });
       }
 
@@ -98,8 +91,6 @@ function Login() {
               ),
             }}
             variant="standard"
-            helperText={error?.field === "login" ? error.message : ""}
-            error={error?.field === "login"}
           />
         </FormControl>
         <FormControl>
