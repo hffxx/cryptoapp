@@ -8,6 +8,7 @@ import Dashboard from "./components/Dashboard";
 import Recover from "./components/Recover";
 import { Box } from "@mui/material";
 import { AuthProvider } from "./components/contexts/AuthContext";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 function App() {
   return (
@@ -16,7 +17,15 @@ function App() {
         <Navbar />
         <Box sx={{ display: "flex" }}>
           <Routes>
-            <Route path="/" exact={true} element={<Dashboard />} />
+            <Route
+              path="/"
+              exact
+              element={
+                <AuthenticatedRoute>
+                  <Dashboard />
+                </AuthenticatedRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/recover" element={<Recover />} />
