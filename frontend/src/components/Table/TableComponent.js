@@ -67,7 +67,9 @@ function Row({ coin }) {
             }}
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
-            <Typography>{coin.name}</Typography>
+            <Typography>
+              {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
+            </Typography>
             <Typography variant="subtitle2" sx={{ color: "gray" }}>
               {coin.symbol.toUpperCase()}
             </Typography>
@@ -160,7 +162,7 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
       </TableRow>
-      <TableRow>
+      {/* <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box>
@@ -246,7 +248,7 @@ function Row({ coin }) {
             </Box>
           </Collapse>
         </TableCell>
-      </TableRow>
+      </TableRow> */}
     </>
   );
 }
@@ -286,7 +288,7 @@ function TableComponent({ data }) {
                 <TableCell />
               </Hidden> */}
               <TableCell>#</TableCell>
-              <TableCell sx={{ position: "sticky", left: "0px", zIndex: 100 }}>
+              <TableCell sx={{ position: "sticky", left: "0px" }}>
                 Name
               </TableCell>
               <TableCell>Price</TableCell>
@@ -296,13 +298,7 @@ function TableComponent({ data }) {
               <TableCell>Circulating Supply</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody
-            sx={{
-              [`& .${tableCellClasses.root}`]: {
-                borderBottom: "none",
-              },
-            }}
-          >
+          <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((coin) => (
@@ -334,6 +330,8 @@ function TablePaginationComponent({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        position: "sticky",
+        left: "0px",
       }}
       rowsPerPageOptions={[10, 25, 50, 100, 250]}
       component="div"
