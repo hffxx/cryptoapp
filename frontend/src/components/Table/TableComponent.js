@@ -200,7 +200,14 @@ function TableComponent({ data }) {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        padding: "20px",
+        "@media (max-width: 600px)": {
+          padding: "0px",
+        },
+      }}
+    >
       <TableContainer>
         <Table aria-label="simple table" size="small">
           <TableHead>
