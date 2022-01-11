@@ -42,12 +42,7 @@ function Row({ coin }) {
   }, []);
   return (
     <>
-      <TableRow
-        sx={{
-          "&:last-child td, &:last-child th": { border: 0 },
-          height: "65px",
-        }}
-      >
+      <TableRow>
         <Hidden lgUp>
           <TableCell sx={{ width: "px" }}>
             <IconButton
@@ -136,7 +131,7 @@ function Row({ coin }) {
             </Grid>
           </TableCell>
           <TableCell>
-            <Grid>
+            <Grid item>
               <Typography>
                 <NumberFormat
                   displayType="text"
@@ -176,7 +171,9 @@ function Row({ coin }) {
             <Box>
               <Table>
                 <TableHead>
-                  <TableRow>
+                  <TableRow
+                    sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
+                  >
                     <TableCell sx={{ border: 0 }}></TableCell>
                     <TableCell>Market Cap</TableCell>
                     <TableCell>Volume</TableCell>
@@ -185,7 +182,9 @@ function Row({ coin }) {
                     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody
+                  sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
+                >
                   <TableRow
                     key={coin.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -304,7 +303,13 @@ function TableComponent({ data }) {
               </Hidden>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody
+            sx={{
+              [`& .${tableCellClasses.root}`]: {
+                borderBottom: "none",
+              },
+            }}
+          >
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((coin) => (
