@@ -63,7 +63,7 @@ function Row({ coin }) {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              gap: "20px",
+              gap: "10px",
             }}
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
@@ -198,16 +198,17 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
+
   return (
     <Box>
       <TableContainer>
-        <Table aria-label="simple table">
+        <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
               {/* <Hidden lgUp>
                 <TableCell />
               </Hidden> */}
-              <TableCell>#</TableCell>
+              <TableCell sx={{ width: "10px" }}>#</TableCell>
               <TableCell sx={{ position: "sticky", left: "0px" }}>
                 Name
               </TableCell>
