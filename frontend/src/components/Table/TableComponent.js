@@ -13,7 +13,7 @@ import {
   Hidden,
   TablePagination,
 } from "@mui/material";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -162,93 +162,13 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
       </TableRow>
-      {/* <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box>
-              <Table>
-                <TableHead>
-                  <TableRow
-                    sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
-                  >
-                    <TableCell></TableCell>
-                    <TableCell>Market Cap</TableCell>
-                    <TableCell>Volume</TableCell>
-                    <TableCell sx={{ width: "150px" }}>
-                      Circulating Supply
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody
-                  sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
-                >
-                  <TableRow
-                    key={coin.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell></TableCell>
-                    <TableCell>
-                      <Grid item>
-                        <Typography>{`$${coin.market_cap}`}</Typography>
-                      </Grid>
-                    </TableCell>
-                    <TableCell>
-                      <Grid item>
-                        <Typography>{`$${coin.total_volume}`}</Typography>
-                      </Grid>
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ display: "flex", margin: "0px" }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-start",
-                        }}
-                      >
-                        <Typography>
-                          <NumberFormat
-                            displayType="text"
-                            suffix={` ${coin.symbol.toUpperCase()}`}
-                            value={coin.circulating_supply.toFixed()}
-                            thousandSeparator={true}
-                          ></NumberFormat>
-                        </Typography>
-                        {!!coin.max_supply &&
-                          coin.circulating_supply !== coin.max_supply && (
-                            <Tooltip
-                              title={`Percentage: ${(
-                                (coin.circulating_supply / coin.max_supply) *
-                                100
-                              ).toFixed(2)}%`}
-                              arrow
-                            >
-                              <LinearProgress
-                                sx={{
-                                  width: "150px",
-                                  height: "5px",
-                                  borderRadius: "2px",
-                                }}
-                                variant="determinate"
-                                value={
-                                  (coin.circulating_supply / coin.max_supply) *
-                                  100
-                                }
-                                color="inherit"
-                              ></LinearProgress>
-                            </Tooltip>
-                          )}
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow> */}
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Box>{"TEst"}</Box>
+          </TableCell>
+        </TableRow>
+      </Collapse>
     </>
   );
 }
