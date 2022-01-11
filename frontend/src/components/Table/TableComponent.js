@@ -47,10 +47,19 @@ function Row({ coin }) {
       //   window.innerWidth <= 1200 && setOpen(!open);
       // }}
       >
-        <TableCell>
-          <Typography>{coin.market_cap_rank}</Typography>
-        </TableCell>
-        <TableCell sx={{ position: "sticky", left: "0px", zIndex: "100" }}>
+        <Hidden mdDown>
+          <TableCell>
+            <Typography>{coin.market_cap_rank}</Typography>
+          </TableCell>
+        </Hidden>
+        <TableCell
+          sx={{
+            position: "sticky",
+            left: "0px",
+            zIndex: "100",
+            backgroundColor: "white",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
@@ -204,8 +213,17 @@ function TableComponent({ data }) {
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              <TableCell sx={{ width: "10px" }}>#</TableCell>
-              <TableCell sx={{ position: "sticky", left: "0px" }}>
+              <Hidden mdDown>
+                <TableCell sx={{ width: "10px" }}>#</TableCell>
+              </Hidden>
+              <TableCell
+                sx={{
+                  position: "sticky",
+                  left: "0px",
+                  backgroundColor: "white",
+                  zIndex: 100,
+                }}
+              >
                 Name
               </TableCell>
               <TableCell>Price</TableCell>
