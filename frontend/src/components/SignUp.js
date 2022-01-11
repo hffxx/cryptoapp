@@ -38,7 +38,7 @@ const styles = {
 
 const errorsConf = {
   "auth/invalid-email": "Invalid email format",
-  "auth/weak-password": "Password too weak",
+  "auth/weak-password": "Password too short",
   "auth/email-already-in-use": "Email already in use",
 };
 

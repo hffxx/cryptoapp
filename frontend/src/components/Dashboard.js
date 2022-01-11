@@ -65,8 +65,7 @@ function Dashboard() {
               xs={12}
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                gap: "150px",
+                justifyContent: "space-around",
               }}
             >
               <Carousel title="🔥 Top Coins" coins={topCoins} />
