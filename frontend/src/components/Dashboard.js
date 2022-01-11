@@ -74,7 +74,9 @@ function Dashboard() {
             </Grid>
           </Hidden>
           <Hidden xlUp>
-            <Carousel title="🔥 Top Coins" coins={topCoins} />
+            <Grid item xs={12}>
+              <Carousel title="🔥 Top Coins" coins={topCoins} />
+            </Grid>
           </Hidden>
           <Grid item xs={12}>
             <TableComponent data={data} />

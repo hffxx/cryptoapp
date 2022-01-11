@@ -120,18 +120,20 @@ function Navbar() {
                   </Button>
                 </Hidden>
               ) : (
-                <Hidden xlDown>
+                <>
                   <Typography sx={{ color: "black", margin: "0px 20px" }}>
                     {currentUser.email}
                   </Typography>
-                  <Button
-                    sx={styles.register}
-                    disableRipple
-                    onClick={handleLogout}
-                  >
-                    Log out
-                  </Button>
-                </Hidden>
+                  <Hidden xlDown>
+                    <Button
+                      sx={styles.register}
+                      disableRipple
+                      onClick={handleLogout}
+                    >
+                      Log out
+                    </Button>
+                  </Hidden>
+                </>
               )}
               <Hidden xlUp>
                 <IconButton onClick={() => setOpen(true)}>
