@@ -43,9 +43,9 @@ function Row({ coin }) {
   return (
     <>
       <TableRow
-        onClick={() => {
-          window.innerWidth <= 1200 && setOpen(!open);
-        }}
+      // onClick={() => {
+      //   window.innerWidth <= 1200 && setOpen(!open);
+      // }}
       >
         <TableCell>
           <Typography>{coin.market_cap_rank}</Typography>
@@ -155,13 +155,12 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
       </TableRow>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Box>{"Click test"}</Box>
-          </TableCell>
-        </TableRow>
-      </Collapse>
+      {/* <Collapse
+        in={open}
+        timeout="auto"
+        unmountOnExit
+        onClick={() => setOpen(false)}
+      ></Collapse> */}
     </>
   );
 }
