@@ -73,6 +73,11 @@ function Dashboard() {
               <Carousel title="📉 Top Losers" coins={biggestLosers} />
             </Grid>
           </Hidden>
+          <Hidden xlUp>
+            <Grid item xs={12}>
+              <Carousel title="🔥 Top Coins" coins={topCoins} />
+            </Grid>
+          </Hidden>
           <Grid item xs={12}>
             <TableComponent data={data} />
           </Grid>
