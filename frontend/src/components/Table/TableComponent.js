@@ -43,8 +43,8 @@ function Row({ coin }) {
   return (
     <>
       <TableRow>
-        <Hidden lgUp>
-          <TableCell sx={{ width: "px" }}>
+        {/* <Hidden lgUp>
+          <TableCell>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -53,13 +53,11 @@ function Row({ coin }) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-        </Hidden>
-        <Hidden lgDown>
-          <TableCell>
-            <Typography>{coin.market_cap_rank}</Typography>
-          </TableCell>
-        </Hidden>
+        </Hidden> */}
         <TableCell>
+          <Typography>{coin.market_cap_rank}</Typography>
+        </TableCell>
+        <TableCell sx={{ position: "sticky", left: "0px", zIndex: "100" }}>
           <Box
             sx={{
               display: "flex",
@@ -105,65 +103,62 @@ function Row({ coin }) {
             dataMissing
           )}
         </TableCell>
-        <Hidden lgDown>
-          <TableCell>
-            <Grid item>
-              <Typography>
-                <NumberFormat
-                  displayType="text"
-                  prefix="$"
-                  value={coin.market_cap.toFixed()}
-                  thousandSeparator={true}
-                ></NumberFormat>
-              </Typography>
-            </Grid>
-          </TableCell>
-          <TableCell>
-            <Grid item>
-              <Typography>
-                <NumberFormat
-                  displayType="text"
-                  prefix="$"
-                  value={coin.total_volume.toFixed()}
-                  thousandSeparator={true}
-                ></NumberFormat>
-              </Typography>
-            </Grid>
-          </TableCell>
-          <TableCell>
-            <Grid item>
-              <Typography>
-                <NumberFormat
-                  displayType="text"
-                  suffix={` ${coin.symbol.toUpperCase()}`}
-                  value={coin.circulating_supply.toFixed()}
-                  thousandSeparator={true}
-                ></NumberFormat>
-              </Typography>
-              {!!coin.max_supply &&
-                coin.circulating_supply !== coin.max_supply && (
-                  <Tooltip
-                    title={`Percentage: ${(
-                      (coin.circulating_supply / coin.max_supply) *
-                      100
-                    ).toFixed(2)}%`}
-                    arrow
-                  >
-                    <LinearProgress
-                      sx={{
-                        width: "150px",
-                        height: "5px",
-                        borderRadius: "2px",
-                      }}
-                      variant="determinate"
-                      value={(coin.circulating_supply / coin.max_supply) * 100}
-                      color="inherit"
-                    ></LinearProgress>
-                  </Tooltip>
-                )}
-            </Grid>
-          </TableCell>
-        </Hidden>
+        <TableCell>
+          <Grid item>
+            <Typography>
+              <NumberFormat
+                displayType="text"
+                prefix="$"
+                value={coin.market_cap.toFixed()}
+                thousandSeparator={true}
+              ></NumberFormat>
+            </Typography>
+          </Grid>
+        </TableCell>
+        <TableCell>
+          <Grid item>
+            <Typography>
+              <NumberFormat
+                displayType="text"
+                prefix="$"
+                value={coin.total_volume.toFixed()}
+                thousandSeparator={true}
+              ></NumberFormat>
+            </Typography>
+          </Grid>
+        </TableCell>
+        <TableCell>
+          <Grid item>
+            <Typography>
+              <NumberFormat
+                displayType="text"
+                suffix={` ${coin.symbol.toUpperCase()}`}
+                value={coin.circulating_supply.toFixed()}
+                thousandSeparator={true}
+              ></NumberFormat>
+            </Typography>
+            {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
+              <Tooltip
+                title={`Percentage: ${(
+                  (coin.circulating_supply / coin.max_supply) *
+                  100
+                ).toFixed(2)}%`}
+                arrow
+              >
+                <LinearProgress
+                  sx={{
+                    width: "150px",
+                    height: "5px",
+                    borderRadius: "2px",
+                  }}
+                  variant="determinate"
+                  value={(coin.circulating_supply / coin.max_supply) * 100}
+                  color="inherit"
+                ></LinearProgress>
+              </Tooltip>
+            )}
+          </Grid>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -174,7 +169,7 @@ function Row({ coin }) {
                   <TableRow
                     sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
                   >
-                    <TableCell sx={{ border: 0 }}></TableCell>
+                    <TableCell></TableCell>
                     <TableCell>Market Cap</TableCell>
                     <TableCell>Volume</TableCell>
                     <TableCell sx={{ width: "150px" }}>
@@ -287,20 +282,18 @@ function TableComponent({ data }) {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <Hidden lgUp>
+              {/* <Hidden lgUp>
                 <TableCell />
-              </Hidden>
-              <Hidden lgDown>
-                <TableCell>#</TableCell>
-              </Hidden>
-              <TableCell>Name</TableCell>
+              </Hidden> */}
+              <TableCell>#</TableCell>
+              <TableCell sx={{ position: "sticky", left: "0px", zIndex: 100 }}>
+                Name
+              </TableCell>
               <TableCell>Price</TableCell>
               <TableCell>24h %</TableCell>
-              <Hidden lgDown>
-                <TableCell>Market Cap</TableCell>
-                <TableCell>Volume</TableCell>
-                <TableCell>Circulating Supply</TableCell>
-              </Hidden>
+              <TableCell>Market Cap</TableCell>
+              <TableCell>Volume</TableCell>
+              <TableCell>Circulating Supply</TableCell>
             </TableRow>
           </TableHead>
           <TableBody
