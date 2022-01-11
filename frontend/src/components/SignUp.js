@@ -36,6 +36,12 @@ const styles = {
   },
 };
 
+const errorsConf = {
+  "auth/invalid-email": "Invalid email format",
+  "auth/weak-password": "Password too weak",
+  "auth/email-already-in-use": "Email already in use",
+};
+
 function SignUp() {
   const [newUser, setNewUser] = useState({
     email: "",
@@ -44,20 +50,26 @@ function SignUp() {
   });
   let navigate = useNavigate();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const { signup } = useAuth();
   const handleSubmit = async () => {
     const { email, password, confirmPassword } = newUser;
     if (password !== confirmPassword) {
-      return setError("Password do not match!");
+      return setError({ message: "Password do not match!" });
     }
     try {
       setError("");
       setLoading(true);
-      signup(email, password);
+      await signup(email, password);
       setNewUser({ email: "", password: "", confirmPassword: "" });
+      setSuccess("Account created");
     } catch (e) {
-      setError("Failed to create an account!");
+      if (errorsConf[e.code]) {
+        setError({
+          message: errorsConf[e.code],
+        });
+      }
     }
     setLoading(false);
   };
@@ -126,7 +138,8 @@ function SignUp() {
             }
           />
         </FormControl>
-        {!!error && <Alert severity="error">{error}</Alert>}
+        {!!error && <Alert severity="error">{error.message}</Alert>}
+        {!!success && <Alert severity="success">{success}</Alert>}
         <Button
           variant="contained"
           sx={styles.item}
