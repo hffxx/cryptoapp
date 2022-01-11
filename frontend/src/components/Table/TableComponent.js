@@ -66,15 +66,21 @@ function Row({ coin }) {
               flexDirection: "row",
               alignItems: "center",
               gap: "10px",
+              "@media (max-width: 600px)": {
+                flexDirection: "column",
+                gap: "0px",
+              },
             }}
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
             <Typography>
               {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
             </Typography>
-            <Typography variant="subtitle2" sx={{ color: "gray" }}>
-              {coin.symbol.toUpperCase()}
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="subtitle2" sx={{ color: "gray" }}>
+                {coin.symbol.toUpperCase()}
+              </Typography>
+            </Hidden>
           </Box>
         </TableCell>
         <TableCell>
