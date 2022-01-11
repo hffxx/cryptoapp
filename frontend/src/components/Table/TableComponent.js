@@ -42,18 +42,11 @@ function Row({ coin }) {
   }, []);
   return (
     <>
-      <TableRow>
-        {/* <Hidden lgUp>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-        </Hidden> */}
+      <TableRow
+        onClick={() => {
+          window.innerWidth <= 1200 && setOpen(!open);
+        }}
+      >
         <TableCell>
           <Typography>{coin.market_cap_rank}</Typography>
         </TableCell>
@@ -165,7 +158,7 @@ function Row({ coin }) {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Box>{"TEst"}</Box>
+            <Box>{"Click test"}</Box>
           </TableCell>
         </TableRow>
       </Collapse>
@@ -212,9 +205,6 @@ function TableComponent({ data }) {
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              {/* <Hidden lgUp>
-                <TableCell />
-              </Hidden> */}
               <TableCell sx={{ width: "10px" }}>#</TableCell>
               <TableCell sx={{ position: "sticky", left: "0px" }}>
                 Name
