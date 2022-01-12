@@ -47,7 +47,7 @@ function Row({ coin }) {
       //   window.innerWidth <= 1200 && setOpen(!open);
       // }}
       >
-        <Hidden mdDown>
+        <Hidden smDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
           </TableCell>
@@ -73,9 +73,14 @@ function Row({ coin }) {
             }}
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
-            <Typography sx={{ textAlign: "center" }}>
-              {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
-            </Typography>
+            <Box sx={{ display: "flex" }}>
+              <Hidden smUp>
+                <Typography>{`${coin.market_cap_rank}.\u00A0`}</Typography>
+              </Hidden>
+              <Typography sx={{ textAlign: "center" }}>
+                {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
+              </Typography>
+            </Box>
             <Hidden smDown>
               <Typography variant="subtitle2" sx={{ color: "gray" }}>
                 {coin.symbol.toUpperCase()}
@@ -216,10 +221,10 @@ function TableComponent({ data }) {
       }}
     >
       <TableContainer>
-        <Table aria-label="simple table">
+        <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              <Hidden mdDown>
+              <Hidden smDown>
                 <TableCell sx={{ width: "10px" }}>#</TableCell>
               </Hidden>
               <TableCell
