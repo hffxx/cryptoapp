@@ -31,15 +31,7 @@ const dataMissing = (
 
 function Row({ coin }) {
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    function handleCloseCollapse() {
-      if (window.innerWidth >= 1200) {
-        setOpen(false);
-      }
-    }
-    window.addEventListener("resize", handleCloseCollapse);
-    return () => window.removeEventListener("resize", handleCloseCollapse);
-  }, []);
+
   return (
     <>
       <TableRow
@@ -47,7 +39,7 @@ function Row({ coin }) {
       //   window.innerWidth <= 1200 && setOpen(!open);
       // }}
       >
-        <Hidden mdDown>
+        <Hidden smDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
           </TableCell>
@@ -73,9 +65,14 @@ function Row({ coin }) {
             }}
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
-            <Typography>
-              {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
-            </Typography>
+            <Box sx={{ display: "flex" }}>
+              <Hidden smUp>
+                <Typography>{`${coin.market_cap_rank}.\u00A0`}</Typography>
+              </Hidden>
+              <Typography sx={{ textAlign: "center" }}>
+                {coin.name.length > 8 ? coin.symbol.toUpperCase() : coin.name}
+              </Typography>
+            </Box>
             <Hidden smDown>
               <Typography variant="subtitle2" sx={{ color: "gray" }}>
                 {coin.symbol.toUpperCase()}
@@ -219,7 +216,7 @@ function TableComponent({ data }) {
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              <Hidden mdDown>
+              <Hidden smDown>
                 <TableCell sx={{ width: "10px" }}>#</TableCell>
               </Hidden>
               <TableCell
@@ -271,6 +268,7 @@ function TablePaginationComponent({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        margin: "0px",
         position: "sticky",
         left: "0px",
       }}

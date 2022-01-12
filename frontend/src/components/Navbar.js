@@ -120,26 +120,27 @@ function Navbar() {
                   </Button>
                 </Hidden>
               ) : (
-                <>
+                <Hidden xlDown>
                   <Typography sx={{ color: "black", margin: "0px 20px" }}>
                     {currentUser.email}
                   </Typography>
-                  <Hidden xlDown>
-                    <Button
-                      sx={styles.register}
-                      disableRipple
-                      onClick={handleLogout}
-                    >
-                      Log out
-                    </Button>
-                  </Hidden>
-                </>
+
+                  <Button
+                    sx={styles.register}
+                    disableRipple
+                    onClick={handleLogout}
+                  >
+                    Log out
+                  </Button>
+                </Hidden>
               )}
-              <Hidden xlUp>
-                <IconButton onClick={() => setOpen(true)}>
-                  <MenuIcon sx={{ color: "black" }} fontSize="large" />
-                </IconButton>
-              </Hidden>
+              {!!currentUser && (
+                <Hidden xlUp>
+                  <IconButton onClick={() => setOpen(true)}>
+                    <MenuIcon sx={{ color: "black" }} fontSize="large" />
+                  </IconButton>
+                </Hidden>
+              )}
             </Box>
           </Toolbar>
         </Container>
@@ -152,6 +153,9 @@ function Navbar() {
           <IconButton disableRipple onClick={() => setOpen(false)}>
             <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
+          <Typography variant="h5" sx={{ textAlign: "center" }}>
+            {currentUser?.email}
+          </Typography>
           <Sidebar setOpen={setOpen} />
         </SwipeableDrawer>
       </AppBar>
