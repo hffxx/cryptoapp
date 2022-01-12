@@ -154,7 +154,7 @@ function Navbar() {
             <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
           <Typography variant="h5" sx={{ textAlign: "center" }}>
-            {currentUser.email}
+            {currentUser?.email}
           </Typography>
           <Sidebar setOpen={setOpen} />
         </SwipeableDrawer>
