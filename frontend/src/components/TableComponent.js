@@ -31,15 +31,7 @@ const dataMissing = (
 
 function Row({ coin }) {
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    function handleCloseCollapse() {
-      if (window.innerWidth >= 1200) {
-        setOpen(false);
-      }
-    }
-    window.addEventListener("resize", handleCloseCollapse);
-    return () => window.removeEventListener("resize", handleCloseCollapse);
-  }, []);
+
   return (
     <>
       <TableRow
@@ -78,7 +70,7 @@ function Row({ coin }) {
                 <Typography>{`${coin.market_cap_rank}.\u00A0`}</Typography>
               </Hidden>
               <Typography sx={{ textAlign: "center" }}>
-                {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
+                {coin.name.length > 8 ? coin.symbol.toUpperCase() : coin.name}
               </Typography>
             </Box>
             <Hidden smDown>

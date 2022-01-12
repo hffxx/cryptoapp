@@ -1,5 +1,12 @@
 import React from "react";
-import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
+import {
+  Grid,
+  Box,
+  CircularProgress,
+  Typography,
+  Hidden,
+  Button,
+} from "@mui/material";
 import TableComponent from "./TableComponent";
 import Carousel from "./Carousel";
 import Sidebar from "./Sidebar";
@@ -7,7 +14,6 @@ import { useCoins } from "./contexts/CoinsContext";
 
 function Dashboard() {
   const { coins } = useCoins();
-  console.log(coins);
 
   const topCoins = coins.slice(0, 10);
 
@@ -62,6 +68,22 @@ function Dashboard() {
           </Hidden>
           <Hidden xlUp>
             <Grid
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "25px",
+                gap: "20px",
+              }}
+            >
+              <Button variant="outlined" disableRipple>
+                💪 Top Gainers
+              </Button>
+              <Button variant="outlined" disableRipple>
+                📉 Top Losers
+              </Button>
+            </Grid>
+            <Grid
               item
               xs={12}
               sx={{
@@ -70,9 +92,6 @@ function Dashboard() {
               }}
             >
               <Carousel title="🔥 Top Coins" coins={topCoins} />
-              <Hidden mdDown>
-                <Carousel title="💪 Top Gainers" coins={biggestGainers} />
-              </Hidden>
             </Grid>
           </Hidden>
           <Grid item xs={12}>
