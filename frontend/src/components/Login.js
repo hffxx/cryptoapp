@@ -63,6 +63,10 @@ function Login() {
         setError({
           message: errorsConf[e.code],
         });
+      } else {
+        setError({
+          message: e.code,
+        });
       }
       setLoading(false);
     }

@@ -8,9 +8,6 @@ import {
   InputAdornment,
   Grid,
   Button,
-  Link,
-  Box,
-  Divider,
   Alert,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -60,9 +57,13 @@ function Recover() {
         setError({
           message: errorsConf[e.code],
         });
+      } else {
+        setError({
+          message: e.code,
+        });
       }
+      setLoading(false);
     }
-    setLoading(false);
   };
   return (
     <Grid container sx={{ padding: "10px" }}>
