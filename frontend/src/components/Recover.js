@@ -50,6 +50,7 @@ function Recover() {
     }
     try {
       setError(null);
+      setSuccess("");
       setLoading(true);
       await resetPassword(email);
       setLoading(false);
