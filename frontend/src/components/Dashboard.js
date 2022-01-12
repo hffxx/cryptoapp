@@ -61,8 +61,18 @@ function Dashboard() {
             </Grid>
           </Hidden>
           <Hidden xlUp>
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+              }}
+            >
               <Carousel title="🔥 Top Coins" coins={topCoins} />
+              <Hidden mdDown>
+                <Carousel title="💪 Top Gainers" coins={biggestGainers} />
+              </Hidden>
             </Grid>
           </Hidden>
           <Grid item xs={12}>
