@@ -272,6 +272,8 @@ function TablePaginationComponent({
         alignItems: "center",
         justifyContent: "center",
         margin: "0px",
+        position: "sticky",
+        left: "0px",
       }}
       rowsPerPageOptions={[10, 25, 50, 100, 250]}
       component="div"
