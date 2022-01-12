@@ -1,41 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { CoinList } from "../config/api";
+import React from "react";
 import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
 import TableComponent from "./Table/TableComponent";
 import Carousel from "./Carousel";
 import Sidebar from "./Sidebar";
-import { useAuth } from "./contexts/AuthContext";
+import { useCoins } from "./contexts/CoinsContext";
 
 function Dashboard() {
-  const [data, setData] = useState([]);
-  const { currentUser } = useAuth();
-  const fetchCoins = async () => {
-    try {
-      let data = await fetch(CoinList());
-      let coins = await data.json();
-      setData(coins);
-    } catch (e) {
-      console.log("error", e);
-    }
-  };
+  const { coins } = useCoins();
+  console.log(coins);
 
-  useEffect(() => {
-    fetchCoins();
-  }, []);
-  const topCoins = data.slice(0, 10);
+  const topCoins = coins.slice(0, 10);
 
-  const biggestGainers = [...data]
+  const biggestGainers = [...coins]
     .sort((a, b) =>
       a.price_change_percentage_24h < b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  const biggestLosers = [...data]
+  const biggestLosers = [...coins]
     .sort((a, b) =>
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
 
-  return data.length === 0 ? (
+  return coins.length === 0 ? (
     <Box
       sx={{
         display: "flex",
@@ -79,7 +66,7 @@ function Dashboard() {
             </Grid>
           </Hidden>
           <Grid item xs={12}>
-            <TableComponent data={data} />
+            <TableComponent data={coins} />
           </Grid>
         </Grid>
       </Grid>
