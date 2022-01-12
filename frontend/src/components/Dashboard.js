@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box, CircularProgress, Typography, Hidden } from "@mui/material";
-import TableComponent from "./Table/TableComponent";
+import TableComponent from "./TableComponent";
 import Carousel from "./Carousel";
 import Sidebar from "./Sidebar";
 import { useCoins } from "./contexts/CoinsContext";
