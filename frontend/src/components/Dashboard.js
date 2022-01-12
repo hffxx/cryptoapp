@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Box,
@@ -27,7 +27,16 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-
+  const [carouselItems, setCarouselItems] = useState({
+    coins: [topCoins, biggestGainers, biggestLosers],
+    titles: ["🔥 Top Coins", "💪 Top Gainers", "📉 Top Losers"],
+  });
+  useEffect(() => {
+    setCarouselItems({
+      ...carouselItems,
+      coins: [topCoins, biggestGainers, biggestLosers],
+    });
+  }, [coins]);
   return coins.length === 0 ? (
     <Box
       sx={{
@@ -68,6 +77,20 @@ function Dashboard() {
           </Hidden>
           <Hidden xlUp>
             <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+              }}
+            >
+              <Carousel
+                title={carouselItems.titles[0]}
+                coins={carouselItems.coins[0]}
+              />
+            </Grid>
+            <Grid
+              item
               xs={12}
               sx={{
                 display: "flex",
@@ -77,21 +100,14 @@ function Dashboard() {
               }}
             >
               <Button variant="outlined" disableRipple>
-                💪 Top Gainers
+                🔥
               </Button>
               <Button variant="outlined" disableRipple>
-                📉 Top Losers
+                💪
               </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-              }}
-            >
-              <Carousel title="🔥 Top Coins" coins={topCoins} />
+              <Button variant="outlined" disableRipple>
+                📉
+              </Button>
             </Grid>
           </Hidden>
           <Grid item xs={12}>
