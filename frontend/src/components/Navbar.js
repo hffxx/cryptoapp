@@ -135,11 +135,13 @@ function Navbar() {
                   </Hidden>
                 </>
               )}
-              <Hidden xlUp>
-                <IconButton onClick={() => setOpen(true)}>
-                  <MenuIcon sx={{ color: "black" }} fontSize="large" />
-                </IconButton>
-              </Hidden>
+              {!!currentUser && (
+                <Hidden xlUp>
+                  <IconButton onClick={() => setOpen(true)}>
+                    <MenuIcon sx={{ color: "black" }} fontSize="large" />
+                  </IconButton>
+                </Hidden>
+              )}
             </Box>
           </Toolbar>
         </Container>
