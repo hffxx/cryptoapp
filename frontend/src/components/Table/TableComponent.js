@@ -73,7 +73,7 @@ function Row({ coin }) {
             }}
           >
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
-            <Typography>
+            <Typography sx={{ textAlign: "center" }}>
               {coin.name.length > 10 ? coin.symbol.toUpperCase() : coin.name}
             </Typography>
             <Hidden smDown>
@@ -216,7 +216,7 @@ function TableComponent({ data }) {
       }}
     >
       <TableContainer>
-        <Table aria-label="simple table" size="small">
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <Hidden mdDown>
@@ -271,8 +271,7 @@ function TablePaginationComponent({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        position: "sticky",
-        left: "0px",
+        margin: "0px",
       }}
       rowsPerPageOptions={[10, 25, 50, 100, 250]}
       component="div"
