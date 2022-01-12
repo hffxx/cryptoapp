@@ -14,6 +14,7 @@ import {
 import LineStyleIcon from "@mui/icons-material/LineStyle";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "./contexts/AuthContext";
@@ -60,17 +61,36 @@ function Sidebar({ setOpen }) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <AccountBalanceWalletIcon />
+              <TrendingUpIcon />
             </ListItemIcon>
-            <ListItemText primary="Wallet" />
+            <ListItemText primary="Highscores" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+      <List
+        aria-labelledby="inbox"
+        component="nav"
+        subheader={
+          <ListSubheader component="div" id="Coins" disableSticky>
+            Coins
+          </ListSubheader>
+        }
+      >
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary="Coins" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <TrendingUpIcon />
+              <AccountBalanceWalletIcon />
             </ListItemIcon>
-            <ListItemText primary="Highscores" />
+            <ListItemText primary="Wallet" />
           </ListItemButton>
         </ListItem>
       </List>
