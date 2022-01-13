@@ -20,9 +20,23 @@ const dataMissing = (
   <Typography sx={{ color: "orange" }}>Data missing</Typography>
 );
 
-function Row({ coin }) {
-  const [open, setOpen] = useState(false);
-
+function Row({ coin, width }) {
+  const coinFormat = (amount) => {
+    if (amount / 1000000000 > 1 && width <= 1200) {
+      return `$${(amount / 1000000000).toFixed(2)}B`;
+    } else if (amount / 1000000 > 1 && width <= 1200) {
+      return `$${(amount / 1000000).toFixed(2)}M`;
+    } else {
+      return (
+        <NumberFormat
+          displayType="text"
+          prefix="$"
+          value={amount.toFixed()}
+          thousandSeparator={true}
+        ></NumberFormat>
+      );
+    }
+  };
   return (
     <>
       <TableRow>
@@ -99,26 +113,12 @@ function Row({ coin }) {
         </TableCell>
         <TableCell>
           <Grid item>
-            <Typography>
-              <NumberFormat
-                displayType="text"
-                prefix="$"
-                value={coin.market_cap.toFixed()}
-                thousandSeparator={true}
-              ></NumberFormat>
-            </Typography>
+            <Typography>{coinFormat(coin.market_cap)}</Typography>
           </Grid>
         </TableCell>
         <TableCell>
           <Grid item>
-            <Typography>
-              <NumberFormat
-                displayType="text"
-                prefix="$"
-                value={coin.total_volume.toFixed()}
-                thousandSeparator={true}
-              ></NumberFormat>
-            </Typography>
+            <Typography>{coinFormat(coin.total_volume)}</Typography>
           </Grid>
         </TableCell>
         <TableCell>
@@ -163,7 +163,7 @@ function TableComponent({ data }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const handleWindowResize = useCallback((event) => {
+  const handleWindowResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
   }, []);
   useEffect(() => {
@@ -192,12 +192,16 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
-  const Infoheader = ({ children }) => {
+  const Infoheader = ({ text }) => {
     return (
       <TableCell>
         <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          {children}
-          <InfoIcon fontSize="string" color="disabled" />
+          <Typography variant="string" noWrap>
+            {text}
+          </Typography>
+          <Hidden lgDown>
+            <InfoIcon fontSize="string" color="disabled" />
+          </Hidden>
         </Box>
       </TableCell>
     );
@@ -233,22 +237,16 @@ function TableComponent({ data }) {
               </TableCell>
               <TableCell>Price</TableCell>
               <TableCell>24h %</TableCell>
-              <Infoheader>
-                <Typography variant="string">Market Cap</Typography>
-              </Infoheader>
-              <Infoheader>
-                <Typography variant="string">Volume(24h)</Typography>
-              </Infoheader>
-              <Infoheader>
-                <Typography variant="string">Circulating Supply</Typography>
-              </Infoheader>
+              <Infoheader text="Market Cap" />
+              <Infoheader text="Volume(24h)" />
+              <Infoheader text="Circulating Supply" />
             </TableRow>
           </TableHead>
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((coin) => (
-                <Row coin={coin} key={coin.id} />
+                <Row coin={coin} key={coin.id} width={windowWidth} />
               ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 75 * emptyRows }}>
