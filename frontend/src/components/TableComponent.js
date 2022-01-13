@@ -167,6 +167,9 @@ function TableComponent({ data }) {
     setWindowWidth(window.innerWidth);
   }, []);
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+  useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
     return () => {
       window.removeEventListener("resize", handleWindowResize);
