@@ -123,7 +123,7 @@ function Row({ coin, width }) {
         </TableCell>
         <TableCell>
           <Grid item>
-            <Typography>
+            <Typography noWrap>
               <NumberFormat
                 displayType="text"
                 suffix={` ${coin.symbol.toUpperCase()}`}
