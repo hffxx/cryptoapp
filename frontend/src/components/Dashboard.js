@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Box,
@@ -13,6 +13,7 @@ import Sidebar from "./Sidebar";
 import { useCoins } from "./contexts/CoinsContext";
 
 function Dashboard() {
+  const [title, setTitle] = useState("🔥 Top Coins");
   const { coins } = useCoins();
 
   const topCoins = coins.slice(0, 10);
@@ -27,16 +28,7 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  const [carouselItems, setCarouselItems] = useState({
-    coins: [topCoins, biggestGainers, biggestLosers],
-    titles: ["🔥 Top Coins", "💪 Top Gainers", "📉 Top Losers"],
-  });
-  useEffect(() => {
-    setCarouselItems({
-      ...carouselItems,
-      coins: [topCoins, biggestGainers, biggestLosers],
-    });
-  }, [coins]);
+
   return coins.length === 0 ? (
     <Box
       sx={{
@@ -54,14 +46,14 @@ function Dashboard() {
     </Box>
   ) : (
     <Grid container sx={{ justifyContent: "center" }}>
-      <Hidden xlDown>
+      <Hidden lgDown>
         <Grid item xs={1.5}>
           <Sidebar />
         </Grid>
       </Hidden>
       <Grid item xs={10.5} mt={4}>
         <Grid container>
-          <Hidden xlDown>
+          <Hidden lgDown>
             <Grid
               item
               xs={12}
@@ -75,7 +67,7 @@ function Dashboard() {
               <Carousel title="📉 Top Losers" coins={biggestLosers} />
             </Grid>
           </Hidden>
-          <Hidden xlUp>
+          <Hidden lgUp>
             <Grid
               item
               xs={12}
@@ -84,10 +76,15 @@ function Dashboard() {
                 justifyContent: "space-around",
               }}
             >
-              <Carousel
-                title={carouselItems.titles[0]}
-                coins={carouselItems.coins[0]}
-              />
+              {title === "🔥 Top Coins" && (
+                <Carousel title="🔥 Top Coins" coins={topCoins} />
+              )}
+              {title === "💪 Top Gainers" && (
+                <Carousel title="💪 Top Gainers" coins={biggestGainers} />
+              )}
+              {title === "📉 Top Losers" && (
+                <Carousel title="📉 Top Losers" coins={biggestLosers} />
+              )}
             </Grid>
             <Grid
               item
@@ -99,13 +96,25 @@ function Dashboard() {
                 gap: "20px",
               }}
             >
-              <Button variant="outlined" disableRipple>
+              <Button
+                variant="outlined"
+                disableRipple
+                onClick={() => setTitle("🔥 Top Coins")}
+              >
                 🔥
               </Button>
-              <Button variant="outlined" disableRipple>
+              <Button
+                variant="outlined"
+                disableRipple
+                onClick={() => setTitle("💪 Top Gainers")}
+              >
                 💪
               </Button>
-              <Button variant="outlined" disableRipple>
+              <Button
+                variant="outlined"
+                disableRipple
+                onClick={() => setTitle("📉 Top Losers")}
+              >
                 📉
               </Button>
             </Grid>
