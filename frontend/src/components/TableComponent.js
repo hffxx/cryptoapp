@@ -11,6 +11,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tooltip from "@mui/material/Tooltip";
 import NumberFormat from "react-number-format";
+import InfoIcon from "@mui/icons-material/Info";
 
 export const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
@@ -191,7 +192,16 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
-
+  const Infoheader = ({ children }) => {
+    return (
+      <TableCell>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+          {children}
+          <InfoIcon fontSize="string" color="disabled" />
+        </Box>
+      </TableCell>
+    );
+  };
   return (
     <Box
       sx={{
@@ -223,9 +233,15 @@ function TableComponent({ data }) {
               </TableCell>
               <TableCell>Price</TableCell>
               <TableCell>24h %</TableCell>
-              <TableCell>Market Cap</TableCell>
-              <TableCell>Volume</TableCell>
-              <TableCell>Circulating Supply</TableCell>
+              <Infoheader>
+                <Typography variant="string">Market Cap</Typography>
+              </Infoheader>
+              <Infoheader>
+                <Typography variant="string">Volume(24h)</Typography>
+              </Infoheader>
+              <Infoheader>
+                <Typography variant="string">Circulating Supply</Typography>
+              </Infoheader>
             </TableRow>
           </TableHead>
           <TableBody>
