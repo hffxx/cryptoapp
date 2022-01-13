@@ -278,7 +278,13 @@ function TablePaginationComponent({
         position: "sticky",
         left: "0px",
       }}
-      rowsPerPageOptions={[10, 25, 50, 100, 250]}
+      rowsPerPageOptions={[
+        10,
+        25,
+        50,
+        100,
+        { label: "All", value: rows.length },
+      ]}
       component="div"
       count={rows.length}
       rowsPerPage={rowsPerPage}
