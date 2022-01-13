@@ -4,7 +4,14 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, Typography, Grid, Hidden, TablePagination } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  Hidden,
+  TablePagination,
+  tablePaginationClasses,
+} from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -168,7 +175,7 @@ function TableComponent({ data }) {
   }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [page]);
+  }, [page, rowsPerPage]);
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
     return () => {
@@ -275,12 +282,17 @@ function TablePaginationComponent({
   return (
     <TablePagination
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         margin: "0px",
         position: "sticky",
         left: "0px",
+        overflow: "hidden",
+        [`& .${tablePaginationClasses.spacer}`]: {
+          display: "none",
+        },
+        [`& .${tablePaginationClasses.toolbar}`]: {
+          justifyContent: "center",
+        },
+        [`& .${tablePaginationClasses.select}`]: {},
       }}
       rowsPerPageOptions={[
         10,
