@@ -108,8 +108,8 @@ function Sidebar({ setOpen }) {
           </ListItemButton>
         </ListItem>
       </List>
-      <Divider />
       <Hidden xlUp>
+        <Divider />
         <List
           aria-labelledby="action"
           component="nav"
