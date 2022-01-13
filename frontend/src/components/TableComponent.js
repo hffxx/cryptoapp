@@ -192,11 +192,11 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
-  const Infoheader = ({ children }) => {
+  const Infoheader = ({ text }) => {
     return (
       <TableCell>
         <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          {children}
+          <Typography variant="string">{text}</Typography>
           <InfoIcon fontSize="string" color="disabled" />
         </Box>
       </TableCell>
@@ -233,15 +233,9 @@ function TableComponent({ data }) {
               </TableCell>
               <TableCell>Price</TableCell>
               <TableCell>24h %</TableCell>
-              <Infoheader>
-                <Typography variant="string">Market Cap</Typography>
-              </Infoheader>
-              <Infoheader>
-                <Typography variant="string">Volume(24h)</Typography>
-              </Infoheader>
-              <Infoheader>
-                <Typography variant="string">Circulating Supply</Typography>
-              </Infoheader>
+              <Infoheader text="Market Cap" />
+              <Infoheader text="Volume(24h)" />
+              <Infoheader text="Circulating Supply" />
             </TableRow>
           </TableHead>
           <TableBody>
