@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {
-  Box,
-  Typography,
-  Grid,
-  Collapse,
-  IconButton,
-  Hidden,
-  TablePagination,
-} from "@mui/material";
+import { Box, Typography, Grid, Hidden, TablePagination } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -34,11 +24,7 @@ function Row({ coin }) {
 
   return (
     <>
-      <TableRow
-      // onClick={() => {
-      //   window.innerWidth <= 1200 && setOpen(!open);
-      // }}
-      >
+      <TableRow>
         <Hidden smDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
@@ -167,12 +153,6 @@ function Row({ coin }) {
           </Grid>
         </TableCell>
       </TableRow>
-      {/* <Collapse
-        in={open}
-        timeout="auto"
-        unmountOnExit
-        onClick={() => setOpen(false)}
-      ></Collapse> */}
     </>
   );
 }
@@ -181,7 +161,16 @@ function TableComponent({ data }) {
   const rows = data;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handleWindowResize = useCallback((event) => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [handleWindowResize]);
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(Number(e.target.value));
 
@@ -213,7 +202,10 @@ function TableComponent({ data }) {
       }}
     >
       <TableContainer>
-        <Table aria-label="simple table" size="small">
+        <Table
+          aria-label="simple table"
+          size={windowWidth < 1200 ? "small" : "medium"}
+        >
           <TableHead>
             <TableRow>
               <Hidden smDown>
