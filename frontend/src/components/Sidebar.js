@@ -35,12 +35,7 @@ function Sidebar({ setOpen }) {
     }
   };
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        width: "200px",
-      }}
-    >
+    <Box>
       <List
         aria-labelledby="dashboard"
         component="nav"

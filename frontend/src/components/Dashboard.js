@@ -27,16 +27,7 @@ function Dashboard() {
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  const [carouselItems, setCarouselItems] = useState({
-    coins: [topCoins, biggestGainers, biggestLosers],
-    titles: ["🔥 Top Coins", "💪 Top Gainers", "📉 Top Losers"],
-  });
-  useEffect(() => {
-    setCarouselItems({
-      ...carouselItems,
-      coins: [topCoins, biggestGainers, biggestLosers],
-    });
-  }, [coins]);
+
   return coins.length === 0 ? (
     <Box
       sx={{
@@ -54,14 +45,14 @@ function Dashboard() {
     </Box>
   ) : (
     <Grid container sx={{ justifyContent: "center" }}>
-      <Hidden xlDown>
+      <Hidden lgDown>
         <Grid item xs={1.5}>
           <Sidebar />
         </Grid>
       </Hidden>
       <Grid item xs={10.5} mt={4}>
         <Grid container>
-          <Hidden xlDown>
+          <Hidden lgDown>
             <Grid
               item
               xs={12}
@@ -75,7 +66,7 @@ function Dashboard() {
               <Carousel title="📉 Top Losers" coins={biggestLosers} />
             </Grid>
           </Hidden>
-          <Hidden xlUp>
+          <Hidden lgUp>
             <Grid
               item
               xs={12}
@@ -84,10 +75,7 @@ function Dashboard() {
                 justifyContent: "space-around",
               }}
             >
-              <Carousel
-                title={carouselItems.titles[0]}
-                coins={carouselItems.coins[0]}
-              />
+              <Carousel title="🔥 Top Coins" coins={topCoins} />
             </Grid>
             <Grid
               item
