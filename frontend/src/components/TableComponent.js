@@ -226,6 +226,7 @@ function TableComponent({ data }) {
                 <TableCell sx={{ width: "10px" }}>#</TableCell>
               </Hidden>
               <TableCell
+                align={windowWidth <= 600 ? "center" : "left"}
                 sx={{
                   position: "sticky",
                   left: "0px",
