@@ -59,7 +59,16 @@ const Infoheader = ({ tooltipText, text }) => {
           {text}
         </Typography>
         <StyledTooltip tooltipText={tooltipText}>
-          <InfoIcon fontSize="string" color="disabled" />
+          <InfoIcon
+            fontSize="string"
+            color="disabled"
+            sx={{
+              display: "inline-block",
+              position: "relative",
+              padding: "1em",
+              margin: "-1em",
+            }}
+          />
         </StyledTooltip>
       </Box>
     </TableCell>
@@ -171,25 +180,17 @@ function Row({ coin, width }) {
           </Grid>
         </TableCell>
         <TableCell>
-          <Grid item>
-            <Typography>
-              <NumberFormat
-                displayType="text"
-                suffix={` ${coin.symbol.toUpperCase()}`}
-                value={coin.circulating_supply.toFixed()}
-                thousandSeparator={true}
-              ></NumberFormat>
-            </Typography>
-            {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
+          <Grid item sx={{ display: "flex" }}>
+            {!!coin.max_supply &&
+            coin.circulating_supply !== coin.max_supply ? (
               <StyledTooltip
-                enterTouchDelay={0}
-                leaveTouchDelay={20000}
                 tooltipText={
                   <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
                       gap: "10px",
+                      flexGrow: 1,
                     }}
                   >
                     <Typography variant="string">{`Percentage: ${(
@@ -227,17 +228,36 @@ function Row({ coin, width }) {
                 }
                 arrow
               >
-                <LinearProgress
-                  sx={{
-                    width: "150px",
-                    height: "5px",
-                    borderRadius: "2px",
-                  }}
-                  variant="determinate"
-                  value={(coin.circulating_supply / coin.max_supply) * 100}
-                  color="inherit"
-                ></LinearProgress>
+                <Box>
+                  <Typography>
+                    <NumberFormat
+                      displayType="text"
+                      suffix={` ${coin.symbol.toUpperCase()}`}
+                      value={coin.circulating_supply.toFixed()}
+                      thousandSeparator={true}
+                    ></NumberFormat>
+                  </Typography>
+                  <LinearProgress
+                    sx={{
+                      width: "150px",
+                      height: "5px",
+                      borderRadius: "2px",
+                    }}
+                    variant="determinate"
+                    value={(coin.circulating_supply / coin.max_supply) * 100}
+                    color="inherit"
+                  ></LinearProgress>
+                </Box>
               </StyledTooltip>
+            ) : (
+              <Typography>
+                <NumberFormat
+                  displayType="text"
+                  suffix={` ${coin.symbol.toUpperCase()}`}
+                  value={coin.circulating_supply.toFixed()}
+                  thousandSeparator={true}
+                ></NumberFormat>
+              </Typography>
             )}
           </Grid>
         </TableCell>
