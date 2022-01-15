@@ -19,6 +19,12 @@ import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "./contexts/AuthContext";
 
+const StyledItemIcon = ({ children }) => {
+  return (
+    <ListItemIcon sx={{ justifyContent: "center" }}>{children}</ListItemIcon>
+  );
+};
+
 function Sidebar({ setOpen }) {
   const [error, setError] = useState(null);
   const { logout } = useAuth();
@@ -47,17 +53,17 @@ function Sidebar({ setOpen }) {
       >
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <LineStyleIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <TrendingUpIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Highscores" />
           </ListItemButton>
         </ListItem>
@@ -74,17 +80,17 @@ function Sidebar({ setOpen }) {
       >
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <MonetizationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Coins" />
+            </StyledItemIcon>
+            <ListItemText primary="Trade Coins" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <AccountBalanceWalletIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Wallet" />
           </ListItemButton>
         </ListItem>
@@ -101,9 +107,9 @@ function Sidebar({ setOpen }) {
       >
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <SendIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Messages" />
           </ListItemButton>
         </ListItem>
@@ -121,9 +127,9 @@ function Sidebar({ setOpen }) {
         >
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogout}>
-              <ListItemIcon>
+              <StyledItemIcon>
                 <LogoutIcon />
-              </ListItemIcon>
+              </StyledItemIcon>
               <ListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
