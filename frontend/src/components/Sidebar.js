@@ -32,7 +32,7 @@ function Sidebar({ setOpen = null }) {
   let navigate = useNavigate();
   const handleNavigate = (route) => {
     navigate(route);
-    setOpen && setOpen(false);
+    !!setOpen && setOpen(false);
   };
   const handleLogout = async () => {
     setError("");
