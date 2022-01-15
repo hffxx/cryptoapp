@@ -11,6 +11,7 @@ import { Box } from "@mui/material";
 import { AuthProvider } from "./components/contexts/AuthContext";
 import { CoinsProvider } from "./components/contexts/CoinsContext";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import Messages from "./components/Messages";
 
 function App() {
   return (
@@ -35,6 +36,15 @@ function App() {
                 element={
                   <AuthenticatedRoute>
                     <Settings />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/messages"
+                exact
+                element={
+                  <AuthenticatedRoute>
+                    <Messages />
                   </AuthenticatedRoute>
                 }
               />

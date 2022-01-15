@@ -32,6 +32,7 @@ function Sidebar({ setOpen }) {
   let navigate = useNavigate();
   const handleNavigate = (route) => {
     navigate(route);
+    setOpen(false);
   };
   const handleLogout = async () => {
     setError("");
@@ -110,7 +111,7 @@ function Sidebar({ setOpen }) {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => handleNavigate("/messages")}>
             <StyledItemIcon>
               <SendIcon />
             </StyledItemIcon>
