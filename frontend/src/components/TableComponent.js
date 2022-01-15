@@ -189,7 +189,7 @@ function Row({ coin, width }) {
                   alignItems={"center"}
                   sx={{ gap: "10px" }}
                 >
-                  <Typography noWrap>
+                  <Typography>
                     <NumberFormat
                       displayType="text"
                       suffix={` ${coin.symbol.toUpperCase()}`}
@@ -266,7 +266,7 @@ function Row({ coin, width }) {
                 ></LinearProgress>
               </Box>
             ) : (
-              <Typography noWrap>
+              <Typography>
                 <NumberFormat
                   displayType="text"
                   suffix={` ${coin.symbol.toUpperCase()}`}
