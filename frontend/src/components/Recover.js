@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { useAuth } from "./contexts/AuthContext";
 import {
   Paper,
   Typography,
   FormControl,
   TextField,
   InputAdornment,
-  Grid,
   Button,
+  Link,
+  Box,
+  Divider,
   Alert,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Link as RouterLink } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import UnauthPage from "./Pages/UnauthPage";
 
 const styles = {
@@ -21,7 +25,10 @@ const styles = {
     margin: "20px auto",
   },
   item: {
+    display: "flex",
+    flexDirection: "column",
     margin: "20px",
+    gap: "10px",
   },
   link: {
     "&:hover": {
@@ -98,6 +105,31 @@ function Recover() {
         >
           Reset password
         </Button>
+        <Divider />
+        <Box sx={styles.item}>
+          <Typography>
+            {"Not a member? "}
+            <Link
+              underline="hover"
+              sx={styles.link}
+              component={RouterLink}
+              to="/signup"
+            >
+              Register here
+            </Link>
+          </Typography>
+          <Typography>
+            {"Password recovered? "}
+            <Link
+              underline="hover"
+              sx={styles.link}
+              component={RouterLink}
+              to="/login"
+            >
+              Login
+            </Link>
+          </Typography>
+        </Box>
       </Paper>
     </UnauthPage>
   );

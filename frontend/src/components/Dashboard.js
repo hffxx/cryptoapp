@@ -35,7 +35,8 @@ function Dashboard() {
       {coins.length === 0 ? (
         <Box
           sx={{
-            height: "100%",
+            height: "60vh",
+            width: "100%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -43,7 +44,7 @@ function Dashboard() {
             gap: "25px",
           }}
         >
-          <Typography>Data loading..</Typography>
+          <Typography variant="h5">Data loading..</Typography>
           <CircularProgress />
         </Box>
       ) : (

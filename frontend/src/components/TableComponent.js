@@ -30,6 +30,8 @@ const dataMissing = (
 const StyledTooltip = ({ children, tooltipText }) => {
   return (
     <Tooltip
+      enterTouchDelay={0}
+      leaveTouchDelay={20000}
       title={tooltipText}
       componentsProps={{
         tooltip: {
@@ -56,11 +58,9 @@ const Infoheader = ({ tooltipText, text }) => {
         <Typography variant="string" noWrap>
           {text}
         </Typography>
-        <Hidden lgDown>
-          <StyledTooltip tooltipText={tooltipText}>
-            <InfoIcon fontSize="string" color="disabled" />
-          </StyledTooltip>
-        </Hidden>
+        <StyledTooltip tooltipText={tooltipText}>
+          <InfoIcon fontSize="string" color="disabled" />
+        </StyledTooltip>
       </Box>
     </TableCell>
   );
@@ -182,6 +182,8 @@ function Row({ coin, width }) {
             </Typography>
             {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
               <StyledTooltip
+                enterTouchDelay={0}
+                leaveTouchDelay={20000}
                 tooltipText={
                   <Box
                     sx={{

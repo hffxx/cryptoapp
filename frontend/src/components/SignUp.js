@@ -26,7 +26,10 @@ const styles = {
     margin: "20px auto",
   },
   item: {
+    display: "flex",
+    flexDirection: "column",
     margin: "20px",
+    gap: "10px",
   },
   link: {
     "&:hover": {
@@ -162,6 +165,17 @@ function SignUp() {
               to="/login"
             >
               Login
+            </Link>
+          </Typography>
+          <Typography>
+            {"Forgot your password? "}
+            <Link
+              underline="hover"
+              sx={styles.link}
+              component={RouterLink}
+              to="/recover"
+            >
+              Recover account
             </Link>
           </Typography>
         </Box>
