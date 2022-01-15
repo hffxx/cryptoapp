@@ -182,6 +182,8 @@ function Row({ coin, width }) {
             </Typography>
             {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
               <StyledTooltip
+                enterTouchDelay={0}
+                leaveTouchDelay={20000}
                 tooltipText={
                   <Box
                     sx={{
