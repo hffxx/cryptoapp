@@ -11,6 +11,7 @@ import {
   Alert,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import UnauthPage from "./Pages/UnauthPage";
 
 const styles = {
   paper: {
@@ -66,7 +67,7 @@ function Recover() {
     }
   };
   return (
-    <Grid container sx={{ padding: "10px" }}>
+    <UnauthPage>
       <Paper elevation={4} sx={styles.paper}>
         <Typography variant="h2">Recovery</Typography>
         <FormControl>
@@ -98,7 +99,7 @@ function Recover() {
           Reset password
         </Button>
       </Paper>
-    </Grid>
+    </UnauthPage>
   );
 }
 

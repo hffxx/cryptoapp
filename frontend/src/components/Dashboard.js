@@ -11,6 +11,7 @@ import TableComponent from "./TableComponent";
 import Carousel from "./Carousel";
 import Sidebar from "./Sidebar";
 import { useCoins } from "./contexts/CoinsContext";
+import DashboardPage from "./Pages/DashboardPage";
 
 function Dashboard() {
   const [title, setTitle] = useState("🔥 Top Coins");
@@ -29,29 +30,23 @@ function Dashboard() {
     )
     .slice(0, 10);
 
-  return coins.length === 0 ? (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "50vh",
-        width: "100vw",
-        flexDirection: "column",
-        gap: "25px",
-      }}
-    >
-      <Typography>Data loading..</Typography>
-      <CircularProgress />
-    </Box>
-  ) : (
-    <Grid container sx={{ justifyContent: "center" }}>
-      <Hidden lgDown>
-        <Grid item xs={1.5}>
-          <Sidebar />
-        </Grid>
-      </Hidden>
-      <Grid item xs={10.5} mt={4}>
+  return (
+    <DashboardPage>
+      {coins.length === 0 ? (
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            gap: "25px",
+          }}
+        >
+          <Typography>Data loading..</Typography>
+          <CircularProgress />
+        </Box>
+      ) : (
         <Grid container>
           <Hidden lgDown>
             <Grid
@@ -123,8 +118,8 @@ function Dashboard() {
             <TableComponent data={coins} />
           </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      )}
+    </DashboardPage>
   );
 }
 

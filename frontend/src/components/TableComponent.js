@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -46,7 +46,7 @@ function Row({ coin, width }) {
   };
   return (
     <>
-      <TableRow>
+      <TableRow sx={{ height: "70px" }}>
         <Hidden smDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
@@ -170,12 +170,11 @@ function TableComponent({ data }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  let tableRef = useRef();
   const handleWindowResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
   }, []);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [page, rowsPerPage]);
+
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
     return () => {
@@ -189,6 +188,10 @@ function TableComponent({ data }) {
   };
   const handleChangePage = (e, newPage) => {
     setPage(newPage);
+    window.scrollTo({
+      behavior: "smooth",
+      top: tableRef.current?.offsetTop,
+    });
   };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -225,7 +228,7 @@ function TableComponent({ data }) {
         },
       }}
     >
-      <TableContainer>
+      <TableContainer ref={tableRef}>
         <Table
           aria-label="simple table"
           size={windowWidth < 1200 ? "small" : "medium"}
@@ -303,6 +306,7 @@ function TablePaginationComponent({
       ]}
       component="div"
       count={rows.length}
+      labelRowsPerPage={"Coins"}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}

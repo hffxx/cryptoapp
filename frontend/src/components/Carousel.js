@@ -63,7 +63,9 @@ function Carousel({ coins, title }) {
         flexDirection: "column",
       }}
     >
-      <Typography variant="h3">{title}</Typography>
+      <Typography noWrap variant="h3">
+        {title}
+      </Typography>
       {coins.length !== 0 ? (
         <Box sx={{ width: "320px" }}>
           <AutoPlaySwipeableViews

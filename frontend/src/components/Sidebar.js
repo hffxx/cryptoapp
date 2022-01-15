@@ -17,12 +17,23 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useAuth } from "./contexts/AuthContext";
+
+const StyledItemIcon = ({ children }) => {
+  return (
+    <ListItemIcon sx={{ justifyContent: "center" }}>{children}</ListItemIcon>
+  );
+};
 
 function Sidebar({ setOpen }) {
   const [error, setError] = useState(null);
   const { logout } = useAuth();
   let navigate = useNavigate();
+  const handleNavigate = (route) => {
+    navigate(route);
+    setOpen(false);
+  };
   const handleLogout = async () => {
     setError("");
     try {
@@ -46,18 +57,18 @@ function Sidebar({ setOpen }) {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
+          <ListItemButton onClick={() => handleNavigate("/")}>
+            <StyledItemIcon>
               <LineStyleIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <TrendingUpIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Highscores" />
           </ListItemButton>
         </ListItem>
@@ -74,17 +85,17 @@ function Sidebar({ setOpen }) {
       >
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <MonetizationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Coins" />
+            </StyledItemIcon>
+            <ListItemText primary="Trade" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
+            <StyledItemIcon>
               <AccountBalanceWalletIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Wallet" />
           </ListItemButton>
         </ListItem>
@@ -100,11 +111,30 @@ function Sidebar({ setOpen }) {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
+          <ListItemButton onClick={() => handleNavigate("/messages")}>
+            <StyledItemIcon>
               <SendIcon />
-            </ListItemIcon>
+            </StyledItemIcon>
             <ListItemText primary="Messages" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+      <List
+        aria-labelledby="account"
+        component="nav"
+        subheader={
+          <ListSubheader component="div" id="account" disableSticky>
+            Account
+          </ListSubheader>
+        }
+      >
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => handleNavigate("/settings")}>
+            <StyledItemIcon>
+              <ManageAccountsIcon />
+            </StyledItemIcon>
+            <ListItemText primary="Settings" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -115,15 +145,15 @@ function Sidebar({ setOpen }) {
           component="nav"
           subheader={
             <ListSubheader component="div" id="action" disableSticky>
-              Action
+              Actions
             </ListSubheader>
           }
         >
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogout}>
-              <ListItemIcon>
+              <StyledItemIcon>
                 <LogoutIcon />
-              </ListItemIcon>
+              </StyledItemIcon>
               <ListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
