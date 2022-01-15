@@ -28,10 +28,13 @@ const dataMissing = (
 );
 
 const StyledTooltip = ({ children, tooltipText }) => {
+  const [toolTip, setToolTip] = useState(false);
   return (
     <Tooltip
       enterTouchDelay={0}
-      leaveTouchDelay={20000}
+      leaveTouchDelay={8000}
+      onClose={() => setToolTip(false)}
+      onOpen={() => setToolTip(true)}
       title={tooltipText}
       componentsProps={{
         tooltip: {
