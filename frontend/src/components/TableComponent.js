@@ -31,7 +31,7 @@ const StyledTooltip = ({ children, tooltipText }) => {
   return (
     <Tooltip
       enterTouchDelay={0}
-      leaveTouchDelay={0}
+      leaveTouchDelay={20000}
       title={tooltipText}
       componentsProps={{
         tooltip: {
@@ -63,6 +63,7 @@ const Infoheader = ({ tooltipText, text }) => {
             fontSize="string"
             color="disabled"
             sx={{
+              display: "inline-block",
               position: "relative",
               padding: "1em",
               margin: "-1em",
