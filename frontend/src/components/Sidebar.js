@@ -87,7 +87,7 @@ function Sidebar({ setOpen }) {
             <StyledItemIcon>
               <MonetizationOnIcon />
             </StyledItemIcon>
-            <ListItemText primary="Trade Coins" />
+            <ListItemText primary="Trade" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
