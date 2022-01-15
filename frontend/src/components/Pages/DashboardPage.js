@@ -10,7 +10,7 @@ function DashboardPage({ children }) {
           <Sidebar />
         </Grid>
       </Hidden>
-      <Grid item xs={10.5} mt={4}>
+      <Grid item xs={10.5} mt={4} marginTop={0}>
         {children}
       </Grid>
     </Grid>
