@@ -26,7 +26,10 @@ const styles = {
     margin: "20px auto",
   },
   item: {
+    display: "flex",
+    flexDirection: "column",
     margin: "20px",
+    gap: "10px",
   },
   link: {
     "&:hover": {
