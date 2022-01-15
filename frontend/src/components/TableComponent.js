@@ -190,7 +190,6 @@ function Row({ coin, width }) {
                       display: "flex",
                       flexDirection: "column",
                       gap: "10px",
-                      flexGrow: 1,
                     }}
                   >
                     <Typography variant="string">{`Percentage: ${(
@@ -229,7 +228,7 @@ function Row({ coin, width }) {
                 arrow
               >
                 <Box>
-                  <Typography>
+                  <Typography noWrap>
                     <NumberFormat
                       displayType="text"
                       suffix={` ${coin.symbol.toUpperCase()}`}
@@ -250,7 +249,7 @@ function Row({ coin, width }) {
                 </Box>
               </StyledTooltip>
             ) : (
-              <Typography>
+              <Typography noWrap>
                 <NumberFormat
                   displayType="text"
                   suffix={` ${coin.symbol.toUpperCase()}`}
@@ -269,7 +268,7 @@ function Row({ coin, width }) {
 function TableComponent({ data }) {
   const rows = data;
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   let tableRef = useRef();
   const handleWindowResize = useCallback(() => {
