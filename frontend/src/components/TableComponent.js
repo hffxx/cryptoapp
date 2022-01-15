@@ -183,11 +183,10 @@ function Row({ coin, width }) {
           <Grid item sx={{ display: "flex" }}>
             {!!coin.max_supply &&
             coin.circulating_supply !== coin.max_supply ? (
-              <Box>
+              <Box sx={{ width: "175px" }}>
                 <Box
                   display={"flex"}
                   alignItems={"center"}
-                  justifyContent={"space-between"}
                   sx={{ gap: "10px" }}
                 >
                   <Typography noWrap>
@@ -250,15 +249,14 @@ function Row({ coin, width }) {
                       sx={{
                         display: "inline-block",
                         position: "relative",
-                        padding: "0.5em",
-                        margin: "-0.5em",
+                        padding: "1em",
+                        margin: "-1em",
                       }}
                     />
                   </StyledTooltip>
                 </Box>
                 <LinearProgress
                   sx={{
-                    width: "150px",
                     height: "5px",
                     borderRadius: "2px",
                   }}
