@@ -9,10 +9,15 @@ function DashboardPage({ children }) {
         <Grid item xs={1.5}>
           <Sidebar />
         </Grid>
+        <Grid item xs={10.5} mt={4} marginTop={0}>
+          {children}
+        </Grid>
       </Hidden>
-      <Grid item xs={10.5} mt={4} marginTop={0}>
-        {children}
-      </Grid>
+      <Hidden xlUp>
+        <Grid item xs={12} mt={4} marginTop={0}>
+          {children}
+        </Grid>
+      </Hidden>
     </Grid>
   );
 }

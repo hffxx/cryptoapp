@@ -26,13 +26,13 @@ const StyledItemIcon = ({ children }) => {
   );
 };
 
-function Sidebar({ setOpen }) {
+function Sidebar({ setOpen = null }) {
   const [error, setError] = useState(null);
   const { logout } = useAuth();
   let navigate = useNavigate();
   const handleNavigate = (route) => {
     navigate(route);
-    setOpen(false);
+    !!setOpen && setOpen(false);
   };
   const handleLogout = async () => {
     setError("");
