@@ -47,7 +47,7 @@ function Row({ coin, width }) {
   return (
     <>
       <TableRow sx={{ height: "70px" }}>
-        <Hidden smDown>
+        <Hidden mdDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
           </TableCell>
@@ -66,12 +66,15 @@ function Row({ coin, width }) {
               flexDirection: "row",
               alignItems: "center",
               gap: "10px",
-              "@media (max-width: 600px)": {
+              "@media (max-width: 599px)": {
                 flexDirection: "column",
                 gap: "0px",
               },
             }}
           >
+            <Hidden mdUp smDown>
+              <Typography>{`${coin.market_cap_rank}.\u00A0`}</Typography>
+            </Hidden>
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
             <Box sx={{ display: "flex" }}>
               <Hidden smUp>
@@ -130,7 +133,7 @@ function Row({ coin, width }) {
         </TableCell>
         <TableCell>
           <Grid item>
-            <Typography noWrap>
+            <Typography>
               <NumberFormat
                 displayType="text"
                 suffix={` ${coin.symbol.toUpperCase()}`}
@@ -182,8 +185,7 @@ function TableComponent({ data }) {
     };
   }, [handleWindowResize]);
   const handleChangeRowsPerPage = (e) => {
-    setRowsPerPage(Number(e.target.value));
-
+    setRowsPerPage(e.target.value);
     setPage(0);
   };
   const handleChangePage = (e, newPage) => {
@@ -235,7 +237,7 @@ function TableComponent({ data }) {
         >
           <TableHead>
             <TableRow>
-              <Hidden smDown>
+              <Hidden mdDown>
                 <TableCell sx={{ width: "10px" }}>#</TableCell>
               </Hidden>
               <TableCell
@@ -295,7 +297,6 @@ function TablePaginationComponent({
         [`& .${tablePaginationClasses.toolbar}`]: {
           justifyContent: "center",
         },
-        [`& .${tablePaginationClasses.select}`]: {},
       }}
       rowsPerPageOptions={[
         10,
