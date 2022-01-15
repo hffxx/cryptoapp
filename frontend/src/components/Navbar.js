@@ -98,7 +98,7 @@ function Navbar() {
             }}
           >
             {!currentUser ? (
-              <Hidden xlDown>
+              <Box>
                 <Button
                   sx={styles.register}
                   onClick={() => handleClick("/signup")}
@@ -113,7 +113,7 @@ function Navbar() {
                 >
                   Login
                 </Button>
-              </Hidden>
+              </Box>
             ) : (
               <Hidden xlDown>
                 <Typography sx={{ color: "black", margin: "0px 20px" }}>
