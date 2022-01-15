@@ -11,12 +11,12 @@ import {
   Hidden,
   TablePagination,
   tablePaginationClasses,
+  Tooltip,
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LinearProgress from "@mui/material/LinearProgress";
-import Tooltip from "@mui/material/Tooltip";
 import NumberFormat from "react-number-format";
 import InfoIcon from "@mui/icons-material/Info";
 
@@ -26,6 +26,45 @@ export const percentColor = (coin) =>
 const dataMissing = (
   <Typography sx={{ color: "orange" }}>Data missing</Typography>
 );
+
+const StyledTooltip = ({ children, tooltipText }) => {
+  return (
+    <Tooltip
+      title={tooltipText}
+      componentsProps={{
+        tooltip: {
+          sx: {
+            padding: "10px 20px",
+            color: "#626f86",
+            backgroundColor: "white",
+            fontSize: "14px",
+            boxShadow:
+              "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)",
+          },
+        },
+      }}
+    >
+      {children}
+    </Tooltip>
+  );
+};
+
+const Infoheader = ({ tooltipText, text }) => {
+  return (
+    <TableCell>
+      <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+        <Typography variant="string" noWrap>
+          {text}
+        </Typography>
+        <Hidden lgDown>
+          <StyledTooltip tooltipText={tooltipText}>
+            <InfoIcon fontSize="string" color="disabled" />
+          </StyledTooltip>
+        </Hidden>
+      </Box>
+    </TableCell>
+  );
+};
 
 function Row({ coin, width }) {
   const coinFormat = (amount) => {
@@ -47,7 +86,7 @@ function Row({ coin, width }) {
   return (
     <>
       <TableRow sx={{ height: "70px" }}>
-        <Hidden smDown>
+        <Hidden mdDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
           </TableCell>
@@ -66,12 +105,15 @@ function Row({ coin, width }) {
               flexDirection: "row",
               alignItems: "center",
               gap: "10px",
-              "@media (max-width: 600px)": {
+              "@media (max-width: 599px)": {
                 flexDirection: "column",
                 gap: "0px",
               },
             }}
           >
+            <Hidden mdUp smDown>
+              <Typography>{`${coin.market_cap_rank}.\u00A0`}</Typography>
+            </Hidden>
             <Box component="img" src={coin?.image} sx={{ width: "25px" }}></Box>
             <Box sx={{ display: "flex" }}>
               <Hidden smUp>
@@ -130,7 +172,7 @@ function Row({ coin, width }) {
         </TableCell>
         <TableCell>
           <Grid item>
-            <Typography noWrap>
+            <Typography>
               <NumberFormat
                 displayType="text"
                 suffix={` ${coin.symbol.toUpperCase()}`}
@@ -139,11 +181,16 @@ function Row({ coin, width }) {
               ></NumberFormat>
             </Typography>
             {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
-              <Tooltip
-                title={`Percentage: ${(
-                  (coin.circulating_supply / coin.max_supply) *
-                  100
-                ).toFixed(2)}%`}
+              <StyledTooltip
+                tooltipText={
+                  <Box>
+                    <Typography variant="string">{`Percentage: ${(
+                      (coin.circulating_supply / coin.max_supply) *
+                      100
+                    ).toFixed(2)}%`}</Typography>
+                    <Typography variant="string">Elo elo elo</Typography>
+                  </Box>
+                }
                 arrow
               >
                 <LinearProgress
@@ -156,7 +203,7 @@ function Row({ coin, width }) {
                   value={(coin.circulating_supply / coin.max_supply) * 100}
                   color="inherit"
                 ></LinearProgress>
-              </Tooltip>
+              </StyledTooltip>
             )}
           </Grid>
         </TableCell>
@@ -182,8 +229,7 @@ function TableComponent({ data }) {
     };
   }, [handleWindowResize]);
   const handleChangeRowsPerPage = (e) => {
-    setRowsPerPage(Number(e.target.value));
-
+    setRowsPerPage(e.target.value);
     setPage(0);
   };
   const handleChangePage = (e, newPage) => {
@@ -205,20 +251,7 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
-  const Infoheader = ({ text }) => {
-    return (
-      <TableCell>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          <Typography variant="string" noWrap>
-            {text}
-          </Typography>
-          <Hidden lgDown>
-            <InfoIcon fontSize="string" color="disabled" />
-          </Hidden>
-        </Box>
-      </TableCell>
-    );
-  };
+
   return (
     <Box
       sx={{
@@ -235,7 +268,7 @@ function TableComponent({ data }) {
         >
           <TableHead>
             <TableRow>
-              <Hidden smDown>
+              <Hidden mdDown>
                 <TableCell sx={{ width: "10px" }}>#</TableCell>
               </Hidden>
               <TableCell
@@ -251,9 +284,18 @@ function TableComponent({ data }) {
               </TableCell>
               <TableCell>Price</TableCell>
               <TableCell>24h %</TableCell>
-              <Infoheader text="Market Cap" />
-              <Infoheader text="Volume(24h)" />
-              <Infoheader text="Circulating Supply" />
+              <Infoheader
+                text="Market Cap"
+                tooltipText="The total market value of a cryptocurrency's circulating supply. It is analogous to the free-float capitalization in the stock market. Market Cap = Current Price x Circulating Supply."
+              />
+              <Infoheader
+                text="Volume(24h)"
+                tooltipText="A measure of how much of a cryptocurrency was traded in the last null."
+              />
+              <Infoheader
+                text="Circulating Supply"
+                tooltipText="The amount of coins that are circulating in the market and are in public hands. It is analogous to the flowing shares in the stock market."
+              />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -295,7 +337,6 @@ function TablePaginationComponent({
         [`& .${tablePaginationClasses.toolbar}`]: {
           justifyContent: "center",
         },
-        [`& .${tablePaginationClasses.select}`]: {},
       }}
       rowsPerPageOptions={[
         10,

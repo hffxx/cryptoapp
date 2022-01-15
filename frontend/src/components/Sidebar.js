@@ -65,7 +65,7 @@ function Sidebar({ setOpen = null }) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => handleNavigate("/highscores")}>
             <StyledItemIcon>
               <TrendingUpIcon />
             </StyledItemIcon>
@@ -92,7 +92,7 @@ function Sidebar({ setOpen = null }) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => handleNavigate("/wallet")}>
             <StyledItemIcon>
               <AccountBalanceWalletIcon />
             </StyledItemIcon>

@@ -12,6 +12,8 @@ import { AuthProvider } from "./components/contexts/AuthContext";
 import { CoinsProvider } from "./components/contexts/CoinsContext";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Messages from "./components/Messages";
+import Wallet from "./components/Wallet";
+import Highscores from "./components/Highscores";
 
 function App() {
   return (
@@ -45,6 +47,24 @@ function App() {
                 element={
                   <AuthenticatedRoute>
                     <Messages />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/wallet"
+                exact
+                element={
+                  <AuthenticatedRoute>
+                    <Wallet />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/highscores"
+                exact
+                element={
+                  <AuthenticatedRoute>
+                    <Highscores />
                   </AuthenticatedRoute>
                 }
               />
