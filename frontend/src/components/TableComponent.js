@@ -46,7 +46,7 @@ function Row({ coin, width }) {
   };
   return (
     <>
-      <TableRow>
+      <TableRow sx={{ height: "70px" }}>
         <Hidden smDown>
           <TableCell>
             <Typography>{coin.market_cap_rank}</Typography>
@@ -190,7 +190,7 @@ function TableComponent({ data }) {
     setPage(newPage);
     window.scrollTo({
       behavior: "smooth",
-      top: tableRef.current?.offsetTop - 64,
+      top: tableRef.current?.offsetTop,
     });
   };
   const emptyRows =
