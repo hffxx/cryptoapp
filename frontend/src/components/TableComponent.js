@@ -183,51 +183,13 @@ function Row({ coin, width }) {
           <Grid item sx={{ display: "flex" }}>
             {!!coin.max_supply &&
             coin.circulating_supply !== coin.max_supply ? (
-              <StyledTooltip
-                tooltipText={
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                    }}
-                  >
-                    <Typography variant="string">{`Percentage: ${(
-                      (coin.circulating_supply / coin.max_supply) *
-                      100
-                    ).toFixed(2)}%`}</Typography>
-                    <LinearProgress
-                      sx={{
-                        height: "5px",
-                        borderRadius: "2px",
-                      }}
-                      variant="determinate"
-                      value={(coin.circulating_supply / coin.max_supply) * 100}
-                      color="inherit"
-                    ></LinearProgress>
-                    <Typography variant="string">
-                      {`Circulating Supply: `}{" "}
-                      <NumberFormat
-                        displayType="text"
-                        value={coin.circulating_supply.toFixed()}
-                        thousandSeparator={true}
-                      ></NumberFormat>
-                      {` ${coin.symbol.toUpperCase()}`}
-                    </Typography>
-                    <Typography variant="string">
-                      {`Max Supply: `}{" "}
-                      <NumberFormat
-                        displayType="text"
-                        value={coin.max_supply}
-                        thousandSeparator={true}
-                      ></NumberFormat>
-                      {` ${coin.symbol.toUpperCase()}`}
-                    </Typography>
-                  </Box>
-                }
-                arrow
-              >
-                <Box>
+              <Box>
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                  sx={{ gap: "10px" }}
+                >
                   <Typography noWrap>
                     <NumberFormat
                       displayType="text"
@@ -236,18 +198,75 @@ function Row({ coin, width }) {
                       thousandSeparator={true}
                     ></NumberFormat>
                   </Typography>
-                  <LinearProgress
-                    sx={{
-                      width: "150px",
-                      height: "5px",
-                      borderRadius: "2px",
-                    }}
-                    variant="determinate"
-                    value={(coin.circulating_supply / coin.max_supply) * 100}
-                    color="inherit"
-                  ></LinearProgress>
+                  <StyledTooltip
+                    tooltipText={
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "10px",
+                        }}
+                      >
+                        <Typography variant="string">{`Percentage: ${(
+                          (coin.circulating_supply / coin.max_supply) *
+                          100
+                        ).toFixed(2)}%`}</Typography>
+                        <LinearProgress
+                          sx={{
+                            height: "5px",
+                            borderRadius: "2px",
+                          }}
+                          variant="determinate"
+                          value={
+                            (coin.circulating_supply / coin.max_supply) * 100
+                          }
+                          color="inherit"
+                        ></LinearProgress>
+                        <Typography variant="string">
+                          {`Circulating Supply: `}{" "}
+                          <NumberFormat
+                            displayType="text"
+                            value={coin.circulating_supply.toFixed()}
+                            thousandSeparator={true}
+                          ></NumberFormat>
+                          {` ${coin.symbol.toUpperCase()}`}
+                        </Typography>
+                        <Typography variant="string">
+                          {`Max Supply: `}{" "}
+                          <NumberFormat
+                            displayType="text"
+                            value={coin.max_supply}
+                            thousandSeparator={true}
+                          ></NumberFormat>
+                          {` ${coin.symbol.toUpperCase()}`}
+                        </Typography>
+                      </Box>
+                    }
+                    arrow
+                  >
+                    <InfoIcon
+                      fontSize="string"
+                      color="disabled"
+                      sx={{
+                        display: "inline-block",
+                        position: "relative",
+                        padding: "0.5em",
+                        margin: "-0.5em",
+                      }}
+                    />
+                  </StyledTooltip>
                 </Box>
-              </StyledTooltip>
+                <LinearProgress
+                  sx={{
+                    width: "150px",
+                    height: "5px",
+                    borderRadius: "2px",
+                  }}
+                  variant="determinate"
+                  value={(coin.circulating_supply / coin.max_supply) * 100}
+                  color="inherit"
+                ></LinearProgress>
+              </Box>
             ) : (
               <Typography noWrap>
                 <NumberFormat
