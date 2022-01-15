@@ -31,7 +31,7 @@ const StyledTooltip = ({ children, tooltipText }) => {
   return (
     <Tooltip
       enterTouchDelay={0}
-      leaveTouchDelay={20000}
+      leaveTouchDelay={0}
       title={tooltipText}
       componentsProps={{
         tooltip: {
@@ -59,7 +59,15 @@ const Infoheader = ({ tooltipText, text }) => {
           {text}
         </Typography>
         <StyledTooltip tooltipText={tooltipText}>
-          <InfoIcon fontSize="string" color="disabled" />
+          <InfoIcon
+            fontSize="string"
+            color="disabled"
+            sx={{
+              position: "relative",
+              padding: "1em",
+              margin: "-1em",
+            }}
+          />
         </StyledTooltip>
       </Box>
     </TableCell>
@@ -182,8 +190,6 @@ function Row({ coin, width }) {
             </Typography>
             {!!coin.max_supply && coin.circulating_supply !== coin.max_supply && (
               <StyledTooltip
-                enterTouchDelay={0}
-                leaveTouchDelay={20000}
                 tooltipText={
                   <Box
                     sx={{
