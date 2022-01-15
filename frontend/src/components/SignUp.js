@@ -167,6 +167,17 @@ function SignUp() {
               Login
             </Link>
           </Typography>
+          <Typography>
+            {"Forgot your password? "}
+            <Link
+              underline="hover"
+              sx={styles.link}
+              component={RouterLink}
+              to="/recover"
+            >
+              Recover account
+            </Link>
+          </Typography>
         </Box>
       </Paper>
     </UnauthPage>
