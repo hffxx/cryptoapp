@@ -12,6 +12,7 @@ import {
   Box,
   IconButton,
   SwipeableDrawer,
+  Divider,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -153,7 +154,11 @@ function Navbar() {
           <IconButton disableRipple onClick={() => setOpen(false)}>
             <ChevronRightIcon sx={{ color: "black" }} fontSize="large" />
           </IconButton>
-          <Typography variant="h5" sx={{ textAlign: "center" }}>
+          <Divider />
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center", margin: "10px 0px" }}
+          >
             {currentUser?.email}
           </Typography>
           <Sidebar setOpen={setOpen} />
