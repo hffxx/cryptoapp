@@ -30,6 +30,9 @@ function Sidebar({ setOpen }) {
   const [error, setError] = useState(null);
   const { logout } = useAuth();
   let navigate = useNavigate();
+  const handleNavigate = (route) => {
+    navigate(route);
+  };
   const handleLogout = async () => {
     setError("");
     try {
@@ -53,7 +56,7 @@ function Sidebar({ setOpen }) {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => handleNavigate("/")}>
             <StyledItemIcon>
               <LineStyleIcon />
             </StyledItemIcon>
@@ -126,7 +129,7 @@ function Sidebar({ setOpen }) {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => handleNavigate("/settings")}>
             <StyledItemIcon>
               <ManageAccountsIcon />
             </StyledItemIcon>

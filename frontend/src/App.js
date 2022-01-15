@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import Recover from "./components/Recover";
+import Settings from "./components/Settings";
 import { Box } from "@mui/material";
 import { AuthProvider } from "./components/contexts/AuthContext";
 import { CoinsProvider } from "./components/contexts/CoinsContext";
@@ -25,6 +26,15 @@ function App() {
                 element={
                   <AuthenticatedRoute>
                     <Dashboard />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                exact
+                element={
+                  <AuthenticatedRoute>
+                    <Settings />
                   </AuthenticatedRoute>
                 }
               />

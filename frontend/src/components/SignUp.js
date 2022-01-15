@@ -17,6 +17,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import UnauthPage from "./Pages/UnauthPage";
 
 const styles = {
   paper: {
@@ -79,10 +80,7 @@ function SignUp() {
   };
 
   return (
-    <Grid
-      container
-      sx={{ padding: "10px", display: "flex", alignItems: "flex-start" }}
-    >
+    <UnauthPage>
       <Paper elevation={4} sx={styles.paper}>
         <Typography variant="h2">Sign up</Typography>
         <FormControl>
@@ -168,7 +166,7 @@ function SignUp() {
           </Typography>
         </Box>
       </Paper>
-    </Grid>
+    </UnauthPage>
   );
 }
 
