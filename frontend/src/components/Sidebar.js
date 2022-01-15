@@ -17,6 +17,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useAuth } from "./contexts/AuthContext";
 
 const StyledItemIcon = ({ children }) => {
@@ -114,6 +115,25 @@ function Sidebar({ setOpen }) {
           </ListItemButton>
         </ListItem>
       </List>
+      <Divider />
+      <List
+        aria-labelledby="account"
+        component="nav"
+        subheader={
+          <ListSubheader component="div" id="account" disableSticky>
+            Account
+          </ListSubheader>
+        }
+      >
+        <ListItem disablePadding>
+          <ListItemButton>
+            <StyledItemIcon>
+              <ManageAccountsIcon />
+            </StyledItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </ListItem>
+      </List>
       <Hidden xlUp>
         <Divider />
         <List
@@ -121,7 +141,7 @@ function Sidebar({ setOpen }) {
           component="nav"
           subheader={
             <ListSubheader component="div" id="action" disableSticky>
-              Action
+              Actions
             </ListSubheader>
           }
         >
