@@ -68,8 +68,8 @@ const Infoheader = ({ tooltipText, text }) => {
             sx={{
               display: "inline-block",
               position: "relative",
-              padding: "1em",
-              margin: "-1em",
+              padding: "2em",
+              margin: "-2em",
             }}
           />
         </StyledTooltip>
@@ -190,7 +190,8 @@ function Row({ coin, width }) {
                 <Box
                   display={"flex"}
                   alignItems={"center"}
-                  sx={{ gap: "10px" }}
+                  justifyContent={"left"}
+                  sx={{ gap: "5px" }}
                 >
                   <Typography>
                     <NumberFormat
@@ -252,8 +253,8 @@ function Row({ coin, width }) {
                       sx={{
                         display: "inline-block",
                         position: "relative",
-                        padding: "1em",
-                        margin: "-1em",
+                        padding: "2em",
+                        margin: "-2em",
                       }}
                     />
                   </StyledTooltip>
