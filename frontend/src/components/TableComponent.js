@@ -193,14 +193,6 @@ function Row({ coin, width }) {
                   justifyContent={"left"}
                   sx={{ gap: "5px" }}
                 >
-                  <Typography>
-                    <NumberFormat
-                      displayType="text"
-                      suffix={` ${coin.symbol.toUpperCase()}`}
-                      value={coin.circulating_supply.toFixed()}
-                      thousandSeparator={true}
-                    ></NumberFormat>
-                  </Typography>
                   <StyledTooltip
                     tooltipText={
                       <Box
@@ -258,6 +250,14 @@ function Row({ coin, width }) {
                       }}
                     />
                   </StyledTooltip>
+                  <Typography>
+                    <NumberFormat
+                      displayType="text"
+                      suffix={` ${coin.symbol.toUpperCase()}`}
+                      value={coin.circulating_supply.toFixed()}
+                      thousandSeparator={true}
+                    ></NumberFormat>
+                  </Typography>
                 </Box>
                 <LinearProgress
                   sx={{
