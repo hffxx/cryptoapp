@@ -68,8 +68,8 @@ const Infoheader = ({ tooltipText, text }) => {
             sx={{
               display: "inline-block",
               position: "relative",
-              padding: "2em",
-              margin: "-2em",
+              padding: "1em",
+              margin: "-1em",
             }}
           />
         </StyledTooltip>
@@ -245,8 +245,8 @@ function Row({ coin, width }) {
                       sx={{
                         display: "inline-block",
                         position: "relative",
-                        padding: "2em",
-                        margin: "-2em",
+                        padding: "1em",
+                        margin: "-1em",
                       }}
                     />
                   </StyledTooltip>
