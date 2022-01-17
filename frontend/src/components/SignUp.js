@@ -17,6 +17,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UnauthPage from "./Pages/UnauthPage";
+import EmailIcon from "@mui/icons-material/Email";
 
 const styles = {
   paper: {
@@ -47,6 +48,7 @@ const errorsConf = {
 
 function SignUp() {
   const [newUser, setNewUser] = useState({
+    nick: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -55,17 +57,17 @@ function SignUp() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signup, logout } = useAuth();
+  const { signup } = useAuth();
   const handleSubmit = async () => {
-    const { email, password, confirmPassword } = newUser;
+    const { email, password, confirmPassword, nick } = newUser;
     if (password !== confirmPassword) {
       return setError({ message: "Password do not match!" });
     }
     try {
       setError("");
       setLoading(true);
-      await signup(email, password);
-      setNewUser({ email: "", password: "", confirmPassword: "" });
+      await signup(email, password, nick);
+      setNewUser({ email: "", password: "", confirmPassword: "", nick: "" });
       setSuccess("Account created");
       setLoading(false);
       navigate("/");
@@ -90,6 +92,23 @@ function SignUp() {
         <Typography variant="h2">Sign up</Typography>
         <FormControl>
           <TextField
+            value={newUser.nick}
+            sx={styles.item}
+            label="Nickname"
+            placeholder="Nick"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+            onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
             value={newUser.email}
             sx={styles.item}
             label="Login"
@@ -97,7 +116,7 @@ function SignUp() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccountCircle />
+                  <EmailIcon />
                 </InputAdornment>
               ),
             }}
