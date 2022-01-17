@@ -84,7 +84,7 @@ function Sidebar({ setOpen = null }) {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => handleNavigate("/trade")}>
             <StyledItemIcon>
               <MonetizationOnIcon />
             </StyledItemIcon>
