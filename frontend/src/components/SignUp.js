@@ -65,21 +65,23 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signup(email, password);
-      navigate("/");
       setNewUser({ email: "", password: "", confirmPassword: "" });
       setSuccess("Account created");
+      setLoading(false);
+      navigate("/");
     } catch (e) {
       if (errorsConf[e.code]) {
         setError({
           message: errorsConf[e.code],
         });
       } else {
+        console.log(e);
         setError({
           message: e.code,
         });
       }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
