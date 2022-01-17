@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 const AuthContext = createContext();
 
@@ -10,8 +10,17 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const signup = (email, password) => {
-    return auth.createUserWithEmailAndPassword(email, password);
+  const [balance, setBalance] = useState(0);
+  const signup = (email, password, nick) => {
+    return auth.createUserWithEmailAndPassword(email, password).then((cred) => {
+      return db.collection("users").doc(cred.user.uid).set({
+        nick,
+        id: cred.user.uid,
+        balance: 1000000,
+        coins: [],
+        history: [],
+      });
+    });
   };
   const login = (email, password) => {
     return auth.signInWithEmailAndPassword(email, password);
@@ -22,6 +31,20 @@ export function AuthProvider({ children }) {
   const resetPassword = (email) => {
     return auth.sendPasswordResetEmail(email);
   };
+  const getBalance = (user) => {
+    if (currentUser) {
+      return db
+        .collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          setBalance(doc.data().balance);
+        });
+    }
+  };
+  useEffect(() => {
+    getBalance(currentUser);
+  });
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -35,6 +58,7 @@ export function AuthProvider({ children }) {
     signup,
     logout,
     resetPassword,
+    balance,
   };
   return (
     <AuthContext.Provider value={value}>

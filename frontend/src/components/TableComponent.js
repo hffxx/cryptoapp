@@ -70,6 +70,7 @@ const Infoheader = ({ tooltipText, text }) => {
               position: "relative",
               padding: "1em",
               margin: "-1em",
+              zIndex: 10,
             }}
           />
         </StyledTooltip>
@@ -247,6 +248,7 @@ function Row({ coin, width }) {
                         position: "relative",
                         padding: "1em",
                         margin: "-1em",
+                        zIndex: 10,
                       }}
                     />
                   </StyledTooltip>

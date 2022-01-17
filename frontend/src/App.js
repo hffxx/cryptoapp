@@ -14,6 +14,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Messages from "./components/Messages";
 import Wallet from "./components/Wallet";
 import Highscores from "./components/Highscores";
+import Trade from "./components/Trade";
 
 function App() {
   return (
@@ -65,6 +66,15 @@ function App() {
                 element={
                   <AuthenticatedRoute>
                     <Highscores />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/trade"
+                exact
+                element={
+                  <AuthenticatedRoute>
+                    <Trade />
                   </AuthenticatedRoute>
                 }
               />
