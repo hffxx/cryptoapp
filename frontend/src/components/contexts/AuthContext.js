@@ -9,13 +9,17 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [currentUserData, setcurrentUserData] = useState();
+  const [userList, setUserList] = useState();
   const [loading, setLoading] = useState(true);
-  const [balance, setBalance] = useState(0);
   const signup = (email, password, nick) => {
     return auth.createUserWithEmailAndPassword(email, password).then((cred) => {
       return db.collection("users").doc(cred.user.uid).set({
         nick,
+        email,
+        password,
         id: cred.user.uid,
+        createdAt: new Date(),
         balance: 1000000,
         coins: [],
         history: [],
@@ -31,20 +35,26 @@ export function AuthProvider({ children }) {
   const resetPassword = (email) => {
     return auth.sendPasswordResetEmail(email);
   };
-  const getBalance = (user) => {
+  const getUserData = (user) => {
     if (currentUser) {
       return db
         .collection("users")
         .doc(user.uid)
         .get()
         .then((doc) => {
-          setBalance(doc.data().balance);
+          setcurrentUserData(doc.data());
         });
     }
+    return;
   };
   useEffect(() => {
-    getBalance(currentUser);
-  });
+    const unsubscribe = db.collection("users").onSnapshot((snapshot) => {
+      setUserList(snapshot.docs.map((doc) => doc.data()));
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -52,13 +62,17 @@ export function AuthProvider({ children }) {
     });
     return unsubscribe;
   }, []);
+  useEffect(() => {
+    getUserData(currentUser);
+  }, [currentUser]);
   const value = {
     currentUser,
     login,
     signup,
     logout,
     resetPassword,
-    balance,
+    currentUserData,
+    userList,
   };
   return (
     <AuthContext.Provider value={value}>
