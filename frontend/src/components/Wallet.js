@@ -3,10 +3,10 @@ import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 
 function Wallet() {
-  const { balance } = useAuth();
+  const { currentUserData } = useAuth();
   return (
     <DashboardPage>
-      <div>{`Current balance is: ${balance}$`}</div>
+      <div>{`Current balance is: ${currentUserData?.balance}$`}</div>
     </DashboardPage>
   );
 }
