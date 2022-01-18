@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth, db } from "../../firebase";
-import { onSnapshot } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -46,6 +45,7 @@ export function AuthProvider({ children }) {
           setcurrentUserData(doc.data());
         });
     }
+    return;
   };
   useEffect(() => {
     const unsubscribe = db.collection("users").onSnapshot((snapshot) => {
@@ -55,7 +55,6 @@ export function AuthProvider({ children }) {
       unsubscribe();
     };
   }, []);
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -73,6 +72,7 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     currentUserData,
+    userList,
   };
   return (
     <AuthContext.Provider value={value}>
