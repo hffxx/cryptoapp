@@ -7,17 +7,26 @@ function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
   const coins = currentUserData?.coins || [];
-  console.log(currentUserData);
-  console.log(coinsPriceList);
+  const totalCoinValue = (coinName) => {
+    if (coinsPriceList) {
+      let price = coinsPriceList.find((el) => el.coinName === coinName);
+      let amount = coins.find((el) => el.coinName === coinName);
+      if (price && amount) {
+        return (price.coinPrice * amount.amount).toFixed(2);
+      }
+    }
+  };
+
+  console.log(totalCoinValue());
   return (
     <DashboardPage>
       <div>{`Your current balance is: ${currentUserData?.balance}$`}</div>
       <div>Coins:</div>
       {coins.map((coin, index) => {
         return (
-          <div
-            key={index}
-          >{`Coin name: ${coin.coinName} --- amount: ${coin.amount}`}</div>
+          <div key={index}>{`Coin name: ${coin.coinName} --- amount: ${
+            coin.amount
+          } value is:${totalCoinValue(coin.coinName)}`}</div>
         );
       })}
     </DashboardPage>
