@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
+import { useCoins } from "./contexts/CoinsContext";
 
 function Wallet() {
   const { currentUserData } = useAuth();
+  const { coinsPriceList } = useCoins();
   const coins = currentUserData?.coins || [];
+  console.log(currentUserData);
+  console.log(coinsPriceList);
   return (
     <DashboardPage>
       <div>{`Your current balance is: ${currentUserData?.balance}$`}</div>
