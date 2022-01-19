@@ -7,6 +7,8 @@ function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
   const coins = currentUserData?.coins || [];
+  console.log(currentUserData);
+  //this function needs new implementation
   const totalCoinValue = (coinName) => {
     if (coinsPriceList) {
       let price = coinsPriceList.find((el) => el.coinName === coinName);
