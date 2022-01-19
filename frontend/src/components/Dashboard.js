@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import TableComponent from "./TableComponent";
 import Carousel from "./Carousel";
-import Sidebar from "./Sidebar";
+import Spinner from "./Spinner";
 import { useCoins } from "./contexts/CoinsContext";
 import DashboardPage from "./Pages/DashboardPage";
 
@@ -33,20 +33,7 @@ function Dashboard() {
   return (
     <DashboardPage>
       {coins.length === 0 ? (
-        <Box
-          sx={{
-            height: "60vh",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            gap: "25px",
-          }}
-        >
-          <Typography variant="h5">Data loading..</Typography>
-          <CircularProgress />
-        </Box>
+        <Spinner />
       ) : (
         <Grid container>
           <Hidden lgDown>

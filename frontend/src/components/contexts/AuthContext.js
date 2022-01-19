@@ -35,18 +35,6 @@ export function AuthProvider({ children }) {
   const resetPassword = (email) => {
     return auth.sendPasswordResetEmail(email);
   };
-  // const getUserData = (user) => {
-  //   if (currentUser) {
-  //     return db
-  //       .collection("users")
-  //       .doc(user.uid)
-  //       .get()
-  //       .then((doc) => {
-  //         setcurrentUserData(doc.data());
-  //       });
-  //   }
-  //   return;
-  // };
   useEffect(() => {
     const unsubscribe = db.collection("users").onSnapshot((snapshot) => {
       setUserList(snapshot.docs.map((doc) => doc.data()));
@@ -72,9 +60,6 @@ export function AuthProvider({ children }) {
     });
     return unsubscribe;
   }, []);
-  // useEffect(() => {
-  //   getUserData(currentUser);
-  // }, [currentUser]);
   const value = {
     currentUser,
     login,
