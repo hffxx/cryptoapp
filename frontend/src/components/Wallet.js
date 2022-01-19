@@ -12,16 +12,15 @@ function Wallet() {
   //this function needs new implementation
   const totalCoinValue = (coinName) => {
     if (coinsPriceList) {
-      let price = coinsPriceList.find((el) => el.coinName === coinName);
-      let amount = coins.find((el) => el.coinName === coinName);
-      if (price && amount) {
-        return (price.coinPrice * amount.amount).toFixed(2);
-      }
+      let { coinPrice } =
+        coinsPriceList.find((el) => el.coinName === coinName) || 0;
+      let { amount } = coins.find((el) => el.coinName === coinName) || 0;
+      return (coinPrice * amount).toFixed(2);
     }
   };
   return (
     <DashboardPage>
-      {!currentUserData && coinsPriceList ? (
+      {!currentUserData && coins ? (
         <Spinner />
       ) : (
         <Box>
