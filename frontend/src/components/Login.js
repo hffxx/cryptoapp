@@ -60,7 +60,6 @@ function Login() {
       setError(null);
       setLoading(true);
       await login(user.email, user.password);
-      setLoading(false);
       navigate("/");
     } catch (e) {
       if (errorsConf[e.code]) {
@@ -75,7 +74,9 @@ function Login() {
       setLoading(false);
     }
   };
-
+  useState(() => {
+    return setLoading(false);
+  });
   return (
     <UnauthPage>
       <Paper elevation={4} sx={styles.paper}>
