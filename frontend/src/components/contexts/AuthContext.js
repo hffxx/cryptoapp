@@ -10,7 +10,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [currentUserId, setcurrentUserId] = useState();
-  const [currentUserData, setcurrentUserData] = useState();
+  const [currentUserData, setCurrentUserData] = useState();
   const [userList, setUserList] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -73,15 +73,13 @@ export function AuthProvider({ children }) {
     if (currentUser) {
       db.collection("users")
         .doc(currentUserId)
-        .get()
-        .then((doc) => {
-          setcurrentUserData(doc.data());
+        .onSnapshot((snapshot) => {
+          setCurrentUserData(snapshot.data());
         });
     } else {
-      setcurrentUserData();
+      setCurrentUserData();
     }
   }, [currentUserId]);
-  console.log(currentUserData);
   const value = {
     currentUser,
     login,
