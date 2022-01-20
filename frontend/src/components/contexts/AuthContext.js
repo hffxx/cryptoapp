@@ -9,6 +9,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [currentUserId, setcurrentUserId] = useState();
   const [currentUserData, setcurrentUserData] = useState();
   const [userList, setUserList] = useState();
   const [loading, setLoading] = useState(true);
@@ -28,10 +29,14 @@ export function AuthProvider({ children }) {
     });
   };
   const login = (email, password) => {
-    return auth.signInWithEmailAndPassword(email, password);
+    return auth.signInWithEmailAndPassword(email, password).then((cred) => {
+      setcurrentUserId(cred.user.uid);
+    });
   };
   const logout = () => {
-    return auth.signOut();
+    return auth.signOut().then(() => {
+      setcurrentUserId();
+    });
   };
   const resetPassword = (email) => {
     return auth.sendPasswordResetEmail(email);
@@ -44,25 +49,39 @@ export function AuthProvider({ children }) {
       unsubscribe();
     };
   }, []);
-  useEffect(() => {
-    const unsubscribe = db
-      .collection("users", currentUser?.uid)
-      .onSnapshot((snapshot) => {
-        setcurrentUserData(...snapshot.docs.map((doc) => doc.data()));
-      });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = db
+  //     .collection("users", currentUser?.uid)
+  //     .onSnapshot((snapshot) => {
+  //       setcurrentUserData(...snapshot.docs.map((doc) => doc.data()));
+  //     });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      setcurrentUserId(user?.uid);
       setLoading(false);
     });
     return () => {
       unsubscribe();
     };
   }, []);
+  useEffect(() => {
+    if (currentUser) {
+      db.collection("users")
+        .doc(currentUserId)
+        .get()
+        .then((doc) => {
+          setcurrentUserData(doc.data());
+        });
+    } else {
+      setcurrentUserData();
+    }
+  }, [currentUserId]);
+  console.log(currentUserData);
   const value = {
     currentUser,
     login,
