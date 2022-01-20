@@ -76,7 +76,7 @@ function Wallet() {
     if (coinsPriceList) {
       let { coinPrice } =
         coinsPriceList.find((el) => el.coinName === coinName) || 0;
-      return coinPrice.toFixed(2);
+      return coinPrice?.toFixed(2);
     }
   };
   const totalUserValue = () => {
