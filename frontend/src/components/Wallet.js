@@ -88,7 +88,7 @@ function Wallet() {
     });
     return totalArr.reduce((a, b) => {
       return a + b;
-    });
+    }, 0);
   };
 
   const getImage = (coinName) => {
