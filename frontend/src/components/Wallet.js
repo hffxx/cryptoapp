@@ -6,10 +6,21 @@ import Spinner from "./Spinner";
 import { Box, Paper, Grid, Typography, Button } from "@mui/material";
 
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+const valueReducer = (value) => {
+  if (value / 1000000000 > 1) {
+    return `${(value / 1000000000).toFixed(2)}B`;
+  } else if (value / 1000000 > 1) {
+    return `${(value / 1000000).toFixed(2)}M`;
+  } else if (value / 1000 > 1) {
+    return `${(value / 1000).toFixed(2)}K`;
+  } else {
+    return value;
+  }
+};
 
 const CoinItem = ({ coin, price, img }) => {
   const { coinName, amount } = coin;
-  console.log(img);
+  let value = (price * amount).toFixed(2);
   return (
     <Grid
       item
@@ -29,15 +40,23 @@ const CoinItem = ({ coin, price, img }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-around",
-          width: "200px",
-          height: "200px",
           padding: "10px",
+          width: "200px",
         }}
       >
         <Typography variant="h4">{capitalize(coinName)}</Typography>
-        <Box component="img" src={img} sx={{ width: "50px" }}></Box>
-        <Typography>{`Amount: ${amount}`}</Typography>
-        <Typography>{`Price: $${price}`}</Typography>
+        <Box
+          component="img"
+          src={img}
+          sx={{ width: "50px", marginTop: "10px" }}
+        ></Box>
+        <Box sx={{ margin: "10px 0px" }}>
+          <Typography>{`Amount: ${amount}`}</Typography>
+          <Typography>{`Price: $${price}`}</Typography>
+          <Typography noWrap>{`Total value: $${valueReducer(
+            value
+          )}`}</Typography>
+        </Box>
         <Button variant="contained">Sell</Button>
       </Paper>
     </Grid>
@@ -54,13 +73,13 @@ function Wallet() {
       let { coinPrice } =
         coinsPriceList.find((el) => el.coinName === coinName) || 0;
       let { amount } = userCoins.find((el) => el.coinName === coinName) || 0;
-      return (coinPrice * amount).toFixed(2);
+      return coinPrice.toFixed(2);
     }
   };
 
   const getImage = (coinName) => {
     let img = coins.find((el) => el.id === coinName);
-    return img.image;
+    return img?.image;
   };
   return (
     <DashboardPage>
@@ -77,7 +96,7 @@ function Wallet() {
           >
             <Typography variant="h3">{`Wallet of player: ${currentUserData.nick}`}</Typography>
           </Grid>
-          <Grid container item spacing={2} xs={12} marginTop={2}>
+          <Grid container item spacing={2} xs={10.5} marginTop={2}>
             {userCoins.map((coin) => (
               <CoinItem
                 coin={coin}
