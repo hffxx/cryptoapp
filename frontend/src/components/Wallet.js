@@ -51,9 +51,13 @@ const CoinItem = ({ coin, price, img }) => {
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Box sx={{ margin: "10px 0px" }}>
-          <Typography>{`Amount: ${amount}`}</Typography>
-          <Typography>{`Price: $${price}`}</Typography>
-          <Typography noWrap>{`Total value: $${valueReducer(
+          <Typography color="red">{`Amount: ${valueReducer(
+            amount
+          )}`}</Typography>
+          <Typography color="darkblue">{`Price: $${valueReducer(
+            price
+          )}`}</Typography>
+          <Typography color="green">{`Total value: $${valueReducer(
             value
           )}`}</Typography>
         </Box>
@@ -68,13 +72,23 @@ function Wallet() {
   const { coinsPriceList } = useCoins();
   const { coins } = useCoins();
   const userCoins = currentUserData?.coins || [];
-  const totalCoinValue = (coinName) => {
+  const findCoinValue = (coinName) => {
     if (coinsPriceList) {
       let { coinPrice } =
         coinsPriceList.find((el) => el.coinName === coinName) || 0;
-      let { amount } = userCoins.find((el) => el.coinName === coinName) || 0;
       return coinPrice.toFixed(2);
     }
+  };
+  const totalUserValue = () => {
+    let totalArr = [];
+    userCoins.forEach((el) => {
+      let value = findCoinValue(el.coinName);
+      let total = el.amount * value;
+      totalArr.push(total);
+    });
+    return totalArr.reduce((a, b) => {
+      return a + b;
+    });
   };
 
   const getImage = (coinName) => {
@@ -93,15 +107,20 @@ function Wallet() {
             display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
+            flexDirection={"column"}
+            gap={"20px"}
           >
-            <Typography variant="h3">{`Wallet of player: ${currentUserData.nick}`}</Typography>
+            <Typography variant="h3">Wallet</Typography>
+            <Typography variant="h4" sx={{ color: "green" }}>
+              {`$${valueReducer(totalUserValue())}`}
+            </Typography>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
             {userCoins.map((coin) => (
               <CoinItem
                 coin={coin}
                 key={coin.coinName}
-                price={totalCoinValue(coin.coinName)}
+                price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
               />
             ))}
@@ -113,13 +132,3 @@ function Wallet() {
 }
 
 export default Wallet;
-
-//  <div>{`Your current balance is: ${currentUserData?.balance}$`}</div>
-//<div>Coins:</div>
-//{coins.map((coin, index) => {
-//return (
-//<div key={index}>{`Coin name: ${coin.coinName} --- amount: ${
-//coin.amount
-//} value is:${totalCoinValue(coin.coinName)}`}</div>
-//);
-//})}
