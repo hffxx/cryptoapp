@@ -69,7 +69,6 @@ function SignUp() {
       await signup(email, password, nick);
       setNewUser({ email: "", password: "", confirmPassword: "", nick: "" });
       setSuccess("Account created");
-      setLoading(false);
       navigate("/");
     } catch (e) {
       if (errorsConf[e.code]) {
@@ -85,7 +84,9 @@ function SignUp() {
       setLoading(false);
     }
   };
-
+  useState(() => {
+    return setLoading(false);
+  });
   return (
     <UnauthPage>
       <Paper elevation={4} sx={styles.paper}>

@@ -51,7 +51,7 @@ const CoinItem = ({ coin, price, img }) => {
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Box sx={{ margin: "10px 0px" }}>
-          <Typography color="red">{`Amount: ${valueReducer(
+          <Typography color="darkred">{`Amount: ${valueReducer(
             amount
           )}`}</Typography>
           <Typography color="darkblue">{`Price: $${valueReducer(
