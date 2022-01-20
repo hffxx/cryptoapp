@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
   const [currentUserData, setcurrentUserData] = useState();
   const [userList, setUserList] = useState();
   const [loading, setLoading] = useState(true);
+
   const signup = (email, password, nick) => {
     return auth.createUserWithEmailAndPassword(email, password).then((cred) => {
       return db.collection("users").doc(cred.user.uid).set({
@@ -58,7 +59,9 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
     });
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
   const value = {
     currentUser,
