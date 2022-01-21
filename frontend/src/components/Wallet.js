@@ -8,11 +8,11 @@ import { Box, Paper, Grid, Typography, Button } from "@mui/material";
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 const valueReducer = (value) => {
   if (value / 1000000000 > 1) {
-    return `${(value / 1000000000).toFixed(2)}B`;
+    return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
   } else if (value / 1000000 > 1) {
-    return `${(value / 1000000).toFixed(2)}M`;
+    return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
   } else if (value / 1000 > 1) {
-    return `${(value / 1000).toFixed(2)}K`;
+    return `${(value / 1000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return value;
   }
@@ -111,9 +111,18 @@ function Wallet() {
             gap={"20px"}
           >
             <Typography variant="h3">Wallet</Typography>
-            <Typography variant="h4" sx={{ color: "green" }}>
-              {`$${valueReducer(totalUserValue())}`}
-            </Typography>
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              <Typography variant="h4">Crypto value:</Typography>
+              <Typography variant="h4" sx={{ color: "green" }}>
+                {`$${valueReducer(totalUserValue())}`}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              <Typography variant="h4">Money amount:</Typography>
+              <Typography variant="h4" sx={{ color: "green" }}>
+                {`$${valueReducer(currentUserData.balance)}`}
+              </Typography>
+            </Box>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
             {userCoins.map((coin, index) => (
