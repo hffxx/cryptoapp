@@ -31,7 +31,7 @@ const StyledTooltip = ({ children, tooltipText }) => {
   const [toolTip, setToolTip] = useState(false);
   return (
     <Tooltip
-      enterTouchDelay={400}
+      enterTouchDelay={600}
       leaveTouchDelay={8000}
       open={toolTip}
       onClose={() => setToolTip(false)}
@@ -83,9 +83,9 @@ const Infoheader = ({ tooltipText, text }) => {
 function Row({ coin, width }) {
   const coinFormat = (amount) => {
     if (amount / 1000000000 > 1 && width <= 1200) {
-      return `$${(amount / 1000000000).toFixed(2)}B`;
+      return `$${(amount / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
     } else if (amount / 1000000 > 1 && width <= 1200) {
-      return `$${(amount / 1000000).toFixed(2)}M`;
+      return `$${(amount / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
     } else {
       return (
         <NumberFormat

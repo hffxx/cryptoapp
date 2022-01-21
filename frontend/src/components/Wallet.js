@@ -108,8 +108,7 @@ function Wallet() {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <Paper
-              elevation={4}
+            <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -132,7 +131,7 @@ function Wallet() {
                   {`$${valueReducer(currentUserData.balance)}`}
                 </Typography>
               </Box>
-            </Paper>
+            </Box>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
             {userCoins.map((coin, index) => (
