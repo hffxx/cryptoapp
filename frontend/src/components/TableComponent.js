@@ -31,8 +31,8 @@ const StyledTooltip = ({ children, tooltipText }) => {
   const [toolTip, setToolTip] = useState(false);
   return (
     <Tooltip
-      enterTouchDelay={0}
       leaveTouchDelay={8000}
+      open={toolTip}
       onClose={() => setToolTip(false)}
       onOpen={() => setToolTip(true)}
       title={tooltipText}

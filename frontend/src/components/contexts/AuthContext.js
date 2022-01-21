@@ -49,16 +49,6 @@ export function AuthProvider({ children }) {
       unsubscribe();
     };
   }, []);
-  // useEffect(() => {
-  //   const unsubscribe = db
-  //     .collection("users", currentUser?.uid)
-  //     .onSnapshot((snapshot) => {
-  //       setcurrentUserData(...snapshot.docs.map((doc) => doc.data()));
-  //     });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
