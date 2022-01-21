@@ -55,7 +55,6 @@ function SignUp() {
   });
   let navigate = useNavigate();
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const { signup } = useAuth();
   const handleSubmit = async () => {
@@ -66,9 +65,9 @@ function SignUp() {
     try {
       setError("");
       setLoading(true);
-      await signup(email, password, nick);
-      setNewUser({ email: "", password: "", confirmPassword: "", nick: "" });
-      setSuccess("Account created");
+      await signup(email, password, nick).then(() =>
+        setNewUser({ email: "", password: "", confirmPassword: "", nick: "" })
+      );
       navigate("/");
     } catch (e) {
       if (errorsConf[e.code]) {
@@ -166,7 +165,6 @@ function SignUp() {
           />
         </FormControl>
         {!!error && <Alert severity="error">{error.message}</Alert>}
-        {!!success && <Alert severity="success">{success}</Alert>}
         <Button
           variant="contained"
           sx={styles.item}
