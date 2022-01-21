@@ -78,6 +78,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     currentUserData,
     userList,
+    currentUserId,
   };
   return (
     <AuthContext.Provider value={value}>

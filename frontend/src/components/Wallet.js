@@ -116,10 +116,10 @@ function Wallet() {
             </Typography>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {userCoins.map((coin) => (
+            {userCoins.map((coin, index) => (
               <CoinItem
                 coin={coin}
-                key={coin.coinName}
+                key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
               />
