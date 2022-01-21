@@ -107,22 +107,32 @@ function Wallet() {
             display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
-            flexDirection={"column"}
-            gap={"20px"}
           >
-            <Typography variant="h3">Wallet</Typography>
-            <Box sx={{ display: "flex", gap: "10px" }}>
-              <Typography variant="h4">Crypto value:</Typography>
-              <Typography variant="h4" sx={{ color: "green" }}>
-                {`$${valueReducer(totalUserValue())}`}
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", gap: "10px" }}>
-              <Typography variant="h4">Money amount:</Typography>
-              <Typography variant="h4" sx={{ color: "green" }}>
-                {`$${valueReducer(currentUserData.balance)}`}
-              </Typography>
-            </Box>
+            <Paper
+              elevation={4}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "20px",
+                gap: "10px",
+              }}
+            >
+              <Typography variant="h3">Wallet 👛</Typography>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <Typography variant="h4">Crypto value:</Typography>
+                <Typography variant="h4" sx={{ color: "green" }}>
+                  {`$${valueReducer(totalUserValue())}`}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <Typography variant="h4">Money amount:</Typography>
+                <Typography variant="h4" sx={{ color: "green" }}>
+                  {`$${valueReducer(currentUserData.balance)}`}
+                </Typography>
+              </Box>
+            </Paper>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
             {userCoins.map((coin, index) => (
