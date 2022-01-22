@@ -56,7 +56,7 @@ const CoinItem = ({ coin, price, img, name }) => {
           <Typography color="darkblue">{`Price: $${valueReducer(
             price
           )}`}</Typography>
-          <Typography color="green">{`Total value: $${valueReducer(
+          <Typography color="green">{`Value: $${valueReducer(
             value
           )}`}</Typography>
         </Box>
@@ -96,7 +96,7 @@ function Wallet() {
   };
   const getCoinFullName = (coinName) => {
     let coin = coins.find((el) => el.id === coinName);
-    if (coin.name.length > 8) {
+    if (coin.name.length > 7) {
       return capitalize(coin.symbol);
     } else {
       return coin.name;
@@ -124,7 +124,9 @@ function Wallet() {
                 gap: "10px",
               }}
             >
-              <Typography variant="h3">Wallet 👛</Typography>
+              <Typography variant="h3" marginBottom={"15px"}>
+                Wallet 👛
+              </Typography>
               <Box sx={{ display: "flex", gap: "10px" }}>
                 <Typography variant="h5">Crypto 💎 :</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
