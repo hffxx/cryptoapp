@@ -16,8 +16,8 @@ function Highscores() {
 
   return (
     <DashboardPage>
-      <Typography variant="h2" mb={5}>
-        Highscores! (Testing)
+      <Typography variant="h3" mb={5}>
+        Highscores 🏆
       </Typography>
       {highscores().map((user) => {
         return (
