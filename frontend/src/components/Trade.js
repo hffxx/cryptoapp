@@ -5,6 +5,7 @@ import { db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
+import { valueReducer } from "./Wallet";
 
 function Trade() {
   const [coinName, setCoinName] = useState("");
@@ -45,6 +46,12 @@ function Trade() {
           }}
         >
           <Typography variant="h3">Trade 🤑</Typography>
+          <Box sx={{ display: "flex", gap: "10px" }}>
+            <Typography variant="h5">Money amount:</Typography>
+            <Typography variant="h5" sx={{ color: "green" }}>
+              {`$${valueReducer(currentUserData?.balance)}`}
+            </Typography>
+          </Box>
           <TextField
             placeholder="Coin name"
             value={coinName}
@@ -52,13 +59,14 @@ function Trade() {
           ></TextField>
           <TextField
             placeholder="Amount"
-            type="tel"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           ></TextField>
           <Button
             variant="contained"
-            onClick={() => handleBitcoin(coinName, amount)}
+            onClick={() =>
+              handleBitcoin(coinName.toLowerCase(), Number(amount))
+            }
             disabled={loading}
           >
             Buy Crypto

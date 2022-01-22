@@ -82,10 +82,12 @@ const Infoheader = ({ tooltipText, text }) => {
 
 function Row({ coin, width }) {
   const coinFormat = (amount) => {
-    if (amount / 1000000000 > 1 && width <= 1200) {
+    if (amount / 1000000000 >= 1 && width <= 1200) {
       return `$${(amount / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
-    } else if (amount / 1000000 > 1 && width <= 1200) {
+    } else if (amount / 1000000 >= 1 && width <= 1200) {
       return `$${(amount / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
+    } else if (amount / 1000 >= 1 && width <= 1200) {
+      return `$${(amount / 1000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
     } else {
       return (
         <NumberFormat

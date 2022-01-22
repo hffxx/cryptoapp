@@ -3,22 +3,21 @@ import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
-import { Box, Paper, Grid, Typography, Button } from "@mui/material";
+import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
 
-const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-const valueReducer = (value) => {
-  if (value / 1000000000 > 1) {
+export const valueReducer = (value) => {
+  if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
-  } else if (value / 1000000 > 1) {
+  } else if (value / 1000000 >= 1) {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
-  } else if (value / 1000 > 1) {
+  } else if (value / 1000 >= 1) {
     return `${(value / 1000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return value;
   }
 };
-
-const CoinItem = ({ coin, price, img }) => {
+const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+const CoinItem = ({ coin, price, img, name }) => {
   const { coinName, amount } = coin;
   let value = (price * amount).toFixed(2);
   return (
@@ -44,7 +43,7 @@ const CoinItem = ({ coin, price, img }) => {
           width: "200px",
         }}
       >
-        <Typography variant="h4">{capitalize(coinName)}</Typography>
+        <Typography variant="h4">{name}</Typography>
         <Box
           component="img"
           src={img}
@@ -57,7 +56,7 @@ const CoinItem = ({ coin, price, img }) => {
           <Typography color="darkblue">{`Price: $${valueReducer(
             price
           )}`}</Typography>
-          <Typography color="green">{`Total value: $${valueReducer(
+          <Typography color="green">{`Value: $${valueReducer(
             value
           )}`}</Typography>
         </Box>
@@ -95,6 +94,14 @@ function Wallet() {
     let img = coins.find((el) => el.id === coinName);
     return img?.image;
   };
+  const getCoinFullName = (coinName) => {
+    let coin = coins.find((el) => el.id === coinName);
+    if (coin.name.length > 7) {
+      return capitalize(coin.symbol);
+    } else {
+      return coin.name;
+    }
+  };
   return (
     <DashboardPage>
       {!currentUserData && userCoins ? (
@@ -113,22 +120,32 @@ function Wallet() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center",
                 padding: "20px",
                 gap: "10px",
               }}
             >
-              <Typography variant="h3">Wallet 👛</Typography>
+              <Typography variant="h3" marginBottom={"15px"}>
+                Wallet 👛
+              </Typography>
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h4">Crypto value:</Typography>
-                <Typography variant="h4" sx={{ color: "green" }}>
+                <Typography variant="h5">Crypto 💎 :</Typography>
+                <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(totalUserValue())}`}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h4">Money amount:</Typography>
-                <Typography variant="h4" sx={{ color: "green" }}>
-                  {`$${valueReducer(currentUserData.balance)}`}
+                <Typography variant="h5">Money 💵 :</Typography>
+                <Typography variant="h5" sx={{ color: "green" }}>
+                  {`$${valueReducer(currentUserData?.balance)}`}
+                </Typography>
+              </Box>
+              <Divider sx={{ width: "100%" }} />
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <Typography variant="h5">Total 💰 :</Typography>
+                <Typography variant="h5" sx={{ color: "green" }}>
+                  {`$${valueReducer(
+                    currentUserData.balance + totalUserValue()
+                  )}`}
                 </Typography>
               </Box>
             </Box>
@@ -140,6 +157,7 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
+                name={getCoinFullName(coin.coinName)}
               />
             ))}
           </Grid>

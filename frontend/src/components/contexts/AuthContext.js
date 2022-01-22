@@ -25,6 +25,7 @@ export function AuthProvider({ children }) {
         balance: 1000000,
         coins: [],
         history: [],
+        totalValue: 1000000,
       });
     });
   };
