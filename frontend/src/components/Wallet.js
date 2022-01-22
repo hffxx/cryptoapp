@@ -5,7 +5,6 @@ import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
 import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
 
-const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 export const valueReducer = (value) => {
   if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
@@ -18,7 +17,7 @@ export const valueReducer = (value) => {
   }
 };
 
-const CoinItem = ({ coin, price, img }) => {
+const CoinItem = ({ coin, price, img, name }) => {
   const { coinName, amount } = coin;
   let value = (price * amount).toFixed(2);
   return (
@@ -44,7 +43,7 @@ const CoinItem = ({ coin, price, img }) => {
           width: "200px",
         }}
       >
-        <Typography variant="h4">{capitalize(coinName)}</Typography>
+        <Typography variant="h4">{name}</Typography>
         <Box
           component="img"
           src={img}
@@ -94,6 +93,10 @@ function Wallet() {
   const getImage = (coinName) => {
     let img = coins.find((el) => el.id === coinName);
     return img?.image;
+  };
+  const getCoinFullName = (coinName) => {
+    let name = coins.find((el) => el.id === coinName);
+    return name?.name;
   };
   return (
     <DashboardPage>
@@ -149,6 +152,7 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
+                name={getCoinFullName(coin.coinName)}
               />
             ))}
           </Grid>
