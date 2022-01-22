@@ -16,7 +16,7 @@ export const valueReducer = (value) => {
     return value;
   }
 };
-
+const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 const CoinItem = ({ coin, price, img, name }) => {
   const { coinName, amount } = coin;
   let value = (price * amount).toFixed(2);
@@ -95,8 +95,12 @@ function Wallet() {
     return img?.image;
   };
   const getCoinFullName = (coinName) => {
-    let name = coins.find((el) => el.id === coinName);
-    return name?.name;
+    let coin = coins.find((el) => el.id === coinName);
+    if (coin.name.length > 8) {
+      return capitalize(coin.symbol);
+    } else {
+      return coin.name;
+    }
   };
   return (
     <DashboardPage>
