@@ -18,7 +18,7 @@ export const valueReducer = (value) => {
 };
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 const CoinItem = ({ coin, price, img, name }) => {
-  const { coinName, amount } = coin;
+  const { amount } = coin;
   let value = (price * amount).toFixed(2);
   return (
     <Grid

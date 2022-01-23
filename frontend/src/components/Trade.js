@@ -6,6 +6,7 @@ import { setDoc, doc } from "firebase/firestore";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import { valueReducer } from "./Wallet";
+import TradeModal from "./TradeModal";
 
 function Trade() {
   const [coinName, setCoinName] = useState("");
@@ -71,6 +72,7 @@ function Trade() {
           >
             Buy Crypto
           </Button>
+          <TradeModal></TradeModal>
         </Grid>
       </Grid>
     </DashboardPage>

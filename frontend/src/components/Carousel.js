@@ -12,6 +12,7 @@ import { Typography, CircularProgress } from "@mui/material";
 import { percentColor } from "./TableComponent";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import TradeModal from "./TradeModal";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -112,12 +113,7 @@ function Carousel({ coins, title }) {
                           {`${coin.price_change_percentage_24h.toFixed(2)}%`}
                         </Typography>
                       </Box>
-                      <Button
-                        disableRipple
-                        sx={{ width: "50%", marginTop: "20px" }}
-                      >
-                        💰 Buy now
-                      </Button>
+                      <TradeModal coin={coin}>💰 Buy now</TradeModal>
                     </Box>
                   </Container>
                 ) : null}
