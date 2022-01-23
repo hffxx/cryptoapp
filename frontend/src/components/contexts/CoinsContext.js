@@ -37,7 +37,6 @@ export function CoinsProvider({ children }) {
     coins,
     coinsPriceList,
   };
-  console.log(coinsPriceList);
   return (
     <CoinsContext.Provider value={value}>{children}</CoinsContext.Provider>
   );
