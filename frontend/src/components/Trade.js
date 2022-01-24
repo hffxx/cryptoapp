@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, Paper, Box, Grid, TextField, Typography } from "@mui/material";
 import DashboardPage from "./Pages/DashboardPage";
 import { db } from "../firebase";
@@ -58,7 +58,6 @@ function Trade() {
   const [loading, setLoading] = useState(false);
   const { currentUserId, currentUserData } = useAuth();
   const { coinsPriceList, coins } = useCoins();
-
   // const handleBitcoin = async (cName, cAmount) => {
   //   setLoading(true);
   //   const wallet = currentUserData.coins;
@@ -78,6 +77,10 @@ function Trade() {
   //   }
   //   setLoading(false);
   // };
+  const memoCoinList = useMemo(
+    () => coins.map((coin, index) => <CoinItem coin={coin} key={index} />),
+    [coins]
+  );
   return (
     <DashboardPage>
       {coins && currentUserData ? (
@@ -106,9 +109,7 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {coins.map((coin, index) => (
-              <CoinItem coin={coin} key={index} />
-            ))}
+            {memoCoinList}
           </Grid>
         </Grid>
       ) : (
