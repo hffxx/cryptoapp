@@ -96,10 +96,10 @@ function Wallet() {
   };
   const getCoinFullName = (coinName) => {
     let coin = coins.find((el) => el.id === coinName);
-    if (coin.name.length > 7) {
+    if (coin?.name.length > 7) {
       return capitalize(coin.symbol);
     } else {
-      return coin.name;
+      return coin?.name;
     }
   };
   return (
