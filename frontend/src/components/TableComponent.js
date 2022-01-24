@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -330,7 +336,11 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
-
+  const memoData = useMemo(() => {
+    return data
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((coin) => <Row coin={coin} key={coin.id} width={windowWidth} />);
+  }, [data]);
   return (
     <Box
       sx={{
@@ -378,11 +388,7 @@ function TableComponent({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((coin) => (
-                <Row coin={coin} key={coin.id} width={windowWidth} />
-              ))}
+            {memoData}
             {emptyRows > 0 && (
               <TableRow style={{ height: 75 * emptyRows }}>
                 <TableCell colSpan={6} />

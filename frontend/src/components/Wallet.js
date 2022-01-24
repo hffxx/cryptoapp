@@ -41,6 +41,7 @@ const CoinItem = ({ coin, price, img, name }) => {
           justifyContent: "space-around",
           padding: "10px",
           width: "200px",
+          gap: "10px",
         }}
       >
         <Typography variant="h4">{name}</Typography>
@@ -96,10 +97,10 @@ function Wallet() {
   };
   const getCoinFullName = (coinName) => {
     let coin = coins.find((el) => el.id === coinName);
-    if (coin.name.length > 7) {
+    if (coin?.name.length > 7) {
       return capitalize(coin.symbol);
     } else {
-      return coin.name;
+      return coin?.name;
     }
   };
   return (
@@ -120,7 +121,6 @@ function Wallet() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                padding: "20px",
                 gap: "10px",
               }}
             >
@@ -128,20 +128,20 @@ function Wallet() {
                 Wallet 👛
               </Typography>
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h5">Crypto 💎 :</Typography>
+                <Typography variant="h5">Crypto 💎:</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(totalUserValue())}`}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h5">Money 💵 :</Typography>
+                <Typography variant="h5">Money 💵:</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(currentUserData?.balance)}`}
                 </Typography>
               </Box>
               <Divider sx={{ width: "100%" }} />
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h5">Total 💰 :</Typography>
+                <Typography variant="h5">Total 💰:</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(
                     currentUserData.balance + totalUserValue()

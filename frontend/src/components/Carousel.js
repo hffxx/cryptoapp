@@ -18,8 +18,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = {
   item: {
-    padding: "20px",
-    height: "260px",
+    paddingTop: "20px",
   },
   itemTitle: {
     display: "flex",
@@ -113,7 +112,6 @@ function Carousel({ coins, title }) {
                           {`${coin.price_change_percentage_24h.toFixed(2)}%`}
                         </Typography>
                       </Box>
-                      <TradeModal coin={coin}>💰 Buy now</TradeModal>
                     </Box>
                   </Container>
                 ) : null}

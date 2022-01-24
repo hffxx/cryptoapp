@@ -4,13 +4,13 @@ import Sidebar from "../Sidebar";
 
 function DashboardPage({ children }) {
   return (
-    <Grid container sx={{ justifyContent: "center" }} marginTop={2}>
+    <Grid container sx={{ justifyContent: "center" }}>
       <Hidden xlDown>
         <Grid item md={1.5}>
           <Sidebar />
         </Grid>
       </Hidden>
-      <Grid item xs={12} md={12} lg={10.5}>
+      <Grid item xs={12} md={12} lg={10.5} marginTop={3}>
         {children}
       </Grid>
     </Grid>
