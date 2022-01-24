@@ -33,6 +33,7 @@ const CoinItem = ({ coin }) => {
           justifyContent: "space-around",
           padding: "10px",
           width: "200px",
+          gap: "10px",
         }}
       >
         <Typography variant="h4">
