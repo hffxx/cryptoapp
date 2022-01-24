@@ -43,10 +43,8 @@ const CoinItem = ({ coin }) => {
           src={coin.image}
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
-        <Box sx={{ margin: "10px 0px" }}>
-          <Typography variant="h5">{`$${coin.current_price}`}</Typography>
-          <TradeModal coin={coin}>Buy </TradeModal>
-        </Box>
+        <Typography variant="h5">{`$${coin.current_price}`}</Typography>
+        <TradeModal coin={coin}>Buy </TradeModal>
       </Paper>
     </Grid>
   );

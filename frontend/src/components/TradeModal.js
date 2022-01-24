@@ -6,10 +6,13 @@ import Modal from "@mui/material/Modal";
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "30%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -31,19 +34,22 @@ function TradeModal({ children, coin }) {
       >
         {children}
       </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {coin.name}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {coin.current_price}
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            <Box component="img" src={coin.image} sx={{ width: "50px" }}></Box>
+            <Typography variant="h2">{coin.name}</Typography>
+            <Box component="img" src={coin.image} sx={{ width: "50px" }}></Box>
+          </Box>
+
+          <Typography variant="h4">{coin.current_price}</Typography>
         </Box>
       </Modal>
     </div>
