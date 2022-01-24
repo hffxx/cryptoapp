@@ -22,7 +22,13 @@ function TradeModal({ children, coin }) {
 
   return (
     <div>
-      <Button disableRipple sx={{ marginTop: "20px" }} onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="success"
+        disableRipple
+        sx={{ marginTop: "20px" }}
+        onClick={handleOpen}
+      >
         {children}
       </Button>
       <Modal
@@ -33,10 +39,10 @@ function TradeModal({ children, coin }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            {coin.name}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {coin.current_price}
           </Typography>
         </Box>
       </Modal>
