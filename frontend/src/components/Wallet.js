@@ -128,20 +128,20 @@ function Wallet() {
                 Wallet 👛
               </Typography>
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h5">Crypto 💎 :</Typography>
+                <Typography variant="h5">Crypto 💎:</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(totalUserValue())}`}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h5">Money 💵 :</Typography>
+                <Typography variant="h5">Money 💵:</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(currentUserData?.balance)}`}
                 </Typography>
               </Box>
               <Divider sx={{ width: "100%" }} />
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Typography variant="h5">Total 💰 :</Typography>
+                <Typography variant="h5">Total 💰:</Typography>
                 <Typography variant="h5" sx={{ color: "green" }}>
                   {`$${valueReducer(
                     currentUserData.balance + totalUserValue()
