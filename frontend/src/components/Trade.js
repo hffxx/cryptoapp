@@ -30,10 +30,10 @@ const CoinItem = ({ coin }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           padding: "10px",
           width: "200px",
-          gap: "10px",
+          gap: "20px",
         }}
       >
         <Typography variant="h4">
@@ -76,12 +76,16 @@ function Trade() {
   //   }
   //   setLoading(false);
   // };
-
+  const filteredCoinList = coins.filter(
+    (coin) =>
+      coin.name.toLowerCase().includes(coinName.toLowerCase()) ||
+      coin.symbol.toLowerCase().includes(coinName.toLowerCase())
+  );
   const memoCoinList = useMemo(
     () =>
-      coins
-        .filter((coin) => coin.name.includes(coinName))
-        .map((coin, index) => <CoinItem coin={coin} key={index} />),
+      filteredCoinList.map((coin, index) => (
+        <CoinItem coin={coin} key={index} />
+      )),
     [coins, coinName]
   );
   return (
@@ -112,7 +116,13 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {memoCoinList}
+            {filteredCoinList.length === 0 ? (
+              <Grid item xs={12} mt={20}>
+                <Typography variant="h3"> Sorry, coin not found :(</Typography>
+              </Grid>
+            ) : (
+              memoCoinList
+            )}
           </Grid>
         </Grid>
       ) : (

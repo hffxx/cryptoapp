@@ -24,12 +24,11 @@ function TradeModal({ children, coin }) {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <Box>
       <Button
         variant="contained"
         color="success"
         disableRipple
-        sx={{ marginTop: "20px" }}
         onClick={handleOpen}
       >
         {children}
@@ -53,7 +52,7 @@ function TradeModal({ children, coin }) {
           <Typography variant="h4">{`$${coin.current_price}`}</Typography>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
 
