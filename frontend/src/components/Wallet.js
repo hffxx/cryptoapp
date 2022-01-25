@@ -10,10 +10,12 @@ export const valueReducer = (value) => {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
   } else if (value / 1000000 >= 1) {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
-  } else if (value / 1000 >= 1) {
-    return `${(value / 1000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
+  } else if (value / 100000 >= 1) {
+    return `${(value / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
-    return value;
+    return Number(value)
+      .toFixed(8)
+      .replace(/(\.0+|0+)$/, "");
   }
 };
 const CoinItem = ({ coin, price, img, name }) => {
