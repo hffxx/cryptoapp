@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { TextField } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -20,6 +21,7 @@ const style = {
 
 function TradeModal({ children, coin }) {
   const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -54,8 +56,26 @@ function TradeModal({ children, coin }) {
               {coin.name}
             </Typography>
           )}
-          <Box>
-            <Typography variant="h4">{`$${coin.current_price}`}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "20px",
+              marginTop: "20px",
+            }}
+          >
+            <Typography
+              noWrap
+              variant="h6"
+            >{`Price: 💲${coin.current_price.toFixed(2)}`}</Typography>
+            <TextField
+              placeholder="Amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            ></TextField>
+            <Button variant="contained">{`Buy ${amount} ${coin.symbol}`}</Button>
           </Box>
         </Box>
       </Modal>
