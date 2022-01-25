@@ -76,9 +76,13 @@ function Trade() {
   //   }
   //   setLoading(false);
   // };
+
   const memoCoinList = useMemo(
-    () => coins.map((coin, index) => <CoinItem coin={coin} key={index} />),
-    [coins]
+    () =>
+      coins
+        .filter((coin) => coin.name.includes(coinName))
+        .map((coin, index) => <CoinItem coin={coin} key={index} />),
+    [coins, coinName]
   );
   return (
     <DashboardPage>
