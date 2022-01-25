@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { Button, Paper, Box, Grid, TextField, Typography } from "@mui/material";
+import { Paper, Box, Grid, TextField, Typography } from "@mui/material";
 import DashboardPage from "./Pages/DashboardPage";
-import { db } from "../firebase";
-import { setDoc, doc } from "firebase/firestore";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import { valueReducer } from "./Wallet";
@@ -12,6 +10,7 @@ import Spinner from "./Spinner";
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
 const CoinItem = ({ coin }) => {
+  const { currentUserId, currentUserData } = useAuth();
   return (
     <Grid
       item
@@ -45,7 +44,13 @@ const CoinItem = ({ coin }) => {
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Typography variant="h5">{`$${coin.current_price}`}</Typography>
-        <TradeModal coin={coin}>Buy </TradeModal>
+        <TradeModal
+          coin={coin}
+          currentUserId={currentUserId}
+          currentUserData={currentUserData}
+        >
+          Buy{" "}
+        </TradeModal>
       </Paper>
     </Grid>
   );
@@ -53,29 +58,10 @@ const CoinItem = ({ coin }) => {
 
 function Trade() {
   const [coinName, setCoinName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const { currentUserId, currentUserData } = useAuth();
-  const { coinsPriceList, coins } = useCoins();
-  // const handleBitcoin = async (cName, cAmount) => {
-  //   setLoading(true);
-  //   const wallet = currentUserData.coins;
-  //   const docRef = doc(db, "users", currentUserId);
-  //   if (!wallet.some(({ coinName }) => coinName === cName)) {
-  //     let payload = { coinName: cName, amount: cAmount };
-  //     await setDoc(docRef, { ...currentUserData, coins: [...wallet, payload] });
-  //   } else {
-  //     let payload = wallet.map((coin) => {
-  //       if (coin.coinName === cName) {
-  //         return { coinName: cName, amount: coin.amount + cAmount };
-  //       } else {
-  //         return coin;
-  //       }
-  //     });
-  //     await setDoc(docRef, { ...currentUserData, coins: payload });
-  //   }
-  //   setLoading(false);
-  // };
+  const { coins } = useCoins();
+
   const filteredCoinList = coins.filter(
     (coin) =>
       coin.name.toLowerCase().includes(coinName.toLowerCase()) ||

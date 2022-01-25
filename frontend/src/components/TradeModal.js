@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
+import { db } from "../firebase";
+import { setDoc, doc } from "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -15,15 +17,39 @@ const style = {
   justifyContent: "center",
   alignItems: "center",
   bgcolor: "background.paper",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
 
-function TradeModal({ children, coin }) {
+function TradeModal({ children, coin, currentUserId, currentUserData }) {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleBuyCrypto = async (cName, cAmount) => {
+    setLoading(true);
+    const wallet = currentUserData.coins;
+    const docRef = doc(db, "users", currentUserId);
+    if (!wallet.some(({ coinName }) => coinName === cName)) {
+      let payload = { coinName: cName, amount: cAmount };
+      await setDoc(docRef, { ...currentUserData, coins: [...wallet, payload] });
+    } else {
+      let payload = wallet.map((coin) => {
+        if (coin.coinName === cName) {
+          return { coinName: cName, amount: coin.amount + cAmount };
+        } else {
+          return coin;
+        }
+      });
+      await setDoc(docRef, { ...currentUserData, coins: payload });
+    }
+    setAmount("");
+    setLoading(false);
+    setOpen(false);
+  };
 
   return (
     <Box>
@@ -75,7 +101,11 @@ function TradeModal({ children, coin }) {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
             ></TextField>
-            <Button variant="contained">{`Buy ${amount} ${coin.symbol}`}</Button>
+            <Button
+              disabled={loading}
+              variant="contained"
+              onClick={() => handleBuyCrypto(coin.id, amount)}
+            >{`Buy ${amount} ${coin.symbol}`}</Button>
           </Box>
         </Box>
       </Modal>
