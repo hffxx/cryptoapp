@@ -33,7 +33,7 @@ const CoinItem = ({ coin }) => {
           justifyContent: "space-between",
           padding: "10px",
           width: "200px",
-          gap: "20px",
+          gap: "10px",
         }}
       >
         <Typography variant="h4">
@@ -116,7 +116,7 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {filteredCoinList.length === 0 ? (
+            {filteredCoinList.length === 0 && !coins ? (
               <Grid item xs={12} mt={20}>
                 <Typography variant="h3"> Sorry, coin not found :(</Typography>
               </Grid>

@@ -45,11 +45,18 @@ function TradeModal({ children, coin }) {
           >
             <Box component="img" src={coin.image} sx={{ width: "50px" }}></Box>
             <Typography variant="h2">
-              {coin.name.length > 8 ? coin.symbol.toUpperCase() : coin.name}
+              {coin.name.length > 6 ? coin.symbol.toUpperCase() : coin.name}
             </Typography>
             <Box component="img" src={coin.image} sx={{ width: "50px" }}></Box>
           </Box>
-          <Typography variant="h4">{`$${coin.current_price}`}</Typography>
+          {coin.name.length > 6 && (
+            <Typography variant="subtitle1" color="gray">
+              {coin.name}
+            </Typography>
+          )}
+          <Box>
+            <Typography variant="h4">{`$${coin.current_price}`}</Typography>
+          </Box>
         </Box>
       </Modal>
     </Box>
