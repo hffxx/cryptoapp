@@ -102,10 +102,10 @@ function TradeModal({ children, coin, currentUserId, currentUserData }) {
               onChange={(e) => setAmount(e.target.value)}
             ></TextField>
             <Button
-              disabled={loading}
+              disabled={loading || amount <= 0}
               variant="contained"
               onClick={() => handleBuyCrypto(coin.id, amount)}
-            >{`Buy ${amount} ${coin.symbol}`}</Button>
+            >{`Buy ${coin.symbol}`}</Button>
           </Box>
         </Box>
       </Modal>
