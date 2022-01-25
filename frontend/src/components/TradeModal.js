@@ -99,6 +99,7 @@ function TradeModal({ children, coin, currentUserId, currentUserData }) {
             <TextField
               placeholder="Amount"
               value={amount}
+              type="number"
               onChange={(e) => setAmount(e.target.value)}
             ></TextField>
             <Button
