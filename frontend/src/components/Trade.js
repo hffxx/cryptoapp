@@ -64,6 +64,7 @@ function Trade() {
       )),
     [coins, coinName]
   );
+  console.log(filteredCoinList.length);
   return (
     <DashboardPage>
       {coins && currentUserData ? (

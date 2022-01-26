@@ -14,11 +14,12 @@ export const valueReducer = (value) => {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return Number(value)
-      .toFixed(4)
+      .toFixed(8)
       .replace(/(\.0+|0+)$/, "");
   }
 };
 const CoinItem = ({ coin, price, img, name }) => {
+  console.log(price);
   const { amount } = coin;
   let value = (price * amount).toFixed(2);
   return (
@@ -77,7 +78,7 @@ function Wallet() {
     if (coinsPriceList) {
       let { coinPrice } =
         coinsPriceList.find((el) => el.coinName === coinName) || 0;
-      return coinPrice?.toFixed(2);
+      return coinPrice?.toFixed(8);
     }
   };
   const totalUserValue = () => {
