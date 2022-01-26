@@ -11,7 +11,7 @@ export const valueReducer = (value) => {
   } else if (value / 1000000 >= 1) {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
   } else if (value / 100000 >= 1) {
-    return `${(value / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
+    return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return Number(value)
       .toFixed(8)
