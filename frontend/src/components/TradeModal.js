@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
+import { useAuth } from "./contexts/AuthContext";
 
 const style = {
   position: "absolute",
@@ -22,7 +23,8 @@ const style = {
   p: 4,
 };
 
-function TradeModal({ children, coin, currentUserId, currentUserData }) {
+function TradeModal({ children, coin }) {
+  const { currentUserId, currentUserData } = useAuth();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
@@ -95,7 +97,7 @@ function TradeModal({ children, coin, currentUserId, currentUserData }) {
             <Typography
               noWrap
               variant="h6"
-            >{`Price: 💲${coin.current_price.toFixed(2)}`}</Typography>
+            >{`Price: $${coin.current_price}`}</Typography>
             <TextField
               placeholder="Amount"
               value={amount}
