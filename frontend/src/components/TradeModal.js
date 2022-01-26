@@ -159,6 +159,7 @@ function TradeModal({ children, coin }) {
                     }}
                     onClick={handleMax}
                     disableRipple
+                    disabled={currentUserData.balance <= 0}
                   >
                     Max
                   </Button>
