@@ -72,7 +72,7 @@ function TradeModal({ children, coin }) {
       let payload = { coinName: cName, amount: cAmount };
       await setDoc(docRef, {
         ...currentUserData,
-        balance: Math.floor(userBalance - coin.current_price * amount),
+        balance: Math.floor(userBalance - coin.current_price * Number(amount)),
         coins: [...wallet, payload],
       });
     } else {
@@ -85,7 +85,7 @@ function TradeModal({ children, coin }) {
       });
       await setDoc(docRef, {
         ...currentUserData,
-        balance: Math.floor(userBalance - coin.current_price * amount),
+        balance: Math.floor(userBalance - coin.current_price * Number(amount)),
         coins: payload,
       });
     }
@@ -144,7 +144,7 @@ function TradeModal({ children, coin }) {
               placeholder="Amount"
               value={amount}
               type="number"
-              onChange={(e) => setAmount(Number(e.target.value))}
+              onChange={(e) => setAmount(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <Button

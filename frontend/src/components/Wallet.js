@@ -14,7 +14,7 @@ export const valueReducer = (value) => {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return Number(value)
-      .toFixed(8)
+      .toFixed(4)
       .replace(/(\.0+|0+)$/, "");
   }
 };
