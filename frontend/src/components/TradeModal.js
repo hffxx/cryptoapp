@@ -167,12 +167,15 @@ function TradeModal({ children, coin }) {
             ></TextField>
             <Typography
               color={
-                currentUserData.balance < coin.current_price * amount && "red"
+                currentUserData.balance > 0 &&
+                currentUserData.balance < coin.current_price * amount &&
+                "red"
               }
             >{`Total price: $${(coin.current_price * amount).toFixed(
               2
             )}`}</Typography>
             <Button
+              color="success"
               disabled={
                 loading ||
                 amount <= 0 ||
