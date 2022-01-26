@@ -31,6 +31,25 @@ const inputStyle = {
   },
 };
 
+function decimalAdjust(type, value, exp) {
+  if (typeof exp === "undefined" || +exp === 0) {
+    return Math[type](value);
+  }
+  value = +value;
+  exp = +exp;
+
+  if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+    return NaN;
+  }
+
+  value = value.toString().split("e");
+  value = Math[type](+(value[0] + "e" + (value[1] ? +value[1] - exp : -exp)));
+
+  value = value.toString().split("e");
+  return +(value[0] + "e" + (value[1] ? +value[1] + exp : exp));
+}
+const floor10 = (value, exp) => decimalAdjust("floor", value, exp);
+
 function TradeModal({ children, coin }) {
   const { currentUserId, currentUserData } = useAuth();
   const userBalance = currentUserData.balance;
@@ -43,7 +62,7 @@ function TradeModal({ children, coin }) {
     setAmount("");
   };
   const handleMax = () => {
-    setAmount(currentUserData.balance / coin.current_price);
+    setAmount(floor10(currentUserData.balance / coin.current_price, -7));
   };
 
   const handleBuyCrypto = async (cName, cAmount) => {
