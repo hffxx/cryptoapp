@@ -7,10 +7,7 @@ import { valueReducer } from "./Wallet";
 import TradeModal from "./TradeModal";
 import Spinner from "./Spinner";
 
-const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-
 const CoinItem = ({ coin }) => {
-  const { currentUserId, currentUserData } = useAuth();
   return (
     <Grid
       item
@@ -44,13 +41,7 @@ const CoinItem = ({ coin }) => {
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Typography variant="h5">{`$${coin.current_price}`}</Typography>
-        <TradeModal
-          coin={coin}
-          currentUserId={currentUserId}
-          currentUserData={currentUserData}
-        >
-          Buy{" "}
-        </TradeModal>
+        <TradeModal coin={coin}>Buy</TradeModal>
       </Paper>
     </Grid>
   );
@@ -58,8 +49,7 @@ const CoinItem = ({ coin }) => {
 
 function Trade() {
   const [coinName, setCoinName] = useState("");
-
-  const { currentUserId, currentUserData } = useAuth();
+  const { currentUserData } = useAuth();
   const { coins } = useCoins();
 
   const filteredCoinList = coins.filter(

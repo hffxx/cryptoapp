@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
+import { useAuth } from "./contexts/AuthContext";
 
 const style = {
   position: "absolute",
@@ -21,21 +22,59 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const inputStyle = {
+  "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+    display: "none",
+  },
+  "& input[type=number]": {
+    MozAppearance: "textfield",
+  },
+};
 
-function TradeModal({ children, coin, currentUserId, currentUserData }) {
+function decimalAdjust(type, value, exp) {
+  if (typeof exp === "undefined" || +exp === 0) {
+    return Math[type](value);
+  }
+  value = +value;
+  exp = +exp;
+
+  if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+    return NaN;
+  }
+
+  value = value.toString().split("e");
+  value = Math[type](+(value[0] + "e" + (value[1] ? +value[1] - exp : -exp)));
+
+  value = value.toString().split("e");
+  return +(value[0] + "e" + (value[1] ? +value[1] + exp : exp));
+}
+const floor10 = (value, exp) => decimalAdjust("floor", value, exp);
+
+function TradeModal({ children, coin }) {
+  const { currentUserId, currentUserData } = useAuth();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const handleClose = () => {
+    setOpen(false);
+    setAmount("");
+  };
+  const handleMax = () => {
+    setAmount(floor10(currentUserData.balance / coin.current_price, -7));
+  };
   const handleBuyCrypto = async (cName, cAmount) => {
     setLoading(true);
     const wallet = currentUserData.coins;
     const docRef = doc(db, "users", currentUserId);
+    const userBalance = currentUserData.balance;
     if (!wallet.some(({ coinName }) => coinName === cName)) {
       let payload = { coinName: cName, amount: cAmount };
-      await setDoc(docRef, { ...currentUserData, coins: [...wallet, payload] });
+      await setDoc(docRef, {
+        ...currentUserData,
+        balance: Math.floor(userBalance - coin.current_price * Number(amount)),
+        coins: [...wallet, payload],
+      });
     } else {
       let payload = wallet.map((coin) => {
         if (coin.coinName === cName) {
@@ -44,7 +83,11 @@ function TradeModal({ children, coin, currentUserId, currentUserData }) {
           return coin;
         }
       });
-      await setDoc(docRef, { ...currentUserData, coins: payload });
+      await setDoc(docRef, {
+        ...currentUserData,
+        balance: Math.floor(userBalance - coin.current_price * Number(amount)),
+        coins: payload,
+      });
     }
     setAmount("");
     setLoading(false);
@@ -95,17 +138,49 @@ function TradeModal({ children, coin, currentUserId, currentUserData }) {
             <Typography
               noWrap
               variant="h6"
-            >{`Price: 💲${coin.current_price.toFixed(2)}`}</Typography>
+            >{`Price: $${coin.current_price}`}</Typography>
             <TextField
+              sx={inputStyle}
               placeholder="Amount"
               value={amount}
+              type="number"
               onChange={(e) => setAmount(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    sx={{
+                      color: "green",
+                      margin: "0px",
+                      padding: "0px",
+                      minWidth: "0px",
+                      "&:hover": {
+                        background: "none",
+                      },
+                    }}
+                    onClick={handleMax}
+                    disableRipple
+                  >
+                    Max
+                  </Button>
+                ),
+              }}
             ></TextField>
+            <Typography
+              color={
+                currentUserData.balance < coin.current_price * amount && "red"
+              }
+            >{`Total price: $${(coin.current_price * amount).toFixed(
+              2
+            )}`}</Typography>
             <Button
-              disabled={loading}
+              disabled={
+                loading ||
+                amount <= 0 ||
+                currentUserData.balance < coin.current_price * amount
+              }
               variant="contained"
               onClick={() => handleBuyCrypto(coin.id, amount)}
-            >{`Buy ${amount} ${coin.symbol}`}</Button>
+            >{`Buy ${coin.symbol}`}</Button>
           </Box>
         </Box>
       </Modal>
