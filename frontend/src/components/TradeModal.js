@@ -22,14 +22,29 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const inputStyle = {
+  "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+    display: "none",
+  },
+  "& input[type=number]": {
+    MozAppearance: "textfield",
+  },
+};
 
 function TradeModal({ children, coin }) {
   const { currentUserId, currentUserData } = useAuth();
+  const userBalance = currentUserData.balance;
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setAmount("");
+  };
+  const handleMax = () => {
+    setAmount(currentUserData.balance / coin.current_price);
+  };
 
   const handleBuyCrypto = async (cName, cAmount) => {
     setLoading(true);
@@ -99,13 +114,44 @@ function TradeModal({ children, coin }) {
               variant="h6"
             >{`Price: $${coin.current_price}`}</Typography>
             <TextField
+              sx={inputStyle}
               placeholder="Amount"
               value={amount}
               type="number"
               onChange={(e) => setAmount(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    sx={{
+                      color: "green",
+                      margin: "0px",
+                      padding: "0px",
+                      minWidth: "0px",
+                      "&:hover": {
+                        background: "none",
+                      },
+                    }}
+                    onClick={handleMax}
+                    disableRipple
+                  >
+                    Max
+                  </Button>
+                ),
+              }}
             ></TextField>
+            <Typography
+              color={
+                currentUserData.balance < coin.current_price * amount && "red"
+              }
+            >{`Total price: $${(coin.current_price * amount).toFixed(
+              2
+            )}`}</Typography>
             <Button
-              disabled={loading || amount <= 0}
+              disabled={
+                loading ||
+                amount <= 0 ||
+                currentUserData.balance < coin.current_price * amount
+              }
               variant="contained"
               onClick={() => handleBuyCrypto(coin.id, amount)}
             >{`Buy ${coin.symbol}`}</Button>
