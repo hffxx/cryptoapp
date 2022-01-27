@@ -80,7 +80,7 @@ function TradeModal({ children, coin }) {
     } else {
       let payload = wallet.map((coin) => {
         if (coin.coinName === cName) {
-          return { coinName: cName, amount: coin.amount + numberAmount };
+          return { ...coin, amount: coin.amount + numberAmount };
         } else {
           return coin;
         }
