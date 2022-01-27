@@ -66,6 +66,7 @@ function TradeModal({ children, coin }) {
   const handleBuyCrypto = async (cName) => {
     setLoading(true);
     let numberAmount = Number(amount);
+    let totalAmount = (coin.current_price * amount).toFixed(2);
     const wallet = currentUserData.coins;
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
@@ -73,7 +74,7 @@ function TradeModal({ children, coin }) {
       let payload = { coinName: cName, amount: numberAmount };
       await setDoc(docRef, {
         ...currentUserData,
-        balance: userBalance - Number(coin.current_price) * numberAmount,
+        balance: Math.floor(userBalance - totalAmount),
         coins: [...wallet, payload],
       });
     } else {
@@ -86,7 +87,7 @@ function TradeModal({ children, coin }) {
       });
       await setDoc(docRef, {
         ...currentUserData,
-        balance: userBalance - Number(coin.current_price) * numberAmount,
+        balance: Math.floor(userBalance - totalAmount),
         coins: payload,
       });
     }
