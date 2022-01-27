@@ -181,7 +181,8 @@ function TradeModal({ children, coin }) {
               disabled={
                 loading ||
                 amount <= 0 ||
-                currentUserData.balance < coin.current_price * amount
+                currentUserData.balance < coin.current_price * amount ||
+                (coin.current_price * amount).toFixed(2) <= 0
               }
               variant="contained"
               onClick={() => handleBuyCrypto(coin.name)}
