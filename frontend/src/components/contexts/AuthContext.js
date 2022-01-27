@@ -25,7 +25,6 @@ export function AuthProvider({ children }) {
         balance: 1000000,
         coins: [],
         history: [],
-        totalValue: 1000000,
       });
     });
   };
@@ -61,7 +60,7 @@ export function AuthProvider({ children }) {
     };
   }, []);
   useEffect(() => {
-    if (currentUser) {
+    if (!!currentUser) {
       db.collection("users")
         .doc(currentUserId)
         .onSnapshot((snapshot) => {

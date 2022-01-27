@@ -4,6 +4,7 @@ import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
 import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
+import SellModal from "./SellModal";
 
 export const valueReducer = (value) => {
   if (value / 1000000000 >= 1) {
@@ -14,12 +15,11 @@ export const valueReducer = (value) => {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return Number(value)
-      .toFixed(8)
+      .toFixed(2)
       .replace(/(\.0+|0+)$/, "");
   }
 };
 const CoinItem = ({ coin, price, img, name }) => {
-  console.log(price);
   const { amount } = coin;
   let value = (price * amount).toFixed(2);
   return (
@@ -56,14 +56,19 @@ const CoinItem = ({ coin, price, img, name }) => {
           <Typography color="darkred">{`Amount: ${valueReducer(
             amount
           )}`}</Typography>
-          <Typography color="darkblue">{`Price: $${valueReducer(
-            price
-          )}`}</Typography>
+          <Typography color="darkblue">{`Price: $${Number(price)}`}</Typography>
           <Typography color="green">{`Value: $${valueReducer(
             value
           )}`}</Typography>
         </Box>
-        <Button variant="contained">Sell</Button>
+        <SellModal
+          coinPrice={price}
+          coinImg={img}
+          coinName={name}
+          userCoinAmount={amount}
+        >
+          Sell
+        </SellModal>
       </Paper>
     </Grid>
   );
@@ -94,11 +99,11 @@ function Wallet() {
   };
 
   const getImage = (coinName) => {
-    let img = coins.find((el) => el.id === coinName);
+    let img = coins.find((el) => el.name === coinName);
     return img?.image;
   };
   const getCoinFullName = (coinName) => {
-    let coin = coins.find((el) => el.id === coinName);
+    let coin = coins.find((el) => el.name === coinName);
     if (coin?.name.length > 7) {
       return coin?.symbol.toUpperCase();
     } else {
