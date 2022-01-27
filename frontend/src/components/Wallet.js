@@ -4,6 +4,7 @@ import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
 import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
+import SellModal from "./SellModal";
 
 export const valueReducer = (value) => {
   if (value / 1000000000 >= 1) {
@@ -19,7 +20,6 @@ export const valueReducer = (value) => {
   }
 };
 const CoinItem = ({ coin, price, img, name }) => {
-  console.log(price);
   const { amount } = coin;
   let value = (price * amount).toFixed(2);
   return (
@@ -63,7 +63,14 @@ const CoinItem = ({ coin, price, img, name }) => {
             value
           )}`}</Typography>
         </Box>
-        <Button variant="contained">Sell</Button>
+        <SellModal
+          coinPrice={price}
+          coinImg={img}
+          coinName={name}
+          userCoinAmount={amount}
+        >
+          Sell
+        </SellModal>
       </Paper>
     </Grid>
   );
