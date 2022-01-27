@@ -99,11 +99,11 @@ function Wallet() {
   };
 
   const getImage = (coinName) => {
-    let img = coins.find((el) => el.id === coinName);
+    let img = coins.find((el) => el.name === coinName);
     return img?.image;
   };
   const getCoinFullName = (coinName) => {
-    let coin = coins.find((el) => el.id === coinName);
+    let coin = coins.find((el) => el.name === coinName);
     if (coin?.name.length > 7) {
       return coin?.symbol.toUpperCase();
     } else {

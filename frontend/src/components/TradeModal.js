@@ -73,10 +73,7 @@ function TradeModal({ children, coin }) {
       let payload = { coinName: cName, amount: numberAmount };
       await setDoc(docRef, {
         ...currentUserData,
-        balance: (
-          userBalance -
-          Number(coin.current_price) * numberAmount
-        ).toFixed(2),
+        balance: userBalance - Number(coin.current_price) * numberAmount,
         coins: [...wallet, payload],
       });
     } else {
@@ -89,10 +86,7 @@ function TradeModal({ children, coin }) {
       });
       await setDoc(docRef, {
         ...currentUserData,
-        balance: (
-          userBalance -
-          Number(coin.current_price) * numberAmount
-        ).toFixed(2),
+        balance: userBalance - Number(coin.current_price) * numberAmount,
         coins: payload,
       });
     }
@@ -190,7 +184,7 @@ function TradeModal({ children, coin }) {
                 currentUserData.balance < coin.current_price * amount
               }
               variant="contained"
-              onClick={() => handleBuyCrypto(coin.id)}
+              onClick={() => handleBuyCrypto(coin.name)}
             >{`Buy ${coin.symbol}`}</Button>
           </Box>
         </Box>

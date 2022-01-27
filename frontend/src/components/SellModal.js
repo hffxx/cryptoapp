@@ -51,6 +51,7 @@ function decimalAdjust(type, value, exp) {
 const floor10 = (value, exp) => decimalAdjust("floor", value, exp);
 
 function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
+  console.log(coinName);
   const { currentUserId, currentUserData } = useAuth();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
@@ -63,22 +64,23 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
   const handleMax = () => {
     setAmount(userCoinAmount);
   };
-  const handleSellCrypto = async (cName, cAmount) => {
+  const handleSellCrypto = async (cName) => {
     setLoading(true);
+    let numberAmount = Number(amount);
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
     const wallet = currentUserData.coins;
-    if (userCoinAmount > cAmount) {
+    if (userCoinAmount > numberAmount) {
       let payload = wallet.map((coin) => {
         if (coin.coinName === cName) {
-          return { coinName: cName, amount: coin.amount - cAmount };
+          return { coinName: cName, amount: coin.amount - numberAmount };
         } else {
           return coin;
         }
       });
       await setDoc(docRef, {
         ...currentUserData,
-        balance: Math.floor(userBalance - coinPrice * Number(amount)),
+        balance: (userBalance - coinPrice * numberAmount).toFixed(2),
         coins: [...wallet, payload],
       });
     }
@@ -162,6 +164,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
               //     currentUserData.balance < coin.current_price * amount
               //   }
               variant="contained"
+              onClick={() => handleSellCrypto()}
             >{`Buy`}</Button>
           </Box>
         </Box>
