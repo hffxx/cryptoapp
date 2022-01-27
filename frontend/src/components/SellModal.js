@@ -63,36 +63,30 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
   const handleMax = () => {
     setAmount(userCoinAmount);
   };
-  //   const handleBuyCrypto = async (cName, cAmount) => {
-  //     setLoading(true);
-  //     const wallet = currentUserData.coins;
-  //     const docRef = doc(db, "users", currentUserId);
-  //     const userBalance = currentUserData.balance;
-  //     if (!wallet.some(({ coinName }) => coinName === cName)) {
-  //       let payload = { coinName: cName, amount: cAmount };
-  //       await setDoc(docRef, {
-  //         ...currentUserData,
-  //         balance: Math.floor(userBalance - coin.current_price * Number(amount)),
-  //         coins: [...wallet, payload],
-  //       });
-  //     } else {
-  //       let payload = wallet.map((coin) => {
-  //         if (coin.coinName === cName) {
-  //           return { coinName: cName, amount: coin.amount + cAmount };
-  //         } else {
-  //           return coin;
-  //         }
-  //       });
-  //       await setDoc(docRef, {
-  //         ...currentUserData,
-  //         balance: Math.floor(userBalance - coin.current_price * Number(amount)),
-  //         coins: payload,
-  //       });
-  //     }
-  //     setAmount("");
-  //     setLoading(false);
-  //     setOpen(false);
-  //   };
+  const handleSellCrypto = async (cName, cAmount) => {
+    setLoading(true);
+    const docRef = doc(db, "users", currentUserId);
+    const userBalance = currentUserData.balance;
+    const wallet = currentUserData.coins;
+    if (userCoinAmount > cAmount) {
+      let payload = wallet.map((coin) => {
+        if (coin.coinName === cName) {
+          return { coinName: cName, amount: coin.amount - cAmount };
+        } else {
+          return coin;
+        }
+      });
+      await setDoc(docRef, {
+        ...currentUserData,
+        balance: Math.floor(userBalance - coinPrice * Number(amount)),
+        coins: [...wallet, payload],
+      });
+    }
+
+    setAmount("");
+    setLoading(false);
+    setOpen(false);
+  };
 
   return (
     <Box>

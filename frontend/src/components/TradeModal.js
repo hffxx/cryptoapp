@@ -72,7 +72,7 @@ function TradeModal({ children, coin }) {
       let payload = { coinName: cName, amount: cAmount };
       await setDoc(docRef, {
         ...currentUserData,
-        balance: Math.floor(userBalance - coin.current_price * Number(amount)),
+        balance: (userBalance - coin.current_price * Number(amount)).toFixed(2),
         coins: [...wallet, payload],
       });
     } else {
@@ -85,7 +85,7 @@ function TradeModal({ children, coin }) {
       });
       await setDoc(docRef, {
         ...currentUserData,
-        balance: Math.floor(userBalance - coin.current_price * Number(amount)),
+        balance: (userBalance - coin.current_price * Number(amount)).toFixed(2),
         coins: payload,
       });
     }
