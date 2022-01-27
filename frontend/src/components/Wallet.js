@@ -13,15 +13,19 @@ export const valueReducer = (value) => {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
   } else if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
-  } else {
+  } else if (value >= 1) {
     return Number(value)
       .toFixed(2)
+      .replace(/(\.0+|0+)$/, "");
+  } else {
+    return Number(value)
+      .toFixed(8)
       .replace(/(\.0+|0+)$/, "");
   }
 };
 const CoinItem = ({ coin, price, img, name }) => {
   const { amount } = coin;
-  let value = (price * amount).toFixed(2);
+  let value = (price * amount).toFixed(8);
   return (
     <Grid
       item
