@@ -7,6 +7,7 @@ import { TextField } from "@mui/material";
 import { db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { useAuth } from "./contexts/AuthContext";
+import { useCoins } from "./contexts/CoinsContext";
 
 const style = {
   position: "absolute",
@@ -51,9 +52,18 @@ function decimalAdjust(type, value, exp) {
 
 function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
   const { currentUserId, currentUserData } = useAuth();
+  const { coins } = useCoins();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
+  const getCoinFullName = (coinName) => {
+    let coin = coins.find((el) => el.name === coinName);
+    if (coin?.name.length > 7) {
+      return coin?.symbol.toUpperCase();
+    } else {
+      return coin?.name;
+    }
+  };
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -110,7 +120,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
             }}
           >
             <Box component="img" src={coinImg} sx={{ width: "50px" }}></Box>
-            <Typography variant="h2">{coinName}</Typography>
+            <Typography variant="h2">{getCoinFullName(coinName)}</Typography>
             <Box component="img" src={coinImg} sx={{ width: "50px" }}></Box>
           </Box>
           <Box
