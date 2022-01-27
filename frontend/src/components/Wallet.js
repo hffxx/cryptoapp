@@ -15,7 +15,7 @@ export const valueReducer = (value) => {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
     return Number(value)
-      .toFixed(8)
+      .toFixed(2)
       .replace(/(\.0+|0+)$/, "");
   }
 };
@@ -56,9 +56,7 @@ const CoinItem = ({ coin, price, img, name }) => {
           <Typography color="darkred">{`Amount: ${valueReducer(
             amount
           )}`}</Typography>
-          <Typography color="darkblue">{`Price: $${valueReducer(
-            price
-          )}`}</Typography>
+          <Typography color="darkblue">{`Price: $${Number(price)}`}</Typography>
           <Typography color="green">{`Value: $${valueReducer(
             value
           )}`}</Typography>

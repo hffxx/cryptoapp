@@ -63,29 +63,36 @@ function TradeModal({ children, coin }) {
   const handleMax = () => {
     setAmount(floor10(currentUserData.balance / coin.current_price, -7));
   };
-  const handleBuyCrypto = async (cName, cAmount) => {
+  const handleBuyCrypto = async (cName) => {
     setLoading(true);
+    let numberAmount = Number(amount);
     const wallet = currentUserData.coins;
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
     if (!wallet.some(({ coinName }) => coinName === cName)) {
-      let payload = { coinName: cName, amount: cAmount };
+      let payload = { coinName: cName, amount: numberAmount };
       await setDoc(docRef, {
         ...currentUserData,
-        balance: (userBalance - coin.current_price * Number(amount)).toFixed(2),
+        balance: (
+          userBalance -
+          Number(coin.current_price) * numberAmount
+        ).toFixed(2),
         coins: [...wallet, payload],
       });
     } else {
       let payload = wallet.map((coin) => {
         if (coin.coinName === cName) {
-          return { coinName: cName, amount: coin.amount + cAmount };
+          return { coinName: cName, amount: coin.amount + numberAmount };
         } else {
           return coin;
         }
       });
       await setDoc(docRef, {
         ...currentUserData,
-        balance: (userBalance - coin.current_price * Number(amount)).toFixed(2),
+        balance: (
+          userBalance -
+          Number(coin.current_price) * numberAmount
+        ).toFixed(2),
         coins: payload,
       });
     }
@@ -183,7 +190,7 @@ function TradeModal({ children, coin }) {
                 currentUserData.balance < coin.current_price * amount
               }
               variant="contained"
-              onClick={() => handleBuyCrypto(coin.id, amount)}
+              onClick={() => handleBuyCrypto(coin.id)}
             >{`Buy ${coin.symbol}`}</Button>
           </Box>
         </Box>
