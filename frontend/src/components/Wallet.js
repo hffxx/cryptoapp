@@ -25,7 +25,16 @@ export const valueReducer = (value) => {
 };
 const CoinItem = ({ coin, price, img, name }) => {
   const { amount } = coin;
+  const { coins } = useCoins();
   let value = (price * amount).toFixed(8);
+  const getCoinFullName = (coinName) => {
+    let coin = coins.find((el) => el.name === coinName);
+    if (coin?.name.length > 7) {
+      return coin?.symbol.toUpperCase();
+    } else {
+      return coin?.name;
+    }
+  };
   return (
     <Grid
       item
@@ -50,7 +59,7 @@ const CoinItem = ({ coin, price, img, name }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h4">{name}</Typography>
+        <Typography variant="h4">{getCoinFullName(name)}</Typography>
         <Box
           component="img"
           src={img}
@@ -106,14 +115,7 @@ function Wallet() {
     let img = coins.find((el) => el.name === coinName);
     return img?.image;
   };
-  const getCoinFullName = (coinName) => {
-    let coin = coins.find((el) => el.name === coinName);
-    if (coin?.name.length > 7) {
-      return coin?.symbol.toUpperCase();
-    } else {
-      return coin?.name;
-    }
-  };
+
   return (
     <DashboardPage>
       {!currentUserData && userCoins ? (
@@ -168,7 +170,7 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
-                name={getCoinFullName(coin.coinName)}
+                name={coin.coinName}
               />
             ))}
           </Grid>
