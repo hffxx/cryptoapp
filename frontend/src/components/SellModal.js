@@ -92,8 +92,14 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
         balance: Math.floor(userBalance + Number(totalAmount)),
         coins: payload,
       });
+    } else {
+      let payload = wallet.filter((coin) => coin.coinName !== cName);
+      await setDoc(docRef, {
+        ...currentUserData,
+        balance: Math.floor(userBalance + Number(totalAmount)),
+        coins: payload,
+      });
     }
-
     setAmount("");
     setLoading(false);
     setOpen(false);
