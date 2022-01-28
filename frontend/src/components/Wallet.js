@@ -20,7 +20,7 @@ export const valueReducer = (value) => {
     return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
   }
 };
-const CoinItem = ({ coin, price, img, name }) => {
+const CoinItem = ({ coin, price, img }) => {
   const { amount } = coin;
   const { coins } = useCoins();
   let value = (price * amount).toFixed(8);
@@ -56,7 +56,7 @@ const CoinItem = ({ coin, price, img, name }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h4">{getCoinFullName(name)}</Typography>
+        <Typography variant="h4">{getCoinFullName(coin.coinName)}</Typography>
         <Box
           component="img"
           src={img}
@@ -76,7 +76,7 @@ const CoinItem = ({ coin, price, img, name }) => {
         <SellModal
           coinPrice={price}
           coinImg={img}
-          coinName={name}
+          coinName={coin.coinName}
           userCoinAmount={amount}
         >
           Sell
@@ -169,7 +169,6 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
-                name={coin.coinName}
               />
             ))}
           </Grid>
