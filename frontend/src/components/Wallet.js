@@ -7,6 +7,7 @@ import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
 import SellModal from "./SellModal";
 
 export const valueReducer = (value) => {
+  console.log(typeof value);
   if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
   } else if (value / 1000000 >= 1) {
@@ -14,13 +15,9 @@ export const valueReducer = (value) => {
   } else if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else if (value >= 1) {
-    return Number(value)
-      .toFixed(2)
-      .replace(/(\.0+|0+)$/, "");
+    return `${value.toFixed(2).replace(/(\.0+|0+)$/, "")}`;
   } else {
-    return Number(value)
-      .toFixed(8)
-      .replace(/(\.0+|0+)$/, "");
+    return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
   }
 };
 const CoinItem = ({ coin, price, img, name }) => {
@@ -69,9 +66,11 @@ const CoinItem = ({ coin, price, img, name }) => {
           <Typography color="darkred">{`Amount: ${valueReducer(
             amount
           )}`}</Typography>
-          <Typography color="darkblue">{`Price: $${Number(price)}`}</Typography>
+          <Typography color="darkblue">{`Price: $${valueReducer(
+            Number(price)
+          )}`}</Typography>
           <Typography color="green">{`Value: $${valueReducer(
-            value
+            Number(value)
           )}`}</Typography>
         </Box>
         <SellModal
