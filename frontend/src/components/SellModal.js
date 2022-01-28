@@ -88,6 +88,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
             return coin;
           }
         });
+        setOpen(false);
         await setDoc(docRef, {
           ...currentUserData,
           balance: Math.floor(userBalance + Number(totalAmount)),
@@ -95,6 +96,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
         });
       } else {
         let payload = wallet.filter((coin) => coin.coinName !== cName);
+        setOpen(false);
         await setDoc(docRef, {
           ...currentUserData,
           balance: Math.floor(userBalance + Number(totalAmount)),
@@ -106,7 +108,6 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
     }
     setAmount("");
     setLoading(false);
-    setOpen(false);
   };
 
   return (
