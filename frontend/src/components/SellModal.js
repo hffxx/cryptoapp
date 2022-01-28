@@ -79,21 +79,31 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
     const wallet = currentUserData.coins;
-    if (userCoinAmount > numberAmount) {
-      let payload = wallet.map((coin) => {
-        if (coin.coinName === cName) {
-          return { ...coin, amount: coin.amount - numberAmount };
-        } else {
-          return coin;
-        }
-      });
-      await setDoc(docRef, {
-        ...currentUserData,
-        balance: Math.floor(userBalance + Number(totalAmount)),
-        coins: payload,
-      });
+    try {
+      if (userCoinAmount > numberAmount) {
+        let payload = wallet.map((coin) => {
+          if (coin.coinName === cName) {
+            return { ...coin, amount: coin.amount - numberAmount };
+          } else {
+            return coin;
+          }
+        });
+        await setDoc(docRef, {
+          ...currentUserData,
+          balance: Math.floor(userBalance + Number(totalAmount)),
+          coins: payload,
+        });
+      } else {
+        let payload = wallet.filter((coin) => coin.coinName !== cName);
+        await setDoc(docRef, {
+          ...currentUserData,
+          balance: Math.floor(userBalance + Number(totalAmount)),
+          coins: payload,
+        });
+      }
+    } catch (e) {
+      console.log("Error", e);
     }
-
     setAmount("");
     setLoading(false);
     setOpen(false);

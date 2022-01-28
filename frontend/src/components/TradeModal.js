@@ -70,26 +70,30 @@ function TradeModal({ children, coin }) {
     const wallet = currentUserData.coins;
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
-    if (!wallet.some(({ coinName }) => coinName === cName)) {
-      let payload = { coinName: cName, amount: numberAmount };
-      await setDoc(docRef, {
-        ...currentUserData,
-        balance: Math.floor(userBalance - totalAmount),
-        coins: [...wallet, payload],
-      });
-    } else {
-      let payload = wallet.map((coin) => {
-        if (coin.coinName === cName) {
-          return { ...coin, amount: coin.amount + numberAmount };
-        } else {
-          return coin;
-        }
-      });
-      await setDoc(docRef, {
-        ...currentUserData,
-        balance: Math.floor(userBalance - totalAmount),
-        coins: payload,
-      });
+    try {
+      if (!wallet.some(({ coinName }) => coinName === cName)) {
+        let payload = { coinName: cName, amount: numberAmount };
+        await setDoc(docRef, {
+          ...currentUserData,
+          balance: Math.floor(userBalance - totalAmount),
+          coins: [...wallet, payload],
+        });
+      } else {
+        let payload = wallet.map((coin) => {
+          if (coin.coinName === cName) {
+            return { ...coin, amount: coin.amount + numberAmount };
+          } else {
+            return coin;
+          }
+        });
+        await setDoc(docRef, {
+          ...currentUserData,
+          balance: Math.floor(userBalance - totalAmount),
+          coins: payload,
+        });
+      }
+    } catch (e) {
+      console.log("Error", e);
     }
     setAmount("");
     setLoading(false);
