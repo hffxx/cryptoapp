@@ -7,23 +7,20 @@ import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
 import SellModal from "./SellModal";
 
 export const valueReducer = (value) => {
-  console.log(typeof value);
   if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
   } else if (value / 1000000 >= 1) {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
   } else if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
-  } else if (value >= 1) {
-    return `${value.toFixed(2).replace(/(\.0+|0+)$/, "")}`;
   } else {
-    return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
+    return `${value}`;
   }
 };
 const CoinItem = ({ coin, price, img }) => {
   const { amount } = coin;
   const { coins } = useCoins();
-  let value = (price * amount).toFixed(8);
+  let value = price * amount;
   const getCoinFullName = (coinName) => {
     let coin = coins.find((el) => el.name === coinName);
     if (coin?.name.length > 7) {
@@ -95,7 +92,7 @@ function Wallet() {
     if (coinsPriceList) {
       let { coinPrice } =
         coinsPriceList.find((el) => el.coinName === coinName) || 0;
-      return coinPrice?.toFixed(8);
+      return coinPrice;
     }
   };
   const totalUserValue = () => {

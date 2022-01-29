@@ -121,7 +121,7 @@ function TradeModal({ children, coin }) {
             }}
           >
             <Box component="img" src={coin.image} sx={{ width: "50px" }}></Box>
-            <Typography variant="h2">
+            <Typography variant="h4">
               {coin.name.length > 6 ? coin.symbol.toUpperCase() : coin.name}
             </Typography>
             <Box component="img" src={coin.image} sx={{ width: "50px" }}></Box>

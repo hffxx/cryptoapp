@@ -32,7 +32,7 @@ const CoinItem = ({ coin }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h4">
+        <Typography variant="h5">
           {coin.name.length > 8 ? coin.symbol.toUpperCase() : coin.name}
         </Typography>
         <Box
