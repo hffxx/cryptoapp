@@ -11,7 +11,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const valueReducer = (value) => {
+export const amountReducer = (value) => {
   if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
   } else if (value / 1000000 >= 1) {
@@ -22,6 +22,18 @@ export const valueReducer = (value) => {
     return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
   }
 };
+export const valueReducer = (value) => {
+  if (value / 1000000000 >= 1) {
+    return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
+  } else if (value / 1000000 >= 1) {
+    return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
+  } else if (value / 100000 >= 1) {
+    return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
+  } else {
+    return `${value.toFixed(2).replace(/(\.0+|0+)$/, "")}`;
+  }
+};
+
 const CoinItem = ({ coin, price, img, openSnackbar }) => {
   const { amount } = coin;
   const { coins } = useCoins();
@@ -65,10 +77,10 @@ const CoinItem = ({ coin, price, img, openSnackbar }) => {
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Box sx={{ margin: "10px 0px" }}>
-          <Typography color="darkred">{`Amount: ${valueReducer(
+          <Typography color="darkred">{`Amount: ${amountReducer(
             amount
           )}`}</Typography>
-          <Typography color="darkblue">{`Price: $${valueReducer(
+          <Typography color="darkblue">{`Price: $${amountReducer(
             Number(price)
           )}`}</Typography>
           <Typography color="green">{`Value: $${valueReducer(
