@@ -165,12 +165,7 @@ function SellModal({
             >{`Total price: $${(coinPrice * amount).toFixed(2)}`}</Typography>
             <Button
               color="success"
-              disabled={
-                loading ||
-                amount <= 0 ||
-                amount > userCoinAmount ||
-                (coinPrice * amount).toFixed(2) <= 0
-              }
+              disabled={loading || amount <= 0 || amount > userCoinAmount}
               variant="contained"
               onClick={() => handleSellCrypto(coinName)}
             >{`Sell`}</Button>

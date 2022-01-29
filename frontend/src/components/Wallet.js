@@ -3,8 +3,17 @@ import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
-import { Box, Paper, Grid, Typography, Divider, Snackbar } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Grid,
+  Typography,
+  Divider,
+  Snackbar,
+  Button,
+} from "@mui/material";
 import SellModal from "./SellModal";
+import { useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -132,7 +141,7 @@ function Wallet() {
       return a + b;
     }, 0);
   };
-
+  let navigate = useNavigate();
   const getImage = (coinName) => {
     let img = coins.find((el) => el.name === coinName);
     return img?.image;
@@ -210,6 +219,29 @@ function Wallet() {
               />
             ))}
           </Grid>
+          {!userCoins.length && currentUserData && (
+            <Grid
+              item
+              xs={12}
+              sx={{
+                height: "200px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: "25px",
+              }}
+            >
+              <Typography variant="h5">You don't have any coins</Typography>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => navigate("/trade")}
+              >
+                Buy crypto
+              </Button>
+            </Grid>
+          )}
         </Grid>
       )}
     </DashboardPage>
