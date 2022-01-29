@@ -1,29 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
-import { Box, Paper, Grid, Typography, Button, Divider } from "@mui/material";
+import { Box, Paper, Grid, Typography, Divider, Snackbar } from "@mui/material";
 import SellModal from "./SellModal";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const valueReducer = (value) => {
-  console.log(typeof value);
   if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
   } else if (value / 1000000 >= 1) {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
   } else if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
-  } else if (value >= 1) {
-    return `${value.toFixed(2).replace(/(\.0+|0+)$/, "")}`;
   } else {
-    return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
+    return `${value}`;
   }
 };
-const CoinItem = ({ coin, price, img }) => {
+const CoinItem = ({ coin, price, img, openSnackbar }) => {
   const { amount } = coin;
   const { coins } = useCoins();
-  let value = (price * amount).toFixed(8);
+  let value = price * amount;
   const getCoinFullName = (coinName) => {
     let coin = coins.find((el) => el.name === coinName);
     if (coin?.name.length > 7) {
@@ -56,7 +58,7 @@ const CoinItem = ({ coin, price, img }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h4">{getCoinFullName(coin.coinName)}</Typography>
+        <Typography variant="h5">{getCoinFullName(coin.coinName)}</Typography>
         <Box
           component="img"
           src={img}
@@ -78,6 +80,7 @@ const CoinItem = ({ coin, price, img }) => {
           coinImg={img}
           coinName={coin.coinName}
           userCoinAmount={amount}
+          openSnackbar={openSnackbar}
         >
           Sell
         </SellModal>
@@ -90,12 +93,15 @@ function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
   const { coins } = useCoins();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const snackbarClose = () => setOpenSnackbar(false);
+  const snackbarOpen = () => setOpenSnackbar(true);
   const userCoins = currentUserData?.coins || [];
   const findCoinValue = (coinName) => {
     if (coinsPriceList) {
       let { coinPrice } =
         coinsPriceList.find((el) => el.coinName === coinName) || 0;
-      return coinPrice?.toFixed(8);
+      return coinPrice;
     }
   };
   const totalUserValue = () => {
@@ -136,6 +142,20 @@ function Wallet() {
                 gap: "10px",
               }}
             >
+              <Snackbar
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={snackbarClose}
+              >
+                <Alert
+                  onClose={snackbarClose}
+                  severity="success"
+                  sx={{ width: "100%" }}
+                >
+                  This is a success message!
+                </Alert>
+              </Snackbar>
               <Typography variant="h3" marginBottom={"15px"}>
                 Wallet 👛
               </Typography>
@@ -169,6 +189,7 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
+                openSnackbar={snackbarOpen}
               />
             ))}
           </Grid>

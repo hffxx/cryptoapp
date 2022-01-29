@@ -32,7 +32,7 @@ const CoinItem = ({ coin }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h4">
+        <Typography variant="h5">
           {coin.name.length > 8 ? coin.symbol.toUpperCase() : coin.name}
         </Typography>
         <Box
@@ -92,7 +92,7 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {filteredCoinList.length === 0 && !coins ? (
+            {filteredCoinList.length === 0 || !coins ? (
               <Grid item xs={12} mt={20}>
                 <Typography variant="h3"> Sorry, coin not found :(</Typography>
               </Grid>
