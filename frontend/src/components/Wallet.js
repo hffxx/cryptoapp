@@ -53,7 +53,7 @@ const CoinItem = ({ coin, price, img }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h4">{getCoinFullName(coin.coinName)}</Typography>
+        <Typography variant="h5">{getCoinFullName(coin.coinName)}</Typography>
         <Box
           component="img"
           src={img}
