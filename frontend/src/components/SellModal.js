@@ -34,7 +34,7 @@ function SellModal({
   coinImg,
   coinName,
   userCoinAmount,
-  openSnackbar,
+  snackbar,
 }) {
   const { currentUserId, currentUserData } = useAuth();
   const { coins } = useCoins();
@@ -90,10 +90,11 @@ function SellModal({
       }
     } catch (e) {
       console.log("Error", e);
+      snackbar("Error!", "error");
     }
     setAmount("");
     setLoading(false);
-    openSnackbar();
+    snackbar(`Sold ${coinName} for $${totalAmount}`);
   };
 
   return (

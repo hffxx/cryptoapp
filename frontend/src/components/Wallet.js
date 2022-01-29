@@ -3,8 +3,17 @@ import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
-import { Box, Paper, Grid, Typography, Divider, Snackbar } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Grid,
+  Typography,
+  Divider,
+  Snackbar,
+  Button,
+} from "@mui/material";
 import SellModal from "./SellModal";
+import { useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -34,7 +43,7 @@ export const valueReducer = (value) => {
   }
 };
 
-const CoinItem = ({ coin, price, img, openSnackbar }) => {
+const CoinItem = ({ coin, price, img, snackbar }) => {
   const { amount } = coin;
   const { coins } = useCoins();
   let value = price * amount;
@@ -92,7 +101,7 @@ const CoinItem = ({ coin, price, img, openSnackbar }) => {
           coinImg={img}
           coinName={coin.coinName}
           userCoinAmount={amount}
-          openSnackbar={openSnackbar}
+          snackbar={snackbar}
         >
           Sell
         </SellModal>
@@ -105,9 +114,14 @@ function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
   const { coins } = useCoins();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const snackbarClose = () => setOpenSnackbar(false);
-  const snackbarOpen = () => setOpenSnackbar(true);
+  const [snackbar, setSnackbar] = useState({
+    state: false,
+    message: "",
+    severity: "",
+  });
+  const snackbarClose = () => setSnackbar(false);
+  const snackbarOpen = (message, severity = "success") =>
+    setSnackbar({ state: true, message, severity });
   const userCoins = currentUserData?.coins || [];
   const findCoinValue = (coinName) => {
     if (coinsPriceList) {
@@ -127,7 +141,7 @@ function Wallet() {
       return a + b;
     }, 0);
   };
-
+  let navigate = useNavigate();
   const getImage = (coinName) => {
     let img = coins.find((el) => el.name === coinName);
     return img?.image;
@@ -156,16 +170,16 @@ function Wallet() {
             >
               <Snackbar
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                open={openSnackbar}
+                open={snackbar.state}
                 autoHideDuration={3000}
                 onClose={snackbarClose}
               >
                 <Alert
                   onClose={snackbarClose}
-                  severity="success"
+                  severity={snackbar.severity}
                   sx={{ width: "100%" }}
                 >
-                  This is a success message!
+                  {snackbar.message}
                 </Alert>
               </Snackbar>
               <Typography variant="h3" marginBottom={"15px"}>
@@ -201,10 +215,33 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
-                openSnackbar={snackbarOpen}
+                snackbar={snackbarOpen}
               />
             ))}
           </Grid>
+          {!userCoins.length && currentUserData && (
+            <Grid
+              item
+              mt={20}
+              xs={12}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: "25px",
+              }}
+            >
+              <Typography variant="h5">You don't have any coins</Typography>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => navigate("/trade")}
+              >
+                Buy crypto
+              </Button>
+            </Grid>
+          )}
         </Grid>
       )}
     </DashboardPage>
