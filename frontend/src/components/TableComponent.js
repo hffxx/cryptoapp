@@ -336,11 +336,12 @@ function TableComponent({ data }) {
     rows,
     handleChangePage,
   };
+
   const memoData = useMemo(() => {
     return data
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((coin) => <Row coin={coin} key={coin.id} width={windowWidth} />);
-  }, [data]);
+  }, [data, windowWidth]);
   return (
     <Box
       sx={{
