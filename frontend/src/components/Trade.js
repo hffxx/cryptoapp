@@ -92,9 +92,9 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {filteredCoinList.length === 0 || !coins ? (
+            {(filteredCoinList.length === 0 && currentUserData) || !coins ? (
               <Grid item xs={12} mt={20}>
-                <Typography variant="h3"> Sorry, coin not found :(</Typography>
+                <Typography variant="h5"> Sorry, coin not found :(</Typography>
               </Grid>
             ) : (
               memoCoinList

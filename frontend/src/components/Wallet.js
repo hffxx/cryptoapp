@@ -222,9 +222,9 @@ function Wallet() {
           {!userCoins.length && currentUserData && (
             <Grid
               item
+              mt={20}
               xs={12}
               sx={{
-                height: "200px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
