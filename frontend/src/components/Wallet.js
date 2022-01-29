@@ -3,15 +3,7 @@ import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import Spinner from "./Spinner";
-import {
-  Box,
-  Paper,
-  Grid,
-  Typography,
-  Divider,
-  Snackbar,
-  IconButton,
-} from "@mui/material";
+import { Box, Paper, Grid, Typography, Divider, Snackbar } from "@mui/material";
 import SellModal from "./SellModal";
 import MuiAlert from "@mui/material/Alert";
 
