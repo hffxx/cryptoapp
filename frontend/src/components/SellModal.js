@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
+import { TextField, Button, Modal, Typography, Box } from "@mui/material";
 import { db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { useAuth } from "./contexts/AuthContext";
@@ -32,7 +28,14 @@ const inputStyle = {
   },
 };
 
-function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
+function SellModal({
+  children,
+  coinPrice,
+  coinImg,
+  coinName,
+  userCoinAmount,
+  openSnackbar,
+}) {
   const { currentUserId, currentUserData } = useAuth();
   const { coins } = useCoins();
   const [open, setOpen] = useState(false);
@@ -70,7 +73,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
             return coin;
           }
         });
-        setOpen(false);
+        handleClose();
         await setDoc(docRef, {
           ...currentUserData,
           balance: Math.floor(userBalance + Number(totalAmount)),
@@ -78,7 +81,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
         });
       } else {
         let payload = wallet.filter((coin) => coin.coinName !== cName);
-        setOpen(false);
+        handleClose();
         await setDoc(docRef, {
           ...currentUserData,
           balance: Math.floor(userBalance + Number(totalAmount)),
@@ -90,6 +93,7 @@ function SellModal({ children, coinPrice, coinImg, coinName, userCoinAmount }) {
     }
     setAmount("");
     setLoading(false);
+    openSnackbar();
   };
 
   return (
