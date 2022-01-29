@@ -19,7 +19,7 @@ export const valueReducer = (value) => {
   } else if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   } else {
-    return `${value}`;
+    return `${value.toFixed(2)}`;
   }
 };
 const CoinItem = ({ coin, price, img, openSnackbar }) => {

@@ -61,7 +61,7 @@ function TradeModal({ children, coin }) {
     setAmount("");
   };
   const handleMax = () => {
-    setAmount(floor10(currentUserData.balance / coin.current_price, -7));
+    setAmount(floor10(currentUserData.balance / coin.current_price, -8));
   };
   const handleBuyCrypto = async (cName) => {
     setLoading(true);
