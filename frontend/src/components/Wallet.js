@@ -34,7 +34,7 @@ export const valueReducer = (value) => {
   }
 };
 
-const CoinItem = ({ coin, price, img, openSnackbar }) => {
+const CoinItem = ({ coin, price, img, snackbar }) => {
   const { amount } = coin;
   const { coins } = useCoins();
   let value = price * amount;
@@ -92,7 +92,7 @@ const CoinItem = ({ coin, price, img, openSnackbar }) => {
           coinImg={img}
           coinName={coin.coinName}
           userCoinAmount={amount}
-          openSnackbar={openSnackbar}
+          snackbar={snackbar}
         >
           Sell
         </SellModal>
@@ -105,9 +105,14 @@ function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
   const { coins } = useCoins();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const snackbarClose = () => setOpenSnackbar(false);
-  const snackbarOpen = () => setOpenSnackbar(true);
+  const [snackbar, setSnackbar] = useState({
+    state: false,
+    message: "",
+    severity: "",
+  });
+  const snackbarClose = () => setSnackbar(false);
+  const snackbarOpen = (message, severity = "success") =>
+    setSnackbar({ state: true, message, severity });
   const userCoins = currentUserData?.coins || [];
   const findCoinValue = (coinName) => {
     if (coinsPriceList) {
@@ -156,16 +161,16 @@ function Wallet() {
             >
               <Snackbar
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                open={openSnackbar}
+                open={snackbar.state}
                 autoHideDuration={3000}
                 onClose={snackbarClose}
               >
                 <Alert
                   onClose={snackbarClose}
-                  severity="success"
+                  severity={snackbar.severity}
                   sx={{ width: "100%" }}
                 >
-                  This is a success message!
+                  {snackbar.message}
                 </Alert>
               </Snackbar>
               <Typography variant="h3" marginBottom={"15px"}>
@@ -201,7 +206,7 @@ function Wallet() {
                 key={index}
                 price={findCoinValue(coin.coinName)}
                 img={getImage(coin.coinName)}
-                openSnackbar={snackbarOpen}
+                snackbar={snackbarOpen}
               />
             ))}
           </Grid>

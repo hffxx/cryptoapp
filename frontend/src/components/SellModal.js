@@ -34,7 +34,7 @@ function SellModal({
   coinImg,
   coinName,
   userCoinAmount,
-  openSnackbar,
+  snackbar,
 }) {
   const { currentUserId, currentUserData } = useAuth();
   const { coins } = useCoins();
@@ -90,10 +90,11 @@ function SellModal({
       }
     } catch (e) {
       console.log("Error", e);
+      snackbar("Error!", "error");
     }
     setAmount("");
     setLoading(false);
-    openSnackbar();
+    snackbar(`Sold ${coinName} for $${totalAmount}`);
   };
 
   return (
@@ -164,7 +165,12 @@ function SellModal({
             >{`Total price: $${(coinPrice * amount).toFixed(2)}`}</Typography>
             <Button
               color="success"
-              disabled={loading || amount <= 0 || amount > userCoinAmount}
+              disabled={
+                loading ||
+                amount <= 0 ||
+                amount > userCoinAmount ||
+                (coinPrice * amount).toFixed(2) <= 0
+              }
               variant="contained"
               onClick={() => handleSellCrypto(coinName)}
             >{`Sell`}</Button>
