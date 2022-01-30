@@ -1,13 +1,13 @@
 import React, { useState, useMemo } from "react";
-import { Paper, Box, Grid, TextField, Typography } from "@mui/material";
+import { Paper, Box, Grid, TextField, Typography, Button } from "@mui/material";
 import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import { valueReducer } from "./Wallet";
-import TradeModal from "./TradeModal";
 import Spinner from "./Spinner";
+import ModalTrade from "./ModalTrade";
 
-const CoinItem = ({ coin }) => {
+const CoinItem = ({ coin, openModal, setModalData }) => {
   return (
     <Grid
       item
@@ -41,7 +41,16 @@ const CoinItem = ({ coin }) => {
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Typography variant="h5">{`$${coin.current_price}`}</Typography>
-        <TradeModal coin={coin}>Buy</TradeModal>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => {
+            openModal();
+            setModalData(coin);
+          }}
+        >
+          Buy new
+        </Button>
       </Paper>
     </Grid>
   );
@@ -49,6 +58,10 @@ const CoinItem = ({ coin }) => {
 
 function Trade() {
   const [coinName, setCoinName] = useState("");
+  const [modal, setModal] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const handleOpenModal = () => setModal(true);
+  const handleCloseModal = () => setModal(false);
   const { currentUserData } = useAuth();
   const { coins } = useCoins();
 
@@ -60,12 +73,22 @@ function Trade() {
   const memoCoinList = useMemo(
     () =>
       filteredCoinList.map((coin, index) => (
-        <CoinItem coin={coin} key={index} />
+        <CoinItem
+          coin={coin}
+          key={index}
+          openModal={handleOpenModal}
+          setModalData={setModalData}
+        />
       )),
     [coins, coinName]
   );
   return (
     <DashboardPage>
+      <ModalTrade
+        modal={modal}
+        coin={modalData}
+        closeModal={handleCloseModal}
+      />
       {coins && currentUserData ? (
         <Grid container justifyContent={"center"} alignItems={"center"}>
           <Grid
