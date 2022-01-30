@@ -46,13 +46,13 @@ function decimalAdjust(type, value, exp) {
 }
 const floor10 = (value, exp) => decimalAdjust("floor", value, exp);
 
-function ModalTrade({ modal, closeModal, coin }) {
+function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
   const { currentUserId, currentUserData } = useAuth();
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleMax = () => {
-    setAmount(floor10(currentUserData.balance / coin.current_price, -8));
+    setAmount(floor10(currentUserData.balance / coin.current_price, -4));
   };
   const handleBuyCrypto = async (cName) => {
     setLoading(true);
@@ -84,8 +84,12 @@ function ModalTrade({ modal, closeModal, coin }) {
           coins: payload,
         });
       }
+      openSnackbar(
+        `Bought ${coin?.name} for $${(coin.current_price * amount).toFixed(2)}`
+      );
     } catch (e) {
       console.log("Error", e);
+      openSnackbar(`Error, check console`, "error");
     }
     setLoading(false);
     closeModal();
