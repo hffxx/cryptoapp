@@ -52,7 +52,7 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
   const [loading, setLoading] = useState(false);
 
   const handleMax = () => {
-    setAmount(floor10(currentUserData.balance / coin.current_price, -4));
+    setAmount(floor10(currentUserData.balance / coin.current_price, -7));
   };
   const handleBuyCrypto = async (cName) => {
     setLoading(true);
@@ -167,7 +167,7 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
           <Typography
             color={
               currentUserData?.balance > 0 &&
-              currentUserData?.balance < coin.current_price * amount &&
+              currentUserData?.balance + 0.01 < coin.current_price * amount &&
               "red"
             }
           >{`Total price: $${(coin.current_price * amount).toFixed(
@@ -178,7 +178,7 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
             disabled={
               loading ||
               amount <= 0 ||
-              currentUserData.balance < coin.current_price * amount ||
+              currentUserData.balance + 0.01 < coin.current_price * amount ||
               (coin.current_price * amount).toFixed(2) <= 0
             }
             variant="contained"
