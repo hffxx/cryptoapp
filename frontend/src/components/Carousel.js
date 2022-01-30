@@ -12,7 +12,6 @@ import { Typography, CircularProgress } from "@mui/material";
 import { percentColor } from "./TableComponent";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import TradeModal from "./TradeModal";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
