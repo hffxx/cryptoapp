@@ -50,7 +50,6 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
   const { currentUserId, currentUserData } = useAuth();
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
-
   const handleMax = () => {
     setAmount(floor10(currentUserData.balance / coin.current_price, -7));
   };
@@ -61,10 +60,15 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
     const wallet = currentUserData.coins;
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
-    console.log(typeof userBalance, typeof totalAmount);
     try {
-      if (!wallet.some(({ coinName }) => coinName === cName)) {
-        let payload = { coinName: cName, amount: numberAmount };
+      if (!wallet.some(({ name }) => name === cName)) {
+        let payload = {
+          name: cName,
+          image: coin.image,
+          id: coin.id,
+          symbol: coin.symbol,
+          amount: numberAmount,
+        };
         await setDoc(docRef, {
           ...currentUserData,
           balance: userBalance - totalAmount,
@@ -72,7 +76,7 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
         });
       } else {
         let payload = wallet.map((coin) => {
-          if (coin.coinName === cName) {
+          if (coin.name === cName) {
             return { ...coin, amount: coin.amount + numberAmount };
           } else {
             return coin;

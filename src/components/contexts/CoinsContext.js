@@ -21,8 +21,8 @@ export function CoinsProvider({ children }) {
   const getCoinsPriceList = () => {
     if (!!coins) {
       let priceList = coins.map((coin) => ({
-        coinName: coin.name,
-        coinPrice: coin.current_price,
+        name: coin.name,
+        price: coin.current_price,
       }));
       setCoinsPriceList(priceList);
     }
