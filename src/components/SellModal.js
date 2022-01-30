@@ -80,7 +80,7 @@ function SellModal({
           coins: payload,
         });
       } else {
-        let payload = wallet.filter((coin) => coin.coinName !== cName);
+        let payload = wallet.filter((coin) => coin.name !== cName);
         handleClose();
         await setDoc(docRef, {
           ...currentUserData,
