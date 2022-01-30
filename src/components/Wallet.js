@@ -45,6 +45,7 @@ export const valueReducer = (value) => {
 
 const CoinItem = ({ coin, snackbar, price }) => {
   const { amount, image, symbol, name } = coin;
+  console.log(coin);
   let value = price * amount;
   return (
     <Grid
@@ -90,7 +91,7 @@ const CoinItem = ({ coin, snackbar, price }) => {
         <SellModal
           coinPrice={price}
           coinImg={image}
-          coinName={coin.coinName}
+          coinName={name}
           userCoinAmount={amount}
           snackbar={snackbar}
         >

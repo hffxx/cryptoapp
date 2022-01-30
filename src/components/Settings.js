@@ -1,6 +1,6 @@
 import React from "react";
 import DashboardPage from "./Pages/DashboardPage";
-import { Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 function Settings() {
   return (
