@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Grid,
-  Box,
-  CircularProgress,
-  Typography,
-  Hidden,
-  Button,
-} from "@mui/material";
+import { Grid, Hidden, Button } from "@mui/material";
 import TableComponent from "./TableComponent";
 import Carousel from "./Carousel";
 import Spinner from "./Spinner";

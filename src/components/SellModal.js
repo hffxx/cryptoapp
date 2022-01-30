@@ -67,7 +67,7 @@ function SellModal({
     try {
       if (userCoinAmount > numberAmount) {
         let payload = wallet.map((coin) => {
-          if (coin.coinName === cName) {
+          if (coin.name === cName) {
             return { ...coin, amount: coin.amount - numberAmount };
           } else {
             return coin;

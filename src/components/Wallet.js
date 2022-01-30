@@ -43,18 +43,10 @@ export const valueReducer = (value) => {
   }
 };
 
-const CoinItem = ({ coin, price, img, snackbar }) => {
-  const { amount } = coin;
-  const { coins } = useCoins();
+const CoinItem = ({ coin, snackbar, price }) => {
+  const { amount, image, symbol, name } = coin;
+  console.log(coin);
   let value = price * amount;
-  const getCoinFullName = (coinName) => {
-    let coin = coins.find((el) => el.name === coinName);
-    if (coin?.name.length > 7) {
-      return coin?.symbol.toUpperCase();
-    } else {
-      return coin?.name;
-    }
-  };
   return (
     <Grid
       item
@@ -79,10 +71,10 @@ const CoinItem = ({ coin, price, img, snackbar }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h5">{getCoinFullName(coin.coinName)}</Typography>
+        <Typography variant="h5">{name?.length > 7 ? symbol : name}</Typography>
         <Box
           component="img"
-          src={img}
+          src={image}
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Box sx={{ margin: "10px 0px" }}>
@@ -98,8 +90,8 @@ const CoinItem = ({ coin, price, img, snackbar }) => {
         </Box>
         <SellModal
           coinPrice={price}
-          coinImg={img}
-          coinName={coin.coinName}
+          coinImg={image}
+          coinName={name}
           userCoinAmount={amount}
           snackbar={snackbar}
         >
@@ -113,7 +105,6 @@ const CoinItem = ({ coin, price, img, snackbar }) => {
 function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
-  const { coins } = useCoins();
   const [snackbar, setSnackbar] = useState({
     state: false,
     message: "",
@@ -123,18 +114,17 @@ function Wallet() {
   const snackbarOpen = (message, severity = "success") =>
     setSnackbar({ state: true, message, severity });
   const userCoins = currentUserData?.coins || [];
-  const findCoinValue = (coinName) => {
+  const findCoinValue = (name) => {
     if (coinsPriceList) {
-      let { coinPrice } =
-        coinsPriceList.find((el) => el.coinName === coinName) || 0;
-      return coinPrice;
+      let { price } = coinsPriceList.find((coin) => coin.name === name) || 0;
+      return price;
     }
   };
   const totalUserValue = () => {
     let totalArr = [];
-    userCoins.forEach((el) => {
-      let value = findCoinValue(el.coinName);
-      let total = el.amount * value;
+    userCoins.forEach((coin) => {
+      let value = findCoinValue(coin.name);
+      let total = coin.amount * value;
       totalArr.push(total);
     });
     return totalArr.reduce((a, b) => {
@@ -142,11 +132,6 @@ function Wallet() {
     }, 0);
   };
   let navigate = useNavigate();
-  const getImage = (coinName) => {
-    let img = coins.find((el) => el.name === coinName);
-    return img?.image;
-  };
-
   return (
     <DashboardPage>
       {!currentUserData && userCoins ? (
@@ -209,12 +194,11 @@ function Wallet() {
             </Box>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {userCoins.map((coin, index) => (
+            {userCoins.map((coin) => (
               <CoinItem
                 coin={coin}
-                key={index}
-                price={findCoinValue(coin.coinName)}
-                img={getImage(coin.coinName)}
+                key={coin.symbol}
+                price={findCoinValue(coin.name)}
                 snackbar={snackbarOpen}
               />
             ))}

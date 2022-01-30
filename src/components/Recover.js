@@ -14,7 +14,6 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 import UnauthPage from "./Pages/UnauthPage";
 
 const styles = {
