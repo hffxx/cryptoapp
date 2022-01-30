@@ -63,7 +63,7 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
     try {
       if (!wallet.some(({ name }) => name === cName)) {
         let payload = {
-          name: cName,
+          name: coin.name,
           image: coin.image,
           id: coin.id,
           symbol: coin.symbol,
