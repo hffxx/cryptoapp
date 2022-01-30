@@ -1,11 +1,24 @@
 import React, { useState, useMemo } from "react";
-import { Paper, Box, Grid, TextField, Typography, Button } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Snackbar,
+} from "@mui/material";
 import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import { valueReducer } from "./Wallet";
 import Spinner from "./Spinner";
 import ModalTrade from "./ModalTrade";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const CoinItem = ({ coin, openModal, setModalData }) => {
   return (
@@ -49,7 +62,7 @@ const CoinItem = ({ coin, openModal, setModalData }) => {
             setModalData(coin);
           }}
         >
-          Buy new
+          Buy
         </Button>
       </Paper>
     </Grid>
@@ -60,6 +73,14 @@ function Trade() {
   const [coinName, setCoinName] = useState("");
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [snackbar, setSnackbar] = useState({
+    state: false,
+    message: "",
+    severity: "",
+  });
+  const snackbarClose = () => setSnackbar(false);
+  const snackbarOpen = (message, severity = "success") =>
+    setSnackbar({ state: true, message, severity });
   const handleOpenModal = () => setModal(true);
   const handleCloseModal = () => setModal(false);
   const { currentUserData } = useAuth();
@@ -84,10 +105,25 @@ function Trade() {
   );
   return (
     <DashboardPage>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={snackbar.state}
+        autoHideDuration={3000}
+        onClose={snackbarClose}
+      >
+        <Alert
+          onClose={snackbarClose}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <ModalTrade
         modal={modal}
         coin={modalData}
         closeModal={handleCloseModal}
+        openSnackbar={snackbarOpen}
       />
       {coins && currentUserData ? (
         <Grid container justifyContent={"center"} alignItems={"center"}>
