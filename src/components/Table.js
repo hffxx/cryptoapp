@@ -13,7 +13,7 @@ import {
   TablePagination,
   tablePaginationClasses,
   Tooltip,
-  Table,
+  Table as MUITable,
   TableBody,
   TableContainer,
   TableHead,
@@ -297,7 +297,7 @@ function Row({ coin, width }) {
   );
 }
 
-function TableComponent({ data }) {
+function Table({ data }) {
   const rows = data;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -352,7 +352,7 @@ function TableComponent({ data }) {
       }}
     >
       <TableContainer ref={tableRef}>
-        <Table
+        <MUITable
           aria-label="simple table"
           size={windowWidth < 1200 ? "small" : "medium"}
         >
@@ -396,7 +396,7 @@ function TableComponent({ data }) {
               </TableRow>
             )}
           </TableBody>
-        </Table>
+        </MUITable>
         <TablePaginationComponent {...props} />
       </TableContainer>
     </Box>
@@ -442,4 +442,4 @@ function TablePaginationComponent({
   );
 }
 
-export default TableComponent;
+export default Table;

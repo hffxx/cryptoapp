@@ -72,7 +72,7 @@ const CoinItem = ({ coin, openModal, setModalData }) => {
 function Trade() {
   const [coinName, setCoinName] = useState("");
   const [modal, setModal] = useState(false);
-  const [modalData, setModalData] = useState({});
+  const [modalData, setModalData] = useState({ state: false });
   const [snackbar, setSnackbar] = useState({
     state: false,
     message: "",
@@ -81,8 +81,8 @@ function Trade() {
   const snackbarClose = () => setSnackbar(false);
   const snackbarOpen = (message, severity = "success") =>
     setSnackbar({ state: true, message, severity });
-  const handleOpenModal = () => setModal(true);
-  const handleCloseModal = () => setModal(false);
+  const handleOpenModal = () => setModalData({ ...modalData, state: true });
+  const handleCloseModal = () => setModalData({ ...modalData, state: false });
   const { currentUserData } = useAuth();
   const { coins } = useCoins();
 
@@ -120,7 +120,7 @@ function Trade() {
         </Alert>
       </Snackbar>
       <ModalTrade
-        modal={modal}
+        modal={modalData.state}
         coin={modalData}
         closeModal={handleCloseModal}
         openSnackbar={snackbarOpen}

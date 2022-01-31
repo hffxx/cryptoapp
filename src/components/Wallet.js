@@ -121,10 +121,10 @@ function Wallet() {
     }
   };
   const totalUserValue = () => {
-    let totalArr = [];
+    const totalArr = [];
     userCoins.forEach((coin) => {
-      let value = findCoinValue(coin.name);
-      let total = coin.amount * value;
+      const value = findCoinValue(coin.name);
+      const total = coin.amount * value;
       totalArr.push(total);
     });
     return totalArr.reduce((a, b) => {
