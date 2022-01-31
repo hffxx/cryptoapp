@@ -151,7 +151,8 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {(filteredCoinList.length === 0 && currentUserData) || !coins ? (
+            {filteredCoinList.length === 0 &&
+            currentUserData.coin?.length !== 0 ? (
               <Grid item xs={12} mt={20}>
                 <Typography variant="h5"> Sorry, coin not found :(</Typography>
               </Grid>

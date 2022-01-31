@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Hidden, Button } from "@mui/material";
 import TableComponent from "./TableComponent";
 import Carousel from "./Carousel";
@@ -8,16 +8,21 @@ import DashboardPage from "./Pages/DashboardPage";
 
 function Dashboard() {
   const [title, setTitle] = useState("🔥 Top Coins");
+  const [coinsList, setCoinsList] = useState([]);
   const { coins } = useCoins();
 
-  const topCoins = coins.slice(0, 10);
+  useEffect(() => {
+    setCoinsList(coins);
+  }, [coins]);
 
-  const biggestGainers = [...coins]
+  const topCoins = coinsList.slice(0, 10);
+
+  const biggestGainers = [...coinsList]
     .sort((a, b) =>
       a.price_change_percentage_24h < b.price_change_percentage_24h ? 1 : -1
     )
     .slice(0, 10);
-  const biggestLosers = [...coins]
+  const biggestLosers = [...coinsList]
     .sort((a, b) =>
       a.price_change_percentage_24h > b.price_change_percentage_24h ? 1 : -1
     )
@@ -25,7 +30,7 @@ function Dashboard() {
 
   return (
     <DashboardPage>
-      {coins.length === 0 ? (
+      {coinsList.length === 0 ? (
         <Spinner />
       ) : (
         <Grid container>
@@ -96,7 +101,7 @@ function Dashboard() {
             </Grid>
           </Hidden>
           <Grid item xs={12}>
-            <TableComponent data={coins} />
+            <TableComponent data={coinsList} />
           </Grid>
         </Grid>
       )}

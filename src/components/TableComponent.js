@@ -5,11 +5,6 @@ import React, {
   useRef,
   useMemo,
 } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import {
   Box,
   Typography,
@@ -18,13 +13,18 @@ import {
   TablePagination,
   tablePaginationClasses,
   Tooltip,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  LinearProgress,
 } from "@mui/material";
-import TableCell from "@mui/material/TableCell";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import LinearProgress from "@mui/material/LinearProgress";
-import NumberFormat from "react-number-format";
 import InfoIcon from "@mui/icons-material/Info";
+import NumberFormat from "react-number-format";
 
 export const percentColor = (coin) =>
   coin.price_change_percentage_24h > 0 ? "green" : "red";
