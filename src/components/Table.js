@@ -341,7 +341,7 @@ function Table({ data }) {
     return data
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((coin) => <Row coin={coin} key={coin.id} width={windowWidth} />);
-  }, [data, windowWidth]);
+  }, [data, windowWidth, page, rowsPerPage]);
   return (
     <Box
       sx={{
