@@ -9,6 +9,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import DashboardPage from "./Pages/DashboardPage";
+import { SingleCoinPrice } from "../config/api";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
 import { valueReducer } from "./Wallet";
@@ -20,7 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const CoinItem = ({ coin, openModal, setModalData }) => {
+const CoinItem = ({ coin, openModal, setModalData, fetchActualPrice }) => {
   return (
     <Grid
       item
@@ -60,6 +61,7 @@ const CoinItem = ({ coin, openModal, setModalData }) => {
           onClick={() => {
             openModal();
             setModalData(coin);
+            fetchActualPrice(coin.id);
           }}
         >
           Buy
@@ -72,8 +74,10 @@ const CoinItem = ({ coin, openModal, setModalData }) => {
 function Trade() {
   const { currentUserData } = useAuth();
   const { coins } = useCoins();
+  const [actualCoinPrice, setActualCoinPrice] = useState(0);
   const [coinName, setCoinName] = useState("");
   const [modal, setModal] = useState(false);
+  const [loadingFetchPrice, setLoadingFetchPrice] = useState(false);
   const [modalData, setModalData] = useState({});
   const [snackbar, setSnackbar] = useState({
     state: false,
@@ -86,6 +90,17 @@ function Trade() {
   const handleOpenModal = () => setModal(true);
   const handleCloseModal = () => setModal(false);
 
+  const fetchActualPrice = async (id) => {
+    try {
+      setLoadingFetchPrice(true);
+      let data = await fetch(SingleCoinPrice(id));
+      let coinPrice = await data.json();
+      setActualCoinPrice(coinPrice[id].usd);
+      setLoadingFetchPrice(false);
+    } catch (e) {
+      console.log("Error!", e?.message);
+    }
+  };
   const filteredCoinList = coins.filter(
     (coin) =>
       coin.name.toLowerCase().includes(coinName.toLowerCase()) ||
@@ -99,6 +114,7 @@ function Trade() {
           key={index}
           openModal={handleOpenModal}
           setModalData={setModalData}
+          fetchActualPrice={fetchActualPrice}
         />
       )),
     [coins, coinName]
@@ -124,6 +140,8 @@ function Trade() {
         coin={modalData}
         closeModal={handleCloseModal}
         openSnackbar={snackbarOpen}
+        price={actualCoinPrice}
+        loadingFetchPrice={loadingFetchPrice}
       />
       {coins && currentUserData ? (
         <Grid container justifyContent={"center"} alignItems={"center"}>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import DashboardPage from "./Pages/DashboardPage";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
+import DashboardPage from "./Pages/DashboardPage";
 import Spinner from "./Spinner";
 import {
   Box,
@@ -13,7 +14,7 @@ import {
   Button,
 } from "@mui/material";
 import SellModal from "./SellModal";
-import { useNavigate } from "react-router-dom";
+
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {

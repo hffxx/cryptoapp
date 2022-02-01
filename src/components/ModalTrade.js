@@ -46,17 +46,24 @@ function decimalAdjust(type, value, exp) {
 }
 const floor10 = (value, exp) => decimalAdjust("floor", value, exp);
 
-function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
+function ModalTrade({
+  modal,
+  closeModal,
+  coin,
+  openSnackbar,
+  price,
+  loadingFetchPrice,
+}) {
   const { currentUserId, currentUserData } = useAuth();
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const handleMax = () => {
-    setAmount(floor10(currentUserData.balance / coin.current_price, -7));
+    setAmount(floor10(currentUserData.balance / price, -7));
   };
   const handleBuyCrypto = async (cName) => {
     setLoading(true);
     let numberAmount = Number(amount);
-    let totalAmount = +(coin.current_price * amount).toFixed(2);
+    let totalAmount = +(price * amount).toFixed(2);
     const wallet = currentUserData.coins;
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
@@ -88,9 +95,7 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
           coins: payload,
         });
       }
-      openSnackbar(
-        `Bought ${coin?.name} for $${(coin.current_price * amount).toFixed(2)}`
-      );
+      openSnackbar(`Bought ${coin?.name} for $${(price * amount).toFixed(2)}`);
     } catch (e) {
       console.log("Error", e);
       openSnackbar(`Error, check console`, "error");
@@ -137,10 +142,9 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
             marginTop: "20px",
           }}
         >
-          <Typography
-            noWrap
-            variant="h6"
-          >{`Price: $${coin.current_price}`}</Typography>
+          <Typography noWrap variant="h6">
+            {loadingFetchPrice ? `Loading price` : `Price: $${price}`}
+          </Typography>
           <TextField
             sx={inputStyle}
             placeholder="Amount"
@@ -171,19 +175,18 @@ function ModalTrade({ modal, closeModal, coin, openSnackbar }) {
           <Typography
             color={
               currentUserData?.balance > 0 &&
-              currentUserData?.balance < coin.current_price * amount &&
+              currentUserData?.balance < price * amount &&
               "red"
             }
-          >{`Total price: $${(coin.current_price * amount).toFixed(
-            2
-          )}`}</Typography>
+          >{`Total price: $${(price * amount).toFixed(2)}`}</Typography>
           <Button
             color="success"
             disabled={
               loading ||
+              loadingFetchPrice ||
               amount <= 0 ||
-              currentUserData.balance < coin.current_price * amount ||
-              (coin.current_price * amount).toFixed(2) <= 0
+              currentUserData.balance < price * amount ||
+              (price * amount).toFixed(2) <= 0
             }
             variant="contained"
             onClick={() => handleBuyCrypto(coin.name)}
