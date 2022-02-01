@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import DashboardPage from "./Pages/DashboardPage";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
+import DashboardPage from "./Pages/DashboardPage";
 import Spinner from "./Spinner";
 import {
   Box,
@@ -13,40 +14,33 @@ import {
   Button,
 } from "@mui/material";
 import SellModal from "./SellModal";
-import { useNavigate } from "react-router-dom";
+
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const amountReducer = (value) => {
-  if (value / 1000000000 >= 1) {
-    return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
-  } else if (value / 1000000 >= 1) {
-    return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
-  } else if (value / 100000 >= 1) {
-    return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
-  } else {
-    return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
-  }
-};
 export const valueReducer = (value) => {
   if (value / 1000000000 >= 1) {
     return `${(value / 1000000000).toFixed(2).replace(/(\.0+|0+)$/, "")}B`;
-  } else if (value / 1000000 >= 1) {
+  }
+  if (value / 1000000 >= 1) {
     return `${(value / 1000000).toFixed(2).replace(/(\.0+|0+)$/, "")}M`;
-  } else if (value / 100000 >= 1) {
+  }
+  if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
+  }
+  if (value / 1 >= 1) {
+    return `${value.toFixed(3).replace(/(\.0+|0+)$/, "")}`;
   } else {
-    return `${value.toFixed(2).replace(/(\.0+|0+)$/, "")}`;
+    return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
   }
 };
 
 const CoinItem = ({ coin, snackbar, price }) => {
   const { amount, image, symbol, name } = coin;
-  console.log(coin);
-  let value = price * amount;
+  const value = price * amount;
   return (
     <Grid
       item
@@ -71,17 +65,19 @@ const CoinItem = ({ coin, snackbar, price }) => {
           gap: "10px",
         }}
       >
-        <Typography variant="h5">{name?.length > 7 ? symbol : name}</Typography>
+        <Typography variant="h5">
+          {name?.length > 7 ? symbol.toUpperCase() : name}
+        </Typography>
         <Box
           component="img"
           src={image}
           sx={{ width: "50px", marginTop: "10px" }}
         ></Box>
         <Box sx={{ margin: "10px 0px" }}>
-          <Typography color="darkred">{`Amount: ${amountReducer(
+          <Typography color="darkred">{`Amount: ${valueReducer(
             amount
           )}`}</Typography>
-          <Typography color="darkblue">{`Price: $${amountReducer(
+          <Typography color="darkblue">{`Price: $${valueReducer(
             Number(price)
           )}`}</Typography>
           <Typography color="green">{`Value: $${valueReducer(
@@ -105,6 +101,8 @@ const CoinItem = ({ coin, snackbar, price }) => {
 function Wallet() {
   const { currentUserData } = useAuth();
   const { coinsPriceList } = useCoins();
+  const [modal, setModal] = useState(false);
+  const [modalData, setModalData] = useState({});
   const [snackbar, setSnackbar] = useState({
     state: false,
     message: "",
@@ -113,6 +111,7 @@ function Wallet() {
   const snackbarClose = () => setSnackbar(false);
   const snackbarOpen = (message, severity = "success") =>
     setSnackbar({ state: true, message, severity });
+  const navigate = useNavigate();
   const userCoins = currentUserData?.coins || [];
   const findCoinValue = (name) => {
     if (coinsPriceList) {
@@ -121,19 +120,33 @@ function Wallet() {
     }
   };
   const totalUserValue = () => {
-    let totalArr = [];
+    const totalArr = [];
     userCoins.forEach((coin) => {
-      let value = findCoinValue(coin.name);
-      let total = coin.amount * value;
+      const value = findCoinValue(coin.name);
+      const total = coin.amount * value;
       totalArr.push(total);
     });
     return totalArr.reduce((a, b) => {
       return a + b;
     }, 0);
   };
-  let navigate = useNavigate();
+
   return (
     <DashboardPage>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={snackbar.state}
+        autoHideDuration={3000}
+        onClose={snackbarClose}
+      >
+        <Alert
+          onClose={snackbarClose}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       {!currentUserData && userCoins ? (
         <Spinner />
       ) : (
@@ -153,20 +166,6 @@ function Wallet() {
                 gap: "10px",
               }}
             >
-              <Snackbar
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                open={snackbar.state}
-                autoHideDuration={3000}
-                onClose={snackbarClose}
-              >
-                <Alert
-                  onClose={snackbarClose}
-                  severity={snackbar.severity}
-                  sx={{ width: "100%" }}
-                >
-                  {snackbar.message}
-                </Alert>
-              </Snackbar>
               <Typography variant="h3" marginBottom={"15px"}>
                 Wallet 👛
               </Typography>

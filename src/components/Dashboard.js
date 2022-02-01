@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Hidden, Button } from "@mui/material";
-import TableComponent from "./TableComponent";
+import Table from "./Table";
 import Carousel from "./Carousel";
 import Spinner from "./Spinner";
 import { useCoins } from "./contexts/CoinsContext";
@@ -101,7 +101,7 @@ function Dashboard() {
             </Grid>
           </Hidden>
           <Grid item xs={12}>
-            <TableComponent data={coinsList} />
+            <Table data={coinsList} />
           </Grid>
         </Grid>
       )}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 import {
   Box,
   List,
@@ -18,7 +19,6 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SendIcon from "@mui/icons-material/Send";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import { useAuth } from "./contexts/AuthContext";
 
 const StyledItemIcon = ({ children }) => {
   return (
@@ -42,7 +42,7 @@ function Sidebar({ setOpen = null }) {
       navigate("/login");
     } catch (e) {
       setError("Failed to logout!");
-      console.log(e?.message);
+      console.log(e?.message, error);
     }
   };
   return (

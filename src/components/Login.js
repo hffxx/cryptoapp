@@ -128,7 +128,7 @@ function Login() {
         <Divider />
         <Box sx={styles.item}>
           <Typography>
-            {"Not a member? "}
+            {"Not a member?"}
             <Link
               underline="hover"
               sx={styles.link}
@@ -139,7 +139,7 @@ function Login() {
             </Link>
           </Typography>
           <Typography>
-            {"Forgot your password? "}
+            {"Forgot your password?"}
             <Link
               underline="hover"
               sx={styles.link}
