@@ -73,7 +73,6 @@ function SellModal({
             return coin;
           }
         });
-        handleClose();
         await setDoc(docRef, {
           ...currentUserData,
           balance: Math.floor(userBalance + Number(totalAmount)),
@@ -81,7 +80,6 @@ function SellModal({
         });
       } else {
         let payload = wallet.filter((coin) => coin.name !== cName);
-        handleClose();
         await setDoc(docRef, {
           ...currentUserData,
           balance: Math.floor(userBalance + Number(totalAmount)),
@@ -95,6 +93,7 @@ function SellModal({
     setAmount("");
     setLoading(false);
     snackbar(`Sold ${coinName} for $${totalAmount}`);
+    handleClose();
   };
 
   return (

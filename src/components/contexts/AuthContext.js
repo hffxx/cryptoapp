@@ -20,7 +20,6 @@ export function AuthProvider({ children }) {
         nick,
         email,
         password,
-        id: cred.user.uid,
         createdAt: new Date(),
         balance: 1000000,
         coins: [],

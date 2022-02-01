@@ -70,9 +70,11 @@ const CoinItem = ({ coin, openModal, setModalData }) => {
 };
 
 function Trade() {
+  const { currentUserData } = useAuth();
+  const { coins } = useCoins();
   const [coinName, setCoinName] = useState("");
   const [modal, setModal] = useState(false);
-  const [modalData, setModalData] = useState({ state: false });
+  const [modalData, setModalData] = useState({});
   const [snackbar, setSnackbar] = useState({
     state: false,
     message: "",
@@ -81,10 +83,8 @@ function Trade() {
   const snackbarClose = () => setSnackbar(false);
   const snackbarOpen = (message, severity = "success") =>
     setSnackbar({ state: true, message, severity });
-  const handleOpenModal = () => setModalData({ ...modalData, state: true });
-  const handleCloseModal = () => setModalData({ ...modalData, state: false });
-  const { currentUserData } = useAuth();
-  const { coins } = useCoins();
+  const handleOpenModal = () => setModal(true);
+  const handleCloseModal = () => setModal(false);
 
   const filteredCoinList = coins.filter(
     (coin) =>
@@ -120,7 +120,7 @@ function Trade() {
         </Alert>
       </Snackbar>
       <ModalTrade
-        modal={modalData.state}
+        modal={modal}
         coin={modalData}
         closeModal={handleCloseModal}
         openSnackbar={snackbarOpen}
@@ -151,8 +151,7 @@ function Trade() {
             ></TextField>
           </Grid>
           <Grid container item spacing={2} xs={10.5} marginTop={2}>
-            {filteredCoinList.length === 0 &&
-            currentUserData.coin?.length !== 0 ? (
+            {filteredCoinList.length === 0 ? (
               <Grid item xs={12} mt={20}>
                 <Typography variant="h5"> Sorry, coin not found :(</Typography>
               </Grid>
