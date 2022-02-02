@@ -18,6 +18,11 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const styles = {
   item: {
     paddingTop: "20px",
+    height: "220px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
   itemTitle: {
     display: "flex",
