@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Hidden, Button } from "@mui/material";
+import { CoinList } from "../config/api";
 import Table from "./Table";
 import Carousel from "./Carousel";
 import Spinner from "./Spinner";
-import { useCoins } from "./contexts/CoinsContext";
 import DashboardPage from "./Pages/DashboardPage";
 
 function Dashboard() {
   const [title, setTitle] = useState("🔥 Top Coins");
   const [coinsList, setCoinsList] = useState([]);
-  const { coins } = useCoins();
+
+  const fetchCoins = async () => {
+    try {
+      let data = await fetch(CoinList());
+      let coins = await data.json();
+      setCoinsList(coins);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
 
   useEffect(() => {
-    setCoinsList(coins);
-  }, [coins]);
+    fetchCoins();
+  }, []);
 
   const topCoins = coinsList.slice(0, 10);
 
