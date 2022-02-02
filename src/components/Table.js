@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useMemo,
-} from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { CoinList } from "../config/api";
 import {
   Box,
   Typography,
@@ -297,11 +292,31 @@ function Row({ coin, width }) {
   );
 }
 
-function Table({ data }) {
-  const rows = data;
+function Table() {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const fetchCoins = async () => {
+      try {
+        let data = await fetch(CoinList());
+        let coins = await data.json();
+        setData(coins);
+      } catch (e) {
+        console.log("error", e);
+      }
+    };
+    const id = setInterval(() => {
+      fetchCoins();
+    }, 60000);
+    fetchCoins();
+    return () => clearInterval(id);
+  }, []);
+
+  const rows = data;
+
   let tableRef = useRef();
   const handleWindowResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -337,11 +352,6 @@ function Table({ data }) {
     handleChangePage,
   };
 
-  const memoData = useMemo(() => {
-    return data
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map((coin) => <Row coin={coin} key={coin.id} width={windowWidth} />);
-  }, [data, windowWidth, page, rowsPerPage]);
   return (
     <Box
       sx={{
@@ -389,7 +399,11 @@ function Table({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {memoData}
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((coin) => (
+                <Row coin={coin} key={coin.id} width={windowWidth} />
+              ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 75 * emptyRows }}>
                 <TableCell colSpan={6} />

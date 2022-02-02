@@ -117,7 +117,7 @@ function Trade() {
           fetchActualPrice={fetchActualPrice}
         />
       )),
-    [coins, coinName]
+    [filteredCoinList]
   );
   return (
     <DashboardPage>
