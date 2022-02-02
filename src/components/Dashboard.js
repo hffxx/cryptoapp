@@ -101,7 +101,7 @@ function Dashboard() {
             </Grid>
           </Hidden>
           <Grid item xs={12}>
-            <Table data={coinsList} />
+            <Table />
           </Grid>
         </Grid>
       )}

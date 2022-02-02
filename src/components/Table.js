@@ -5,6 +5,7 @@ import React, {
   useRef,
   useMemo,
 } from "react";
+import { CoinList } from "../config/api";
 import {
   Box,
   Typography,
@@ -297,11 +298,28 @@ function Row({ coin, width }) {
   );
 }
 
-function Table({ data }) {
-  const rows = data;
+function Table() {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const fetchCoins = async () => {
+    try {
+      let data = await fetch(CoinList());
+      let coins = await data.json();
+      setData(coins);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
+  useEffect(() => {
+    fetchCoins();
+  }, []);
+
+  const rows = data;
+
   let tableRef = useRef();
   const handleWindowResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
