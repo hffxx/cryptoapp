@@ -8,9 +8,8 @@ import {
   Button,
   Snackbar,
 } from "@mui/material";
-import { CoinList } from "../config/api";
+import { CoinList, SingleCoinPrice } from "../config/api";
 import DashboardPage from "./Pages/DashboardPage";
-import { SingleCoinPrice } from "../config/api";
 import { useAuth } from "./contexts/AuthContext";
 import { valueReducer } from "./Wallet";
 import Spinner from "./Spinner";
