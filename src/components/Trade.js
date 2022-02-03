@@ -89,7 +89,6 @@ function Trade() {
     setSnackbar({ state: true, message, severity });
   const handleOpenModal = () => setModal(true);
   const handleCloseModal = () => setModal(false);
-
   useEffect(() => {
     const fetchCoins = async () => {
       try {
@@ -102,7 +101,7 @@ function Trade() {
     };
     const id = setInterval(() => {
       fetchCoins();
-    }, 60000);
+    }, 12000000);
     fetchCoins();
     return () => clearInterval(id);
   }, []);
@@ -110,9 +109,17 @@ function Trade() {
   const fetchActualPrice = async (id) => {
     try {
       setLoadingFetchPrice(true);
-      let data = await fetch(SingleCoinPrice(id));
-      let coinPrice = await data.json();
+      let fetchedPrice = await fetch(SingleCoinPrice(id));
+      let coinPrice = await fetchedPrice.json();
       setActualCoinPrice(coinPrice[id].usd);
+      let updatedData = data.map((coin) => {
+        if (coin.id === id) {
+          return { ...coin, current_price: coinPrice[id].usd };
+        } else {
+          return coin;
+        }
+      });
+      setData(updatedData);
       setLoadingFetchPrice(false);
     } catch (e) {
       console.log("Error!", e?.message);

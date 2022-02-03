@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useCoins } from "./contexts/CoinsContext";
@@ -14,7 +14,6 @@ import {
   Button,
 } from "@mui/material";
 import SellModal from "./SellModal";
-
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -108,17 +107,23 @@ function Wallet() {
     message: "",
     severity: "",
   });
+
   const snackbarClose = () => setSnackbar(false);
+
   const snackbarOpen = (message, severity = "success") =>
     setSnackbar({ state: true, message, severity });
+
   const navigate = useNavigate();
+
   const userCoins = currentUserData?.coins || [];
+
   const findCoinValue = (name) => {
     if (coinsPriceList) {
       let { price } = coinsPriceList.find((coin) => coin.name === name) || 0;
       return price;
     }
   };
+
   const totalUserValue = () => {
     const totalArr = [];
     userCoins.forEach((coin) => {

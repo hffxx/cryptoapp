@@ -1,11 +1,11 @@
 import React from "react";
 import DashboardPage from "./Pages/DashboardPage";
 import { useAuth } from "./contexts/AuthContext";
-// import { useCoins } from "./contexts/CoinsContext";
 import { Typography } from "@mui/material";
+
 function Highscores() {
   const { userList } = useAuth();
-  // const { coinsPriceList } = useCoins();
+
   const highscores = () => {
     let highscores = [];
     if (userList) {

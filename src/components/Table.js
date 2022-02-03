@@ -328,10 +328,12 @@ function Table() {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, [handleWindowResize]);
+
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(e.target.value);
     setPage(0);
   };
+
   const handleChangePage = (e, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -339,6 +341,7 @@ function Table() {
       top: tableRef.current?.offsetTop,
     });
   };
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
