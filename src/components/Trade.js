@@ -101,7 +101,7 @@ function Trade() {
     };
     const id = setInterval(() => {
       fetchCoins();
-    }, 12000000);
+    }, 60000);
     fetchCoins();
     return () => clearInterval(id);
   }, []);
