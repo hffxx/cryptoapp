@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Paper,
   Box,
@@ -8,10 +8,9 @@ import {
   Button,
   Snackbar,
 } from "@mui/material";
+import { CoinList, SingleCoinPrice } from "../config/api";
 import DashboardPage from "./Pages/DashboardPage";
-import { SingleCoinPrice } from "../config/api";
 import { useAuth } from "./contexts/AuthContext";
-import { useCoins } from "./contexts/CoinsContext";
 import { valueReducer } from "./Wallet";
 import Spinner from "./Spinner";
 import ModalTrade from "./ModalTrade";
@@ -73,7 +72,7 @@ const CoinItem = ({ coin, openModal, setModalData, fetchActualPrice }) => {
 
 function Trade() {
   const { currentUserData } = useAuth();
-  const { coins } = useCoins();
+  const [data, setData] = useState([]);
   const [actualCoinPrice, setActualCoinPrice] = useState(0);
   const [coinName, setCoinName] = useState("");
   const [modal, setModal] = useState(false);
@@ -89,19 +88,43 @@ function Trade() {
     setSnackbar({ state: true, message, severity });
   const handleOpenModal = () => setModal(true);
   const handleCloseModal = () => setModal(false);
+  useEffect(() => {
+    const fetchCoins = async () => {
+      try {
+        let data = await fetch(CoinList());
+        let coins = await data.json();
+        setData(coins);
+      } catch (e) {
+        console.log("error", e);
+      }
+    };
+    const id = setInterval(() => {
+      fetchCoins();
+    }, 60000);
+    fetchCoins();
+    return () => clearInterval(id);
+  }, []);
 
   const fetchActualPrice = async (id) => {
     try {
       setLoadingFetchPrice(true);
-      let data = await fetch(SingleCoinPrice(id));
-      let coinPrice = await data.json();
+      let fetchedPrice = await fetch(SingleCoinPrice(id));
+      let coinPrice = await fetchedPrice.json();
       setActualCoinPrice(coinPrice[id].usd);
+      let updatedData = data.map((coin) => {
+        if (coin.id === id) {
+          return { ...coin, current_price: coinPrice[id].usd };
+        } else {
+          return coin;
+        }
+      });
+      setData(updatedData);
       setLoadingFetchPrice(false);
     } catch (e) {
       console.log("Error!", e?.message);
     }
   };
-  const filteredCoinList = coins.filter(
+  const filteredCoinList = data.filter(
     (coin) =>
       coin.name.toLowerCase().includes(coinName.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(coinName.toLowerCase())
@@ -143,7 +166,7 @@ function Trade() {
         price={actualCoinPrice}
         loadingFetchPrice={loadingFetchPrice}
       />
-      {coins && currentUserData ? (
+      {data.length !== 0 && currentUserData ? (
         <Grid container justifyContent={"center"} alignItems={"center"}>
           <Grid
             item
