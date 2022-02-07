@@ -53,6 +53,7 @@ function ModalTrade({
   openSnackbar,
   price,
   loadingFetchPrice,
+  type = "Buy",
 }) {
   const { currentUserId, currentUserData } = useAuth();
   const [amount, setAmount] = useState("");
@@ -67,7 +68,6 @@ function ModalTrade({
       id.current = window.setInterval(() => {
         setTimer((time) => time - 1);
       }, 1000);
-      return;
     }
 
     return () => {
@@ -79,8 +79,8 @@ function ModalTrade({
   useEffect(() => {
     if (timer === 0) {
       clear();
-      closeModal();
       openSnackbar(`Buying time expired`, "error");
+      closeModal();
     }
   }, [timer]);
   const handleMax = () => {
@@ -127,6 +127,7 @@ function ModalTrade({
       console.log("Error", e);
       openSnackbar(`Error, check console`, "error");
     }
+    setAmount("");
     setLoading(false);
     closeModal();
   };
@@ -220,7 +221,7 @@ function ModalTrade({
             }
             variant="contained"
             onClick={() => handleBuyCrypto(coin.name)}
-          >{`Buy ${coin.symbol}`}</Button>
+          >{`${type} ${coin.symbol}`}</Button>
         </Box>
       </Box>
     </Modal>
