@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Modal, Typography, TextField, Button } from "@mui/material";
 import { db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
@@ -53,13 +53,40 @@ function ModalTrade({
   openSnackbar,
   price,
   loadingFetchPrice,
+  type = "Buy",
 }) {
   const { currentUserId, currentUserData } = useAuth();
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState(30);
+  const id = useRef(null);
+  const clear = () => {
+    window.clearInterval(id.current);
+  };
+  useEffect(() => {
+    if (modal) {
+      id.current = window.setInterval(() => {
+        setTimer((time) => time - 1);
+      }, 1000);
+    }
+
+    return () => {
+      setTimer(30);
+      clear();
+    };
+  }, [modal]);
+
+  useEffect(() => {
+    if (timer === 0) {
+      clear();
+      openSnackbar(`Buying time expired`, "error");
+      closeModal();
+    }
+  }, [timer]);
   const handleMax = () => {
     setAmount(floor10(currentUserData.balance / price, -7));
   };
+
   const handleBuyCrypto = async (cName) => {
     setLoading(true);
     let numberAmount = Number(amount);
@@ -100,6 +127,7 @@ function ModalTrade({
       console.log("Error", e);
       openSnackbar(`Error, check console`, "error");
     }
+    setAmount("");
     setLoading(false);
     closeModal();
   };
@@ -179,6 +207,9 @@ function ModalTrade({
               "red"
             }
           >{`Total price: $${(price * amount).toFixed(2)}`}</Typography>
+          <Typography
+            color={timer < 10 && "red"}
+          >{`You have ${timer} seconds left to buy`}</Typography>
           <Button
             color="success"
             disabled={
@@ -190,7 +221,7 @@ function ModalTrade({
             }
             variant="contained"
             onClick={() => handleBuyCrypto(coin.name)}
-          >{`Buy ${coin.symbol}`}</Button>
+          >{`${type} ${coin.symbol}`}</Button>
         </Box>
       </Box>
     </Modal>
