@@ -57,6 +57,7 @@ const CoinItem = ({ coin, openModal, setModalData, fetchActualPrice }) => {
         <Button
           variant="contained"
           color="success"
+          type="Buy"
           onClick={() => {
             openModal();
             setModalData(coin);
