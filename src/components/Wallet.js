@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import { CoinList, SingleCoinPrice } from "../config/api";
 import DashboardPage from "./Pages/DashboardPage";
 import Spinner from "./Spinner";
+import ModalTrade from "./ModalTrade";
 import {
   Box,
   Paper,
@@ -12,9 +14,7 @@ import {
   Snackbar,
   Button,
 } from "@mui/material";
-import SellModal from "./SellModal";
 import MuiAlert from "@mui/material/Alert";
-import { CoinList, SingleCoinPrice } from "../config/api";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -30,14 +30,16 @@ export const valueReducer = (value) => {
   if (value / 100000 >= 1) {
     return `${((value * 100) / 100000).toFixed(2).replace(/(\.0+|0+)$/, "")}K`;
   }
-  if (value / 1 >= 1) {
-    return `${value.toFixed(3).replace(/(\.0+|0+)$/, "")}`;
-  } else {
-    return `${value.toFixed(8).replace(/(\.0+|0+)$/, "")}`;
-  }
+  return `${value.toFixed(4).replace(/(\.0+|0+)$/, "")}`;
 };
 
-const CoinItem = ({ coin, snackbar, price }) => {
+const CoinItem = ({
+  coin,
+  price,
+  openModal,
+  setModalData,
+  fetchActualPrice,
+}) => {
   const { amount, image, symbol, name } = coin;
   const value = price * amount;
   return (
@@ -83,15 +85,17 @@ const CoinItem = ({ coin, snackbar, price }) => {
             Number(value)
           )}`}</Typography>
         </Box>
-        <SellModal
-          coinPrice={price}
-          coinImg={image}
-          coinName={name}
-          userCoinAmount={amount}
-          snackbar={snackbar}
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => {
+            openModal();
+            setModalData(coin);
+            fetchActualPrice(coin.id);
+          }}
         >
           Sell
-        </SellModal>
+        </Button>
       </Paper>
     </Grid>
   );
@@ -109,6 +113,9 @@ function Wallet() {
     message: "",
     severity: "",
   });
+
+  const handleOpenModal = () => setModal(true);
+  const handleCloseModal = () => setModal(false);
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -134,7 +141,7 @@ function Wallet() {
 
   const navigate = useNavigate();
 
-  const userCoins = currentUserData?.coins || [];
+  const userCoins = currentUserData?.coins || [0];
 
   const findCoinValue = (coinId) => {
     if (data.length !== 0) {
@@ -190,6 +197,15 @@ function Wallet() {
           {snackbar.message}
         </Alert>
       </Snackbar>
+      <ModalTrade
+        modal={modal}
+        coin={modalData}
+        type="Sell"
+        closeModal={handleCloseModal}
+        openSnackbar={snackbarOpen}
+        price={actualCoinPrice}
+        loadingFetchPrice={loadingFetchPrice}
+      />
       {!currentUserData && userCoins ? (
         <Spinner />
       ) : (
@@ -241,7 +257,9 @@ function Wallet() {
                 coin={coin}
                 key={coin.symbol}
                 price={findCoinValue(coin.id)}
-                snackbar={snackbarOpen}
+                openModal={handleOpenModal}
+                setModalData={setModalData}
+                fetchActualPrice={fetchActualPrice}
               />
             ))}
           </Grid>

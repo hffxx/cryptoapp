@@ -60,9 +60,11 @@ function ModalTrade({
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(30);
   const id = useRef(null);
+
   const clear = () => {
     window.clearInterval(id.current);
   };
+
   useEffect(() => {
     if (modal) {
       id.current = window.setInterval(() => {
@@ -83,11 +85,58 @@ function ModalTrade({
       closeModal();
     }
   }, [timer]);
+
   const handleMax = () => {
-    setAmount(floor10(currentUserData.balance / price, -7));
+    if (type === "Buy") {
+      setAmount(floor10(currentUserData.balance / price, -7));
+      return;
+    }
+    if (type === "Sell") {
+      setAmount(coin.amount);
+      return;
+    }
   };
 
-  const handleBuyCrypto = async (cName) => {
+  const handleSellCrypto = async (name) => {
+    setLoading(true);
+    let numberAmount = Number(amount);
+    let totalAmount = (price * numberAmount).toFixed(2);
+    const docRef = doc(db, "users", currentUserId);
+    const userBalance = currentUserData.balance;
+    const wallet = currentUserData.coins;
+    try {
+      if (coin.amount > numberAmount) {
+        let payload = wallet.map((coin) => {
+          if (coin.name === name) {
+            return { ...coin, amount: coin.amount - numberAmount };
+          } else {
+            return coin;
+          }
+        });
+        await setDoc(docRef, {
+          ...currentUserData,
+          balance: userBalance + Number(totalAmount),
+          coins: payload,
+        });
+      } else {
+        let payload = wallet.filter((coin) => coin.name !== name);
+        await setDoc(docRef, {
+          ...currentUserData,
+          balance: userBalance + Number(totalAmount),
+          coins: payload,
+        });
+      }
+    } catch (e) {
+      console.log("Error", e);
+      openSnackbar("Error!", "error");
+    }
+    setAmount("");
+    setLoading(false);
+    openSnackbar(`Sold ${coin.name} for $${totalAmount}`);
+    closeModal();
+  };
+
+  const handleBuyCrypto = async (name) => {
     setLoading(true);
     let numberAmount = Number(amount);
     let totalAmount = +(price * amount).toFixed(2);
@@ -95,7 +144,7 @@ function ModalTrade({
     const docRef = doc(db, "users", currentUserId);
     const userBalance = currentUserData.balance;
     try {
-      if (!wallet.some(({ name }) => name === cName)) {
+      if (!wallet.some(({ name }) => name === name)) {
         let payload = {
           name: coin.name,
           image: coin.image,
@@ -110,7 +159,7 @@ function ModalTrade({
         });
       } else {
         let payload = wallet.map((coin) => {
-          if (coin.name === cName) {
+          if (coin.name === name) {
             return { ...coin, amount: coin.amount + numberAmount };
           } else {
             return coin;
@@ -193,7 +242,7 @@ function ModalTrade({
                   }}
                   onClick={handleMax}
                   disableRipple
-                  disabled={currentUserData?.balance <= 0}
+                  disabled={type === "Buy" && currentUserData?.balance <= 0}
                 >
                   Max
                 </Button>
@@ -202,6 +251,7 @@ function ModalTrade({
           ></TextField>
           <Typography
             color={
+              type === "Buy" &&
               currentUserData?.balance > 0 &&
               currentUserData?.balance < price * amount &&
               "red"
@@ -209,18 +259,23 @@ function ModalTrade({
           >{`Total price: $${(price * amount).toFixed(2)}`}</Typography>
           <Typography
             color={timer < 10 && "red"}
-          >{`You have ${timer} seconds left to buy`}</Typography>
+          >{`You have ${timer} seconds left to ${type.toLocaleLowerCase()}`}</Typography>
           <Button
             color="success"
             disabled={
               loading ||
               loadingFetchPrice ||
               amount <= 0 ||
-              currentUserData.balance < price * amount ||
-              (price * amount).toFixed(2) <= 0
+              (price * amount).toFixed(2) <= 0 ||
+              (type === "Buy" && currentUserData.balance < price * amount) ||
+              (type === "Sell" && coin.amount < amount)
             }
             variant="contained"
-            onClick={() => handleBuyCrypto(coin.name)}
+            onClick={() =>
+              type === "Buy"
+                ? handleBuyCrypto(coin.name)
+                : handleSellCrypto(coin.name)
+            }
           >{`${type} ${coin.symbol}`}</Button>
         </Box>
       </Box>
